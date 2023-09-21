@@ -1,22 +1,25 @@
-﻿namespace Stressless_Service.Models
+﻿using System.Globalization;
+using System.Text.Json.Nodes;
+
+namespace Stressless_Service.Models
 {
     public class ConfigurationModel
     {
-        public int ID { get; set; }
-        public string Firstname { get; set; }
-        public string Lastname { get; set; }
-        public string WorkingDays { get; set; }
-        public string Start_time { get; set; }
-        public string Finish_time { get; set; }
-        public string CalenderImport { get; set; }
-        public CalenderModel Calender { get; set; }
+        public int id { get; set; }
+        public string firstname { get; set; }
+        public string lastname { get; set; }
+        public string[] workingDays { get; set; }
+        public string day_Start { get; set; }
+        public string day_End { get; set; }
+        public string calenderImport { get; set; }
+        public List<CalenderModel> calender { get; set; }
     }
 
     public class CalenderModel
     {
-        public string Name { get; set; }
-        public string Location { get; set; }
-        public string Start_time { get; set; }
-        public string End_time { get; set; }
+        public string name { get; set; }
+        public string location { get; set; }
+        public string start { get; set; }
+        public string finish { get; set; }
     }
 }

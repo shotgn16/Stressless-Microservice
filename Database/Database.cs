@@ -74,7 +74,7 @@ namespace Stressless_Service.Database
                 {
                     int table_Configuration = connection.ExecuteScalar<int>("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Prompts';");
                     if (table_Configuration.Equals(0)) {
-                        connection.Execute("CREATE TABLE 'Configuration' ('ID' INTEGER, 'Firstname' TEXT, 'Lastname' INTEGER, 'WorkingDays' TEXT, 'Start_time' TEXT, 'Finish_time' TEXT, 'Calender' TEXT, PRIMARY KEY('ID'));");
+                        connection.Execute("CREATE TABLE 'Configuration' ('ID' INTEGER, 'Firstname' TEXT, 'Lastname' INTEGER, 'WorkingDays' TEXT, 'Start_time' TEXT, 'Finish_time' TEXT, 'CalenderImport' TEXT, 'Calender' TEXT, PRIMARY KEY('ID'));");
                     }
 
                     int table_Prompts = connection.ExecuteScalar<int>("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Prompts';");
@@ -99,28 +99,18 @@ namespace Stressless_Service.Database
             }
         }
 
-        public async Task <ConfigurationModel> GetConfiguration()
+        public async Task <ConfigurationModel> GetConfiguration(int configurationID)
         {
             ConfigurationModel Response;
 
             using (SQLiteConnection Connection = await CreateConnection())
             {
                 await Connection.OpenAsync();
+                               
+                Response = Connection.QueryFirstOrDefault<ConfigurationModel>("SELECT ID, Firstname, Lastname, Start_time, Finish_time, CalenderImport FROM Configuration WHERE ID = '" + configurationID + "'");
 
-                string Calender = Connection.QuerySingleOrDefault<string>("SELECT * FROM Configuration");
-
-                if (Calender.StartsWith("http"))
-                {
-                    Response = Connection.QuerySingle<ConfigurationModel>("SELECT * FROM Configuration");
-                    
-                }
-
-                else
-                {
-
-                }
-
-                
+                string days = Connection.QueryFirstOrDefault<string>("SELECT workingdays FROM Configuration WHERE ID = '" + configurationID + "'"); ;
+                Response.workingDays = JsonConvert.DeserializeObject<string[]>(days);
 
                 await Connection.CloseAsync();
             }
@@ -134,19 +124,9 @@ namespace Stressless_Service.Database
             {
                 await Connection.OpenAsync();
 
-                string SQL = "";
+                Connection.Execute("INSERT INTO Configuration (ID, Firstname, Lastname, WorkingDays, Start_time, Finish_time, CalenderImport, Calender) VALUES ('" + Configuration.id + "', '" + Configuration.firstname + "', '" + Configuration.lastname + "', '" + JsonConvert.SerializeObject(Configuration.workingDays) + "', '" + Configuration.day_Start + "', '" + Configuration.day_End + "', '" + Configuration.calenderImport + "', '" + JsonConvert.SerializeObject(Configuration.calender) + "');");
 
-                if (Configuration.CalenderImport != "string")
-                {
-                    SQL = "INSERT INTO Configuration (ID, Firstname, Lastname, WorkingDays, Start_time, Finish_time, Calender) VALUES ('" + Configuration.ID + "', '" + Configuration.Firstname + "', '" + Configuration.Lastname + "', '" + Configuration.WorkingDays + "', '" + Configuration.Start_time + "', '" + Configuration.Finish_time + "', '" + Configuration.CalenderImport + "');";
-                }
-
-                else if (Configuration.CalenderImport == "string")
-                {
-                    SQL = "INSERT INTO Configuration (ID, Firstname, Lastname, WorkingDays, Start_time, Finish_time, Calender) VALUES ('" + Configuration.ID + "', '" + Configuration.Firstname + "', '" + Configuration.Lastname + "', '" + Configuration.WorkingDays + "', '" + Configuration.Start_time + "', '" + Configuration.Finish_time + "', '" + JsonConvert.SerializeObject(Configuration.Calender) + "');";
-                }
-
-                Connection.Execute(SQL);
+                await Connection.CloseAsync();
             }
         }
 
