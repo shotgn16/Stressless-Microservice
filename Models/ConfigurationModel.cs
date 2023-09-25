@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+﻿ using System.Globalization;
 using System.Text.Json.Nodes;
 
 namespace Stressless_Service.Models
@@ -12,7 +12,7 @@ namespace Stressless_Service.Models
         public string day_Start { get; set; }
         public string day_End { get; set; }
         public string calenderImport { get; set; }
-        public List<CalenderModel> calender { get; set; }
+        public CalenderModel[] calender { get; set; }
     }
 
     public class CalenderModel

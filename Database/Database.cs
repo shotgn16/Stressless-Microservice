@@ -102,12 +102,18 @@ namespace Stressless_Service.Database
         public async Task <ConfigurationModel> GetConfiguration(int configurationID)
         {
             ConfigurationModel Response;
+            List<CalenderModel> Results = new List<CalenderModel>();
 
             using (SQLiteConnection Connection = await CreateConnection())
             {
                 await Connection.OpenAsync();
                                
                 Response = Connection.QueryFirstOrDefault<ConfigurationModel>("SELECT ID, Firstname, Lastname, Start_time, Finish_time, CalenderImport FROM Configuration WHERE ID = '" + configurationID + "'");
+
+                string Calender = Connection.QueryFirstOrDefault<string>("SELECT Calender FROM Configuration WHERE ID = '" + configurationID + "'");
+                
+                Results = JsonConvert.DeserializeObject<List<CalenderModel>>(Calender);
+                Response.calender = Results.ToArray();
 
                 string days = Connection.QueryFirstOrDefault<string>("SELECT workingdays FROM Configuration WHERE ID = '" + configurationID + "'"); ;
                 Response.workingDays = JsonConvert.DeserializeObject<string[]>(days);
@@ -123,7 +129,7 @@ namespace Stressless_Service.Database
             using (SQLiteConnection Connection = await CreateConnection())
             {
                 await Connection.OpenAsync();
-
+                 
                 Connection.Execute("INSERT INTO Configuration (ID, Firstname, Lastname, WorkingDays, Start_time, Finish_time, CalenderImport, Calender) VALUES ('" + Configuration.id + "', '" + Configuration.firstname + "', '" + Configuration.lastname + "', '" + JsonConvert.SerializeObject(Configuration.workingDays) + "', '" + Configuration.day_Start + "', '" + Configuration.day_End + "', '" + Configuration.calenderImport + "', '" + JsonConvert.SerializeObject(Configuration.calender) + "');");
 
                 await Connection.CloseAsync();
@@ -182,6 +188,27 @@ namespace Stressless_Service.Database
 
                 Connection.Execute("INSERT INTO UsedPrompts (ID, PromptID, LastUsed) VALUES ('" + UsedPrompt.ID + "', '" + UsedPrompt.PromptID + "', '" + UsedPrompt.LastUsed + "');");
             }
+        }
+
+        public async Task<DateTime[]> GetShift()
+        {
+            DateTime[] times;
+
+            using (SQLiteConnection Connection = await CreateConnection())
+            {
+                string StartShift = Connection.QuerySingle<string>("SELECT Start_time, Finish_time FROM Configuration");
+                string FinishShift = Connection.QuerySingle<string>("SELECT Finish_time FROM Configuration");
+
+                if (string.IsNullOrEmpty(StartShift) || string.IsNullOrEmpty(FinishShift)) {
+                    throw new ArgumentNullException("Invalid value detected!");
+                }
+
+                else {
+                    times = new DateTime[] { Convert.ToDateTime(StartShift), Convert.ToDateTime(FinishShift) };
+                }
+            }
+
+            return times;
         }
 
         public void Dispose() => GC.Collect();

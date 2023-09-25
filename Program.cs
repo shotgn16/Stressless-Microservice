@@ -1,3 +1,5 @@
+using Stressless_Service.Auto_Run;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -24,5 +26,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+
+using (AutoBootTimer autoBoot = new AutoBootTimer())
+    await autoBoot.StartABTimer();
 
 app.Run();
