@@ -1,7 +1,9 @@
 ﻿using System.Data.SQLite;
+using System.Net;
 using System.Reflection;
 using System.Text.Json.Nodes;
 using Dapper;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Stressless_Service.Models;
@@ -86,6 +88,11 @@ namespace Stressless_Service.Database
                     if (table_UsedPrompts.Equals(0)) {
                         connection.Execute("CREATE TABLE 'UsedPrompts' ('ID' INTEGER, 'PromptID' INTEGER, 'LastUsed' TEXT, FOREIGN KEY('PromptID') REFERENCES 'Prompts', PRIMARY KEY('ID'));");
                     }
+
+                    int table_Auth = connection.ExecuteScalar<int>("SELECT count(*) FROM sqlitet_master WHERE type='table' AND name='Auth';");
+                    if (table_Auth.Equals(0)) {
+                        connection.Execute("CREATE TABLE 'Auth' ('ID' INTEGER, 'ClientIP' TEXT, 'Generated' TEXT, 'AudienceCode' TEXT)");
+                    }
                 }
 
                 catch (Exception ex)
@@ -136,7 +143,7 @@ namespace Stressless_Service.Database
             }
         }
 
-        public async Task<PromptModel> GetPrompt(int ID)
+        public async Task<PromptModel> GetPrompt(string type)
         {
             PromptModel Response;
 
@@ -144,7 +151,7 @@ namespace Stressless_Service.Database
             {
                 await Connection.OpenAsync();
 
-                Response = Connection.QuerySingle<PromptModel>("SELECT * FROM Prompts WHERE ID = '" + ID + "';");
+                Response = Connection.QuerySingle<PromptModel>("SELECT * FROM Prompts WHERE Type = '" + type + "' ORDER BY RANDOM() LIMIT 1;");
 
                 await Connection.CloseAsync();
             }
@@ -158,7 +165,7 @@ namespace Stressless_Service.Database
             {
                 await Connection.OpenAsync();
 
-                Connection.Execute("INSERT INTO Prompts (ID, Type, Text) VALUES ('" + Prompt.ID + "','" + Prompt.Type + "','" + Prompt.Text + "');");
+                Connection.Execute("INSERT INTO Prompts (ID, Type, Text) VALUES ('" + string.Empty + "','" + Prompt.Type + "','" + Prompt.Text + "');");
 
                 await Connection.CloseAsync();
             }
@@ -186,8 +193,38 @@ namespace Stressless_Service.Database
             {
                 await Connection.OpenAsync();
 
-                Connection.Execute("INSERT INTO UsedPrompts (ID, PromptID, LastUsed) VALUES ('" + UsedPrompt.ID + "', '" + UsedPrompt.PromptID + "', '" + UsedPrompt.LastUsed + "');");
+                Connection.Execute("INSERT INTO UsedPrompts (ID, PromptID, LastUsed) VALUES ('" + string.Empty + "', '" + UsedPrompt.PromptID + "', '" + UsedPrompt.LastUsed + "');");
+
+                await Connection.CloseAsync();
             }
+        }
+
+        public async Task InsertAuth(AuthorizeModel Authentication)
+        {
+            using (SQLiteConnection Connection = await CreateConnection())
+            {
+                await Connection.OpenAsync();
+
+                Connection.Execute("INSERT INTO 'Auth' (ID, ClientIP, Generated, AudienceCode) VALUES ('" + string.Empty + "', '" + Authentication.IpAddress + "', '" + DateTime.Now + "', '" + Authentication.AudienceCode + "');");
+
+                await Connection.CloseAsync();
+            }
+        }
+
+        public async Task<AuthorizeModel> GetAuth(string IPAddress)
+        {
+            AuthorizeModel authorize;
+
+            using (SQLiteConnection Connection = await CreateConnection())
+            {
+                await Connection.OpenAsync();
+
+                authorize = Connection.QuerySingle<AuthorizeModel>("SELECT * FROM Auth WHERE ClientIP = '" + IPAddress + "';");
+
+                await Connection.CloseAsync();
+            }
+
+            return authorize;
         }
 
         public async Task<DateTime[]> GetShift()
@@ -199,11 +236,13 @@ namespace Stressless_Service.Database
                 string StartShift = Connection.QuerySingle<string>("SELECT Start_time, Finish_time FROM Configuration");
                 string FinishShift = Connection.QuerySingle<string>("SELECT Finish_time FROM Configuration");
 
-                if (string.IsNullOrEmpty(StartShift) || string.IsNullOrEmpty(FinishShift)) {
+                if (string.IsNullOrEmpty(StartShift) || string.IsNullOrEmpty(FinishShift))
+                {
                     throw new ArgumentNullException("Invalid value detected!");
                 }
 
-                else {
+                else
+                {
                     times = new DateTime[] { Convert.ToDateTime(StartShift), Convert.ToDateTime(FinishShift) };
                 }
             }

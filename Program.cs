@@ -1,6 +1,25 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Stressless_Service.Auto_Run;
+using Stressless_Service.Logic;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.SaveToken = true;
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateAudience = true,
+            ValidAudiences = TokenIssuer.ValidAudiences,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(TokenIssuer.ISK)),
+        };
+    });
+
+builder.Services.AddAuthorization();
 
 // Add services to the container.
 
@@ -14,6 +33,9 @@ builder.Services.AddSwaggerGen(c => c.SwaggerDoc("v1", new Microsoft.OpenApi.Mod
 
 var app = builder.Build();
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -23,10 +45,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
 app.MapControllers();
-
 
 using (AutoBootTimer autoBoot = new AutoBootTimer())
     await autoBoot.StartABTimer();
