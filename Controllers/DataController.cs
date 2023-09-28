@@ -16,70 +16,62 @@ namespace Stressless_Service.Controllers
         private readonly ILogger<DataController> _logger;
         public DataController(ILogger<DataController> logger) => _logger = logger;
 
-        //TODO - Re-write / Improve the structure of this request!
+        // Authorization Request
         [HttpPost("Authorize")]
-        public async Task<AuthenticationTokenModel> Authorize([FromBody] AuthorizeModel AuthorizeModel)
+        public async Task<ActionResult<AuthenticationTokenModel>> Authorize([FromBody] AuthorizeModel RequestBody)
         {
             AuthenticationTokenModel AuthenticationTokenModel = new AuthenticationTokenModel();
 
-            using (database database = new database()) 
-            using (TokenIssuer tokenIssuer = new TokenIssuer())
+            try
             {
-                if (AuthorizeModel == null)
+                //IF: Request is NOT NULL + AudienceCode is VALID!
+                if (!RequestBody.Equals(null) &&
+                    RequestBody.AudienceCode.Equals("SPA17911"))
                 {
-                    await database.InsertAuth(AuthorizeModel);
-                    string token = await tokenIssuer.IssueToken();
-
-                    DateTime Expires = DateTime.Now.AddDays(1);
-
-                    AuthenticationTokenModel = new AuthenticationTokenModel()
+                    //Instancing database
+                    using (database database = new database())
+                    using (TokenIssuer tokenIssuer = new TokenIssuer())
                     {
-                        Token = token,
-                        Expires = Expires.Millisecond,
-                        TokenType = "Bearer"
-                    };
+                        //Inserting into database then new auth instance
+                        await database.InsertAuth(RequestBody);
+
+                        //Generating an OAuth 2.0 Bearer token
+                        string token = await tokenIssuer.IssueToken();
+
+                        DateTime Expires = DateTime.Now.AddHours(24);
+
+                        //Passing all the parameters into the token model
+                        AuthenticationTokenModel = new AuthenticationTokenModel()
+                        {
+                            Token = token,
+                            Expires = Expires.Minute,
+                            TokenType = "Bearer"
+                        };
+                    }
                 }
 
-                else if (AuthorizeModel != null) 
+                //IF: Request is NOT NULL + AudienceCode is INVALID!
+                else if (!RequestBody.Equals(null) &&
+                    !RequestBody.AudienceCode.Equals("SPA17911"))
                 {
-                    throw new ArgumentNullException("Configuration already exists!");
+                    return Unauthorized("Invalid audience code!");
                 }
 
-                else if ()
+                //IF: Request body is NULL
+                else if (RequestBody.Equals(null))
                 {
-
+                    return BadRequest("Invalid request body!");
                 }
             }
 
-            return AuthenticationTokenModel;
+            catch (Exception ex)
+            {
+                return BadRequest("An Internal Error has occurred! " + ex);
+            }
+
+            // Returning the token model
+            return Ok(AuthenticationTokenModel);
         }
-
-
-            //        AuthenticationTokenModel tokenModel = new AuthenticationTokenModel();
-            //string token;
-
-            //using (database database = new database()) {
-            //    AuthorizeModel result = await database.GetAuth(authorizeModel.IpAddress);
-
-            //    if (result == null)
-            //    {
-            //        using (TokenIssuer Issuer = new TokenIssuer())
-            //        {
-            //            token = await Issuer.IssueToken();
-
-            //            tokenModel.Token = token;
-            //            tokenModel.TokenType = "Bearer";
-            //            tokenModel.Expires = 86400000;
-            //        }
-            //    }
-
-            //    else if (result != null || !TokenIssuer.ValidAudiences.Contains(result.AudienceCode))
-            //    {
-            //        throw new AccessViolationException("Authentication instance already exists!");
-            //    }
-            //}
-
-            //return tokenModel;
 
         [Authorize]
         [HttpGet("GetPrompt")]

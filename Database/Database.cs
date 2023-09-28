@@ -89,9 +89,9 @@ namespace Stressless_Service.Database
                         connection.Execute("CREATE TABLE 'UsedPrompts' ('ID' INTEGER, 'PromptID' INTEGER, 'LastUsed' TEXT, FOREIGN KEY('PromptID') REFERENCES 'Prompts', PRIMARY KEY('ID'));");
                     }
 
-                    int table_Auth = connection.ExecuteScalar<int>("SELECT count(*) FROM sqlitet_master WHERE type='table' AND name='Auth';");
+                    int table_Auth = connection.ExecuteScalar<int>("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Auth';");
                     if (table_Auth.Equals(0)) {
-                        connection.Execute("CREATE TABLE 'Auth' ('ID' INTEGER, 'ClientIP' TEXT, 'Generated' TEXT, 'AudienceCode' TEXT)");
+                        connection.Execute("CREATE TABLE 'Auth' ('ID' INTEGER, 'ClientIP' TEXT, 'Generated' TEXT, 'AudienceCode' TEXT);");
                     }
                 }
 
@@ -211,20 +211,20 @@ namespace Stressless_Service.Database
             }
         }
 
-        public async Task<AuthorizeModel> GetAuth(string IPAddress)
+        public async Task<int> GetAuth(string IPAddress)
         {
-            AuthorizeModel authorize;
+            int Exists;
 
             using (SQLiteConnection Connection = await CreateConnection())
             {
                 await Connection.OpenAsync();
 
-                authorize = Connection.QuerySingle<AuthorizeModel>("SELECT * FROM Auth WHERE ClientIP = '" + IPAddress + "';");
+                Exists = Connection.ExecuteScalar<int>("SELECT count(*) FROM Auth WHERE ClientIP = '" + IPAddress + "';");
 
                 await Connection.CloseAsync();
             }
 
-            return authorize;
+            return Exists;
         }
 
         public async Task<DateTime[]> GetShift()

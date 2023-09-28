@@ -8,7 +8,6 @@ namespace Stressless_Service.Logic;
 public class TokenIssuer : IDisposable
 {
     public static string ISK = "SJB443SF8BS48AVSRB43V80KID2LFDFRWVEA";
-    public static string[] ValidAudiences = { "SPA17911" };
     public async Task<string> IssueToken()
     {
         var tokenDescriptor = new SecurityTokenDescriptor

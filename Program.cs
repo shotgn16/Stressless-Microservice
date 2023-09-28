@@ -14,7 +14,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateAudience = true,
-            ValidAudiences = TokenIssuer.ValidAudiences,
+            ValidAudience = "SPA17911",
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(TokenIssuer.ISK)),
         };
     });
