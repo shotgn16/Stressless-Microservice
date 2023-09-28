@@ -31,7 +31,7 @@ namespace Stressless_Service.Controllers
                     //Instancing database
                     using (database database = new database())
                     using (TokenIssuer tokenIssuer = new TokenIssuer())
-                    {
+                    { 
                         //Inserting into database then new auth instance
                         await database.InsertAuth(RequestBody);
 

@@ -1,4 +1,6 @@
+using System.Net;
 using System.Text;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Stressless_Service.Auto_Run;
@@ -18,6 +20,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(TokenIssuer.ISK)),
         };
     });
+
+//builder.WebHost.UseKestrel(options =>
+//{
+//    options.Listen(IPAddress.Any, 5055, listeningOptions =>
+//    {
+//        listeningOptions.UseHttps("PK-devcert.pfx", "J1998ack");
+//        listeningOptions.UseConnectionLogging();
+//    });
+//});
 
 builder.Services.AddAuthorization();
 
@@ -46,6 +57,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapControllers();
+
+app.UseHsts();
 
 using (AutoBootTimer autoBoot = new AutoBootTimer())
     await autoBoot.StartABTimer();
