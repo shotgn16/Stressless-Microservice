@@ -91,7 +91,7 @@ namespace Stressless_Service.Database
 
                     int table_Auth = connection.ExecuteScalar<int>("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Auth';");
                     if (table_Auth.Equals(0)) {
-                        connection.Execute("CREATE TABLE 'Auth' ('ID' INTEGER, 'ClientIP' TEXT, 'Generated' TEXT, 'AudienceCode' TEXT);");
+                        connection.Execute("CREATE TABLE 'Auth' ('ID' INTEGER, 'ClientMAC' TEXT, 'Generated' TEXT, 'AudienceCode' TEXT);");
                     }
                 }
 
@@ -106,7 +106,7 @@ namespace Stressless_Service.Database
             }
         }
 
-        public async Task <ConfigurationModel> GetConfiguration(int configurationID)
+        public async Task <ConfigurationModel> GetConfiguration()
         {
             ConfigurationModel Response;
             List<CalenderModel> Results = new List<CalenderModel>();
@@ -115,14 +115,14 @@ namespace Stressless_Service.Database
             {
                 await Connection.OpenAsync();
                                
-                Response = Connection.QueryFirstOrDefault<ConfigurationModel>("SELECT ID, Firstname, Lastname, Start_time, Finish_time, CalenderImport FROM Configuration WHERE ID = '" + configurationID + "'");
+                Response = Connection.QueryFirstOrDefault<ConfigurationModel>("SELECT ID, Firstname, Lastname, Start_time, Finish_time, CalenderImport FROM Configuration WHERE ID = '1'");
 
-                string Calender = Connection.QueryFirstOrDefault<string>("SELECT Calender FROM Configuration WHERE ID = '" + configurationID + "'");
+                string Calender = Connection.QueryFirstOrDefault<string>("SELECT Calender FROM Configuration WHERE ID = '1'");
                 
                 Results = JsonConvert.DeserializeObject<List<CalenderModel>>(Calender);
                 Response.calender = Results.ToArray();
 
-                string days = Connection.QueryFirstOrDefault<string>("SELECT workingdays FROM Configuration WHERE ID = '" + configurationID + "'"); ;
+                string days = Connection.QueryFirstOrDefault<string>("SELECT workingdays FROM Configuration WHERE ID = '1'"); ;
                 Response.workingDays = JsonConvert.DeserializeObject<string[]>(days);
 
                 await Connection.CloseAsync();
@@ -205,7 +205,7 @@ namespace Stressless_Service.Database
             {
                 await Connection.OpenAsync();
 
-                Connection.Execute("INSERT INTO 'Auth' (ID, ClientIP, Generated, AudienceCode) VALUES ('" + string.Empty + "', '" + Authentication.IpAddress + "', '" + DateTime.Now + "', '" + Authentication.AudienceCode + "');");
+                Connection.Execute("INSERT INTO 'Auth' (ID, ClientMAC, Generated, AudienceCode) VALUES ('" + string.Empty + "', '" + Authentication.IpAddress + "', '" + DateTime.Now + "', '" + Authentication.AudienceCode + "');");
 
                 await Connection.CloseAsync();
             }
@@ -219,7 +219,7 @@ namespace Stressless_Service.Database
             {
                 await Connection.OpenAsync();
 
-                Exists = Connection.ExecuteScalar<int>("SELECT count(*) FROM Auth WHERE ClientIP = '" + IPAddress + "';");
+                Exists = Connection.ExecuteScalar<int>("SELECT count(*) FROM Auth WHERE ClientMAC = '" + IPAddress + "';");
 
                 await Connection.CloseAsync();
             }
@@ -233,8 +233,12 @@ namespace Stressless_Service.Database
 
             using (SQLiteConnection Connection = await CreateConnection())
             {
+                await Connection.OpenAsync(); 
+
                 string StartShift = Connection.QuerySingle<string>("SELECT Start_time, Finish_time FROM Configuration");
                 string FinishShift = Connection.QuerySingle<string>("SELECT Finish_time FROM Configuration");
+
+                await Connection.CloseAsync();
 
                 if (string.IsNullOrEmpty(StartShift) || string.IsNullOrEmpty(FinishShift))
                 {
@@ -248,6 +252,18 @@ namespace Stressless_Service.Database
             }
 
             return times;
+        }
+
+        public async Task DeleteExpiredTokens()
+        {
+            using (SQLiteConnection Connection = await CreateConnection())
+            {
+                await Connection.OpenAsync();
+
+                await Connection.ExecuteAsync("DELETE * FROM Auth WHERE datetime('now', '-1 day') >= Generated;");
+
+                await Connection.CloseAsync();
+            }
         }
 
         public void Dispose() => GC.Collect();

@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stressless_Service.Database;
 using Stressless_Service.Models;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
 using Stressless_Service.Logic;
 using System.Net;
 using Microsoft.AspNetCore.Authentication;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Stressless_Service.Controllers
 {
@@ -36,15 +39,13 @@ namespace Stressless_Service.Controllers
                         await database.InsertAuth(RequestBody);
 
                         //Generating an OAuth 2.0 Bearer token
-                        string token = await tokenIssuer.IssueToken();
-
-                        DateTime Expires = DateTime.Now.AddHours(24);
-
+                        JwtSecurityToken token = await tokenIssuer.IssueToken();
+                        
                         //Passing all the parameters into the token model
                         AuthenticationTokenModel = new AuthenticationTokenModel()
                         {
-                            Token = token,
-                            Expires = Expires.Minute,
+                            Token = token.EncodedPayload,
+                            Expires = token.ValidTo.ToString(),
                             TokenType = "Bearer"
                         };
                     }
@@ -73,7 +74,7 @@ namespace Stressless_Service.Controllers
             return Ok(AuthenticationTokenModel);
         }
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("GetPrompt")]
         public async Task<PromptModel> GetPrompt(string promptType)
         {
@@ -87,7 +88,7 @@ namespace Stressless_Service.Controllers
             return Prompt;
         }
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("InsertPrompt")]
         public async Task<IActionResult> InsertPrompt([FromBody] PromptRequestModel PromptRequest)
         {
@@ -107,21 +108,21 @@ namespace Stressless_Service.Controllers
             return Ok("Success!");
         }
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("GetConfiguration")]
-        public async Task<ConfigurationModel> GetConfiguration(int configurationID)
+        public async Task<ConfigurationModel> GetConfiguration()
         {
             ConfigurationModel Configuration;
 
             using (database database = new database())
             {
-                Configuration = await database.GetConfiguration(configurationID);
+                Configuration = await database.GetConfiguration();
             }
 
             return Configuration;
         }
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("InsertConfiguration")]
         public async Task<IActionResult> InsertConfiguration([FromBody] ConfigurationModel Configuration)
         {
@@ -133,12 +134,12 @@ namespace Stressless_Service.Controllers
             using (database database = new database())
             {
                 await database.InsertConfiguration(Configuration);
-            }
+            } 
 
             return Ok("Success!");
         }
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("GetUsedPrompt")]
         public async Task<UsedPromptsModel> GetUsedPrompt(int promptID)
         {
@@ -153,7 +154,7 @@ namespace Stressless_Service.Controllers
             return UsedPrompt;
         }
 
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPost("InsertUsedPrompt")]
         public async Task<IActionResult> InsertUsedPrompt([FromBody] UsedPromptsModel UsedPrompt)
         {

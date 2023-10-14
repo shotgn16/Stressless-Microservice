@@ -1,34 +1,36 @@
-using System.Net;
 using System.Text;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.IdentityModel.Tokens;
 using Stressless_Service.Auto_Run;
-using Stressless_Service.Logic;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        options.SaveToken = true;
-
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateAudience = true,
-            ValidAudience = "SPA17911",
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(TokenIssuer.ISK)),
+            ValidateIssuer = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SJB443SF8BS48AVSRB43V80KID2LFDFRWVEA")),
+            AuthenticationType = JwtBearerDefaults.AuthenticationScheme
         };
     });
 
-//builder.WebHost.UseKestrel(options =>
-//{
-//    options.Listen(IPAddress.Any, 5055, listeningOptions =>
-//    {
-//        listeningOptions.UseHttps("PK-devcert.pfx", "J1998ack");
-//        listeningOptions.UseConnectionLogging();
-//    });
-//});
+builder.Services.AddHttpLogging(logging =>
+{
+    logging.LoggingFields = HttpLoggingFields.All;
+});
+
+builder.WebHost.ConfigureKestrel((context, options) =>
+{
+    options.ListenAnyIP(7257, listenOptions =>
+    {
+        listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1AndHttp2AndHttp3;
+        listenOptions.UseConnectionLogging();
+        listenOptions.UseHttps("Stressless-Service.pfx", "J1998ack");
+    });
+});
 
 builder.Services.AddAuthorization();
 
@@ -37,22 +39,23 @@ builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
-builder.Services.AddMvc();
-builder.Services.AddSwaggerGen(c => c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "StressLess API", Version = "v1" }));
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-app.UseAuthentication();
-app.UseAuthorization();
+// Enable HttpLogging (Middleware)
+app.UseHttpLogging();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Enable Authentication / Authorization middlware in the app
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseHttpsRedirection();
 
