@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Linq;
+using Stressless_Service.Database;
 
 namespace Stressless_Service.Logic;
 
@@ -32,20 +33,36 @@ public class TokenIssuer : IDisposable
         return token;
     }
 
-    public async Task<HttpResponseMessage> VerifyToken(HttpRequestMessage RequestMessage)
+    public async Task<HttpResponseMessage> VerifyToken(HttpRequestMessage RequestMessage, HttpResponseMessage returnMessage)
     {
         string authorizationHeader = RequestMessage.Headers.GetValues("Authorization").FirstOrDefault();
 
         if (authorizationHeader == null)
-            return new HttpResponseMessage(System.Net.HttpStatusCode.Unauthorized);
+        {
+            returnMessage = new HttpResponseMessage(System.Net.HttpStatusCode.Unauthorized);
+            goto Ending;
+        }
 
         string token = authorizationHeader.Split(' ')[1];
         JwtSecurityToken jwtToken = new JwtSecurityToken(token);
 
-        // Second element [1] in the ....Split function returns the Bearer token key
-        string TokenMAC = await GetTokenMAC(token);
+        using (database database = new database())
+        {
+            // Second element [1] in the ....Split function returns the Bearer token key
+            string TokenMAC = await GetTokenMAC(token);
+            int dbAuth = await database.GetAuth(TokenMAC);
 
-        if (TokenMAC == await Network.GetMac() && /* Check it exists in database -> Have database delete tokens after 24 hours */)
+            if (TokenMAC == await Network.GetMac() && dbAuth == 1)
+            {
+                // Token MAC : MATCH 
+                // Token Exists in database : IS STILL VALID
+
+                returnMessage = new HttpResponseMessage(System.Net.HttpStatusCode.Accepted);
+            }
+        }
+
+        Ending:
+        return returnMessage;
     }
 
     private async Task<string> GetTokenMAC(string tokenKey, string returnValue = null)

@@ -2,6 +2,7 @@
 using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 
 namespace Stressless_Service.Logic;
 
@@ -11,7 +12,7 @@ public class JwtTokenMiddleware
 
     public JwtTokenMiddleware(RequestDelegate next)
     {
-        _next = next; 
+        _next = next;
     }
 
     public async Task InvokeAsync(HttpContext context)
