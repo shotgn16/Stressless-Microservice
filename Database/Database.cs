@@ -91,7 +91,7 @@ namespace Stressless_Service.Database
 
                     int table_Auth = connection.ExecuteScalar<int>("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Auth';");
                     if (table_Auth.Equals(0)) {
-                        connection.Execute("CREATE TABLE 'Auth' ('ID' INTEGER, 'ClientMAC' TEXT, 'Generated' TEXT, 'AudienceCode' TEXT);");
+                        connection.Execute("CREATE TABLE 'Auth' ('ID' INTEGER, 'MACAddress' TEXT, 'DateCreated' TEXT, 'ClientID' TEXT);");
                     }
                 }
 
@@ -137,7 +137,7 @@ namespace Stressless_Service.Database
             {
                 await Connection.OpenAsync();
                  
-                Connection.Execute("INSERT INTO Configuration (ID, Firstname, Lastname, WorkingDays, Start_time, Finish_time, CalenderImport, Calender) VALUES ('" + Configuration.id + "', '" + Configuration.firstname + "', '" + Configuration.lastname + "', '" + JsonConvert.SerializeObject(Configuration.workingDays) + "', '" + Configuration.day_Start + "', '" + Configuration.day_End + "', '" + Configuration.calenderImport + "', '" + JsonConvert.SerializeObject(Configuration.calender) + "');");
+                Connection.Execute("INSERT INTO Configuration (ID, Firstname, Lastname, WorkingDays, Start_time, Finish_time, CalenderImport, Calender) VALUES ('1', '" + Configuration.firstname + "', '" + Configuration.lastname + "', '" + JsonConvert.SerializeObject(Configuration.workingDays) + "', '" + Configuration.day_Start + "', '" + Configuration.day_End + "', '" + Configuration.calenderImport + "', '" + JsonConvert.SerializeObject(Configuration.calender) + "');");
 
                 await Connection.CloseAsync();
             }
@@ -205,13 +205,13 @@ namespace Stressless_Service.Database
             {
                 await Connection.OpenAsync();
 
-                Connection.Execute("INSERT INTO 'Auth' (ID, ClientMAC, Generated, AudienceCode) VALUES ('" + string.Empty + "', '" + Authentication.IpAddress + "', '" + DateTime.Now + "', '" + Authentication.AudienceCode + "');");
+                Connection.Execute("INSERT INTO 'Auth' (ID, MACAddress, DateCreated, ClientID) VALUES ('" + string.Empty + "', '" + Authentication.MACAddress + "', '" + DateTime.Now + "', '" + Authentication.ClientID + "');");
 
                 await Connection.CloseAsync();
             }
         }
 
-        public async Task<int> GetAuth(string IPAddress)
+        public async Task<int> GetAuth(string MACAddress)
         {
             int Exists;
 
@@ -219,12 +219,28 @@ namespace Stressless_Service.Database
             {
                 await Connection.OpenAsync();
 
-                Exists = Connection.ExecuteScalar<int>("SELECT count(*) FROM Auth WHERE ClientMAC = '" + IPAddress + "';");
+                Exists = Connection.ExecuteScalar<int>("SELECT count(*) FROM Auth WHERE MACAddress = '" + MACAddress + "';");
 
                 await Connection.CloseAsync();
             }
 
             return Exists;
+        }
+
+        public async Task<int> UpdateAuth(string MACAddress)
+        {
+            int RowsAffected;
+
+            using (SQLiteConnection Connection = await CreateConnection())
+            {
+                await Connection.OpenAsync();
+
+                RowsAffected = Connection.Execute($"UPDATE Auth SET DateCreated = '{DateTime.Now}' WHERE MACAddress = '{MACAddress}';");
+
+                await Connection.CloseAsync();
+            }
+
+            return RowsAffected;
         }
 
         public async Task<DateTime[]> GetShift()

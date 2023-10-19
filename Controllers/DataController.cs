@@ -9,6 +9,8 @@ using System.Net;
 using Microsoft.AspNetCore.Authentication;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Stressless_Service.JwtSecurityTokens;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Stressless_Service.Controllers
 {
@@ -16,66 +18,25 @@ namespace Stressless_Service.Controllers
     [Route("[controller]")]
     public class DataController : ControllerBase
     {
+        private IAuthenticateClass _authClass;
         private readonly ILogger<DataController> _logger;
         public DataController(ILogger<DataController> logger) => _logger = logger;
 
         // Authorization Request
         [HttpPost("Authorize")]
-        public async Task<ActionResult<AuthenticationTokenModel>> Authorize([FromBody] AuthorizeModel RequestBody)
+        public async Task<ActionResult<AuthenticationTokenModel>> Authorize([FromBody] AuthorizeModel model)
         {
-            AuthenticationTokenModel AuthenticationTokenModel = new AuthenticationTokenModel();
+            var response = await _authClass.Authenticate(model);
 
-            try
-            {
-                //IF: Request is NOT NULL + AudienceCode is VALID!
-                if (!RequestBody.Equals(null) &&
-                    RequestBody.AudienceCode.Equals("SPA17911"))
-                {
-                    //Instancing database
-                    using (database database = new database())
-                    using (TokenIssuer tokenIssuer = new TokenIssuer())
-                    { 
-                        //Inserting into database then new auth instance
-                        await database.InsertAuth(RequestBody);
+            if (response == null)
+                return BadRequest(new { message = "MAC Address or ClientID incorrect!"});
 
-                        //Generating an OAuth 2.0 Bearer token
-                        JwtSecurityToken token = await tokenIssuer.IssueToken();
-                        
-                        //Passing all the parameters into the token model
-                        AuthenticationTokenModel = new AuthenticationTokenModel()
-                        {
-                            Token = token.EncodedPayload,
-                            Expires = token.ValidTo.ToString(),
-                            TokenType = "Bearer"
-                        };
-                    }
-                }
-
-                //IF: Request is NOT NULL + AudienceCode is INVALID!
-                else if (!RequestBody.Equals(null) &&
-                    !RequestBody.AudienceCode.Equals("SPA17911"))
-                {
-                    return Unauthorized("Invalid audience code!");
-                }
-
-                //IF: Request body is NULL
-                else if (RequestBody.Equals(null))
-                {
-                    return BadRequest("Invalid request body!");
-                }
-            }
-
-            catch (Exception ex)
-            {
-                return BadRequest("An Internal Error has occurred! " + ex);
-            }
-
-            // Returning the token model
-            return Ok(AuthenticationTokenModel);
+            else
+                return Ok(response);
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpGet("GetPrompt")]
+        [HttpGet("GetPrompt/{promptType}")]
         public async Task<PromptModel> GetPrompt(string promptType)
         {
             PromptModel Prompt;

@@ -5,6 +5,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using Stressless_Service.Auto_Run;
+using Stressless_Service.Database;
+using Stressless_Service.JwtSecurityTokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,19 +20,7 @@ try
     builder.Host.UseSerilog();
 
     builder.Logging.AddSerilog(new LoggerConfiguration()
-
         .CreateLogger());
-
-    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddJwtBearer(options =>
-        {
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SJB443SF8BS48AVSRB43V80KID2LFDFRWVEA")),
-                AuthenticationType = JwtBearerDefaults.AuthenticationScheme
-            };
-        });
 
     builder.Services.AddHttpLogging(logging =>
     {
@@ -52,6 +42,12 @@ try
     // Add services to the container.
 
     builder.Services.AddControllers();
+
+    builder.Services.AddLogging();
+
+    builder.Services.AddSingleton<database>();
+
+    builder.Services.AddScoped<IJwtUtility, JwtUtility>();
 
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
@@ -77,32 +73,40 @@ try
         };
 
         c.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
-    
+
     });
 
     var app = builder.Build();
 
     // Enable HttpLogging (Middleware)
+    // #6 [Order]
     app.UseHttpLogging();
 
-    // Configure the HTTP request pipeline.
-    if (app.Environment.IsDevelopment())
-    {
+    //// Configure the HTTP request pipeline.
+    //if (app.Environment.IsDevelopment())
+    //{
         app.UseSwaggerUI(options =>
         {
             app.UseSwagger();
             app.UseSwaggerUI();
         });
-    }
+    //}
 
     // Enable Authentication / Authorization middlware in the app
+
+    // #3 [Order]
     app.UseAuthentication();
     app.UseAuthorization();
 
+    // #1 [Order]
     app.UseHttpsRedirection();
+
+    // #4 [Order]
+    app.UseMiddleware<JwtMiddleware>();
 
     app.MapControllers();
 
+    // #2 [Order]
     app.UseHsts();
 
     using (AutoBootTimer autoBoot = new AutoBootTimer())

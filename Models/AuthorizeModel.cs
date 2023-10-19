@@ -4,6 +4,6 @@ namespace Stressless_Service.Models;
 
 public class AuthorizeModel
 {
-    public string IpAddress { get; set; }
-    public string AudienceCode { get; set; }
+    public string MACAddress { get; set; }
+    public string ClientID { get; set; }
 }
