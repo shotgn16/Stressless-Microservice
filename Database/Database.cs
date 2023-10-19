@@ -106,7 +106,7 @@ namespace Stressless_Service.Database
             }
         }
 
-        public async Task <ConfigurationModel> GetConfiguration()
+        public async Task<ConfigurationModel> GetConfiguration()
         {
             ConfigurationModel Response;
             List<CalenderModel> Results = new List<CalenderModel>();
@@ -129,6 +129,20 @@ namespace Stressless_Service.Database
             }
 
             return Response;
+        }
+
+        public async Task<int> ConfigurationExists()
+        {
+            int configExists = 0;
+
+            using (SQLiteConnection Connection = await CreateConnection())
+            {
+                await Connection.OpenAsync();
+
+                configExists = Connection.ExecuteScalar<int>("SELECT COUNT(1) FROM Configuration WHERE ID = 1;");
+            }
+
+            return configExists;
         }
 
         public async Task InsertConfiguration(ConfigurationModel Configuration)

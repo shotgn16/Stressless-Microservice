@@ -14,16 +14,19 @@ namespace Stressless_Service.Auto_Run
 
             using (database database = new database()) 
             {
-                ConfigurationModel configuration = await database.GetConfiguration();
-
-                if (!string.IsNullOrEmpty(configuration.day_Start) && !string.IsNullOrEmpty(configuration.day_End))
+                if (await database.ConfigurationExists() == 1)
                 {
-                    DateTime[] Times = await database.GetShift();
+                    ConfigurationModel configuration = await database.GetConfiguration();
 
-                    // Check if the current system time is within the range of the users specified shift pattern
-                    if (System.DateTime.Now >= Times[0] && System.DateTime.Now <= Times[1])
+                    if (!string.IsNullOrEmpty(configuration.day_Start) && !string.IsNullOrEmpty(configuration.day_End))
                     {
-                        IsWorkingTime = true;
+                        DateTime[] Times = await database.GetShift();
+
+                        // Check if the current system time is within the range of the users specified shift pattern
+                        if (System.DateTime.Now >= Times[0] && System.DateTime.Now <= Times[1])
+                        {
+                            IsWorkingTime = true;
+                        }
                     }
                 }
             }
