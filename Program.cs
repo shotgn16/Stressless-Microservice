@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using Stressless_Service;
 using Stressless_Service.Auto_Run;
 using Stressless_Service.Database;
 using Stressless_Service.JwtSecurityTokens;
@@ -47,6 +48,8 @@ try
 
     builder.Services.AddSingleton<database>();
 
+    //HERER
+    builder.Services.AddScoped<IAuthenticateClass, AuthenticateClass>();
     builder.Services.AddScoped<IJwtUtility, JwtUtility>();
 
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -98,11 +101,10 @@ try
     app.UseAuthentication();
     app.UseAuthorization();
 
+    app.UseMiddleware<JwtMiddleware>();
+
     // #1 [Order]
     app.UseHttpsRedirection();
-
-    // #4 [Order]
-    app.UseMiddleware<JwtMiddleware>();
 
     app.MapControllers();
 

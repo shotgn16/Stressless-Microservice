@@ -20,13 +20,17 @@ namespace Stressless_Service.Controllers
     {
         private IAuthenticateClass _authClass;
         private readonly ILogger<DataController> _logger;
-        public DataController(ILogger<DataController> logger) => _logger = logger;
+        public DataController(ILogger<DataController> logger, IAuthenticateClass authClass)
+        {
+            _logger = logger;
+            _authClass = authClass;
+        }
 
         // Authorization Request
         [HttpPost("Authorize")]
         public async Task<ActionResult<AuthenticationTokenModel>> Authorize([FromBody] AuthorizeModel model)
         {
-            var response = await _authClass.Authenticate(model);
+            var response = _authClass.Authenticate(model);
 
             if (response == null)
                 return BadRequest(new { message = "MAC Address or ClientID incorrect!"});

@@ -1,4 +1,5 @@
 ﻿using Stressless_Service.Database;
+using Stressless_Service.JwtSecurityTokens;
 using Stressless_Service.Models;
 using System.Diagnostics;
 
@@ -7,11 +8,9 @@ namespace Stressless_Service.Auto_Run
     public class AutoBoot : IDisposable
     {
         private static DateTime LastSynced;
+
         private async Task<bool> CheckTime(bool IsWorkingTime = false)
         {
-            // App is crashing here...
-            // Check if configuration exists first? 
-
             using (database database = new database()) 
             {
                 if (await database.ConfigurationExists() == 1)
