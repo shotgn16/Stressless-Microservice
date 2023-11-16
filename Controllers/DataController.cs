@@ -18,17 +18,15 @@ namespace Stressless_Service.Controllers
     [Route("[controller]")]
     public class DataController : ControllerBase
     {
-        private IAuthenticateClass _authClass;
         private readonly ILogger<DataController> _logger;
-        public DataController(ILogger<DataController> logger, IAuthenticateClass authClass)
+        public DataController(ILogger<DataController> logger)
         {
             _logger = logger;
-            _authClass = authClass;
         }
 
         // Authorization Request
         [HttpPost("Authorize")]
-        public async Task<ActionResult<AuthenticationTokenModel>> Authorize([FromBody] AuthorizeModel model)
+        public async Task<ActionResult<AuthenticationTokenModel>> Authorize([FromBody] AuthorizeModel model, [FromServices] IAuthenticateClass _authClass)
         {
             var response = _authClass.Authenticate(model);
 

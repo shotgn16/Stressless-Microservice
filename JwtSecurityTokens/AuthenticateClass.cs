@@ -27,7 +27,7 @@ public class AuthenticateClass : IAuthenticateClass, IDisposable
 
     public AuthenticationTokenModel Authenticate(AuthorizeModel model)
     {
-        AuthenticationTokenModel returnModel = null;
+        AuthenticationTokenModel returnModel = new AuthenticationTokenModel();
 
         using (database db = new database())
         {
