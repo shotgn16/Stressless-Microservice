@@ -11,30 +11,37 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Stressless_Service.JwtSecurityTokens;
 using System.Reflection.Metadata.Ecma335;
+using ServiceStack;
 
 namespace Stressless_Service.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [System.Web.Http.Route("[controller]")]
     public class DataController : ControllerBase
     {
         private readonly ILogger<DataController> _logger;
-        public DataController(ILogger<DataController> logger)
+        private readonly ITokenGeneratorService _tokenGeneratorService;
+
+        public DataController(ILogger<DataController> logger, ITokenGeneratorService tokenGeneratorService)
         {
             _logger = logger;
+            _tokenGeneratorService = tokenGeneratorService;
         }
 
         // Authorization Request
         [HttpPost("Authorize")]
-        public async Task<ActionResult<AuthenticationTokenModel>> Authorize([FromBody] AuthorizeModel model, [FromServices] IAuthenticateClass _authClass)
+        public async Task<ActionResult<AuthenticationTokenModel>> Authorize([FromBody] AuthorizeModel model)
         {
-            var response = _authClass.Authenticate(model);
+            using (AuthenticateClass authenticateClass = new AuthenticateClass(_logger, _tokenGeneratorService))
+            {
+                var response = authenticateClass.Authenticate(model);
 
-            if (response == null)
-                return BadRequest(new { message = "MAC Address or ClientID incorrect!"});
+                if (response == null)
+                    return BadRequest(new { message = "MAC Address or ClientID incorrect!" });
 
-            else
-                return Ok(response);
+                else
+                    return Ok(response);
+            }
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

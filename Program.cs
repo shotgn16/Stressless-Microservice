@@ -1,12 +1,12 @@
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpLogging;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using Stressless_Service;
 using Stressless_Service.Auto_Run;
 using Stressless_Service.Database;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Stressless_Service.Logic;
 using Stressless_Service.JwtSecurityTokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,6 +38,24 @@ try
         });
     });
 
+    builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+        .AddJwtBearer(options =>
+        {
+            options.RequireHttpsMetadata = false;
+            options.SaveToken = true;
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["AppSettings:Secret"])),
+                ValidateIssuer = false,
+                ValidateAudience = true
+            };
+        });
+
     builder.Services.AddAuthorization();
 
     // Add services to the container.
@@ -49,8 +67,9 @@ try
     builder.Services.AddSingleton<database>();
 
     //HERER
-    builder.Services.AddScoped<IAuthenticateClass, AuthenticateClass>();
-    builder.Services.AddScoped<IJwtUtility, JwtUtility>();
+    builder.Services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
+    //builder.Services.AddScoped<IAuthenticateClass, AuthenticateClass>();
+    //builder.Services.AddScoped<IJwtUtility, JwtUtility>();
 
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.AddEndpointsApiExplorer();
@@ -101,7 +120,7 @@ try
     app.UseAuthentication();
     app.UseAuthorization();
 
-    app.UseMiddleware<JwtMiddleware>();
+    //app.UseMiddleware<JwtMiddleware>();
 
     // #1 [Order]
     app.UseHttpsRedirection();

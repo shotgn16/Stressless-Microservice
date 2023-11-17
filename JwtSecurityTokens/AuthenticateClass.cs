@@ -1,28 +1,19 @@
-﻿using System.Collections;
-using System.ComponentModel;
-using System.Net.Mail;
-using ServiceStack;
-using ServiceStack.Auth;
+﻿using Stressless_Service.Controllers;
 using Stressless_Service.Database;
+using Stressless_Service.Logic;
 using Stressless_Service.Models;
 
 namespace Stressless_Service.JwtSecurityTokens;
 
-public interface IAuthenticateClass
+public class AuthenticateClass : IDisposable
 {
-    AuthenticationTokenModel Authenticate(AuthorizeModel model);
-    int AuthExists(string MACAddress, string ID);
-}
+    private readonly ILogger<DataController> _logger;
+    private readonly ITokenGeneratorService _tokenGeneratorService;
 
-public class AuthenticateClass : IAuthenticateClass, IDisposable
-{
-    private readonly IJwtUtility _jwtUtility;
-    IConfiguration _configuration;
-
-    public AuthenticateClass(IJwtUtility jwtUtility, IConfiguration configuration)
+    public AuthenticateClass(ILogger<DataController> logger, ITokenGeneratorService tokenGeneratorService)
     {
-        _jwtUtility = jwtUtility;
-        _configuration = configuration;
+        _logger = logger;
+        _tokenGeneratorService = tokenGeneratorService;
     }
 
     public AuthenticationTokenModel Authenticate(AuthorizeModel model)
@@ -31,8 +22,10 @@ public class AuthenticateClass : IAuthenticateClass, IDisposable
 
         using (database db = new database())
         {
+            // Checking if an authentication request with this MAC and ClientID already exists
             int AuthResponse = AuthExists(model.MACAddress, model.ClientID);
 
+            // DOSEN'T EXIST = Creates a new auth instance
             if (AuthResponse == 1)
             {
                 db.InsertAuth(
@@ -44,12 +37,13 @@ public class AuthenticateClass : IAuthenticateClass, IDisposable
 
                 returnModel = new AuthenticationTokenModel
                 {
-                    Token = _jwtUtility.GenerateJwtToken().Result,
+                    Token = _tokenGeneratorService.GenerateToken(model.ClientID),
                     Expires = DateTime.Now.AddDays(1).ToString(),
                     TokenType = "Bearer"
                 };
             }
 
+            // DOES EXIST = Updates the time of authentication to DateTime.Now 
             else if (AuthResponse == 2)
             {
                 // Updates the [EXISTING USER] database extry with the current datetime - time of new token generation!
@@ -57,7 +51,7 @@ public class AuthenticateClass : IAuthenticateClass, IDisposable
 
                 returnModel = new AuthenticationTokenModel
                 {
-                    Token = _jwtUtility.GenerateJwtToken().Result,
+                    Token = _tokenGeneratorService.GenerateToken(model.ClientID),
                     Expires = DateTime.Now.AddDays(1).ToString(),
                     TokenType = "Bearer"
                 };
@@ -72,11 +66,11 @@ public class AuthenticateClass : IAuthenticateClass, IDisposable
 
     public int AuthExists(string MACAddress, string ID)
     {
-        int value = 10; 
+        int value = 10;
 
         using (database db = new database())
         {
-            if (db.GetAuth(MACAddress).Result == 0 && ID == _configuration.GetSection("AppSettings")["AppSettings:ID"])
+            if (db.GetAuth(MACAddress).Result == 0 && ID == GlobalConfiguration.configuration.GetSection("AppSettings")["ID"])
             {
                 // [NEW USER]
                 // IF: An Auth with that MAC DOSEN'T EXIST!
@@ -84,7 +78,7 @@ public class AuthenticateClass : IAuthenticateClass, IDisposable
                 value = 1;
             }
 
-            else if (db.GetAuth(MACAddress).Result == 1 && ID == _configuration.GetSection("AppSettings")["AppSettings:ID"])
+            else if (db.GetAuth(MACAddress).Result == 1 && ID == GlobalConfiguration.configuration["AppSettings:ID"])
             {
                 // [RETURNING USER]
                 // IF: An Auth with that MAC DOES EXIST!
@@ -92,11 +86,11 @@ public class AuthenticateClass : IAuthenticateClass, IDisposable
                 value = 2;
             }
 
-            else if (db.GetAuth(MACAddress).Result == 0 && ID != _configuration.GetSection("AppSettings")["AppSettings:Secret"])
+            else if (db.GetAuth(MACAddress).Result == 0 && ID != GlobalConfiguration.configuration["AppSettings:Secret"])
                 // [NEW USER - INCORRECT CLIENTID]
                 // IF: An Auth with that MAC DOES ALREADY exists in the database
                 // IF: The ClientID DOES NOT match the one in the appsettings.json
-                
+
                 value = 0;
         }
 
