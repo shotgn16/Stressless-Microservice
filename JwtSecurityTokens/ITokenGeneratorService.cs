@@ -17,7 +17,7 @@ public class TokenGeneratorService : ITokenGeneratorService
 {
     public string GenerateToken(string ID)
     {
-        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(GlobalConfiguration.configuration["AppSettings:Secret"]));
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(GlobalConfiguration._configuration["AppSettings:Secret"]));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
         var claims = new[]

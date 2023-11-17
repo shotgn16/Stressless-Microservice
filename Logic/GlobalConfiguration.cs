@@ -1,4 +1,6 @@
-﻿namespace Stressless_Service.Logic;
+﻿using System.Runtime.InteropServices;
+
+namespace Stressless_Service.Logic;
 
 public class GlobalConfiguration
 {
@@ -12,15 +14,14 @@ public class GlobalConfiguration
             {
                 if (configuration == null)
                 {
-                     createInstance();
+                    loadConfig();
                 }
 
                 return configuration;
             }
         }
     }
-
-    private static async Task createInstance()
+    private static async Task loadConfig()
     {
         var builder = new ConfigurationBuilder()
             .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)

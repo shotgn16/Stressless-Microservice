@@ -25,7 +25,7 @@ public class AuthenticateClass : IDisposable
             // Checking if an authentication request with this MAC and ClientID already exists
             int AuthResponse = AuthExists(model.MACAddress, model.ClientID);
 
-            // DOSEN'T EXIST = Creates a new auth instance
+            // DOSEN'T EXIST = Creates a new authentication database instance
             if (AuthResponse == 1)
             {
                 db.InsertAuth(
@@ -33,7 +33,7 @@ public class AuthenticateClass : IDisposable
                     {
                         ClientID = model.ClientID,
                         MACAddress = model.MACAddress
-                    }).RunSynchronously();
+                    });
 
                 returnModel = new AuthenticationTokenModel
                 {
@@ -47,7 +47,7 @@ public class AuthenticateClass : IDisposable
             else if (AuthResponse == 2)
             {
                 // Updates the [EXISTING USER] database extry with the current datetime - time of new token generation!
-                db.UpdateAuth(model.MACAddress).RunSynchronously();
+                db.UpdateAuth(model.MACAddress);
 
                 returnModel = new AuthenticationTokenModel
                 {
@@ -67,10 +67,11 @@ public class AuthenticateClass : IDisposable
     public int AuthExists(string MACAddress, string ID)
     {
         int value = 10;
+        string configID = GlobalConfiguration._configuration.GetSection("AppSettings")["ID"];
 
         using (database db = new database())
         {
-            if (db.GetAuth(MACAddress).Result == 0 && ID == GlobalConfiguration.configuration.GetSection("AppSettings")["ID"])
+            if (db.GetAuth(MACAddress).Result == 0 && ID == configID)
             {
                 // [NEW USER]
                 // IF: An Auth with that MAC DOSEN'T EXIST!
@@ -78,7 +79,7 @@ public class AuthenticateClass : IDisposable
                 value = 1;
             }
 
-            else if (db.GetAuth(MACAddress).Result == 1 && ID == GlobalConfiguration.configuration["AppSettings:ID"])
+            else if (db.GetAuth(MACAddress).Result == 1 && ID == configID)
             {
                 // [RETURNING USER]
                 // IF: An Auth with that MAC DOES EXIST!
@@ -86,7 +87,7 @@ public class AuthenticateClass : IDisposable
                 value = 2;
             }
 
-            else if (db.GetAuth(MACAddress).Result == 0 && ID != GlobalConfiguration.configuration["AppSettings:Secret"])
+            else if (db.GetAuth(MACAddress).Result == 0 && ID != configID)
                 // [NEW USER - INCORRECT CLIENTID]
                 // IF: An Auth with that MAC DOES ALREADY exists in the database
                 // IF: The ClientID DOES NOT match the one in the appsettings.json
