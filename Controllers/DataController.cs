@@ -44,15 +44,22 @@ namespace Stressless_Service.Controllers
             }
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize]
         [HttpGet("GetPrompt/{promptType}")]
         public async Task<PromptModel> GetPrompt(string promptType)
         {
             PromptModel Prompt;
+            var BearerToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
 
-            using (database database = new database())
+            if (!string.IsNullOrEmpty(BearerToken))
             {
-                Prompt = await database.GetPrompt(promptType);
+                if ()
+                {
+                    using (database database = new database())
+                    {
+                        Prompt = await database.GetPrompt(promptType);
+                    }
+                }
             }
 
             return Prompt;

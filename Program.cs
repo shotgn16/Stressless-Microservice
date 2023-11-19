@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Stressless_Service.Logic;
 using Stressless_Service.JwtSecurityTokens;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,23 +39,18 @@ try
         });
     });
 
-    builder.Services.AddAuthentication(options =>
+    builder.Services.AddAuthentication()
+        .AddJwtBearer()
+        .AddJwtBearer("CST_JWTSchema");
+
+    builder.Services.AddAuthorization(options =>
     {
-        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    })
-        .AddJwtBearer(options =>
+        options.AddPolicy("isAuthenticated", AuthPolicy =>
         {
-            options.RequireHttpsMetadata = false;
-            options.SaveToken = true;
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["AppSettings:Secret"])),
-                ValidateIssuer = false,
-                ValidateAudience = true
-            };
+            AuthPolicy.RequireAuthenticatedUser();
+            AuthPolicy.RequireClaim("ID", GlobalConfiguration._configuration["AppSettings:ID"]);
         });
+    });
 
     builder.Services.AddAuthorization();
 
