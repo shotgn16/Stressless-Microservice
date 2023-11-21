@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Reflection.Metadata;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using Stressless_Service.Logic;
 
@@ -22,13 +23,14 @@ public class TokenGeneratorService : ITokenGeneratorService
 
         var claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, ID),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Iss, "stressless-service"),
+            new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Exp, DateTime.Now.AddDays(1).ToString()),
+            new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
+            new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Sub, ID)
         };
 
         var token = new JwtSecurityToken(
-            issuer: null,
-            audience: null,
+            issuer: "stressless-service",
             claims: claims,
             expires: DateTime.UtcNow.AddDays(1),
             signingCredentials: credentials);

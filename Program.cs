@@ -39,9 +39,12 @@ try
         });
     });
 
-    builder.Services.AddAuthentication()
-        .AddJwtBearer()
-        .AddJwtBearer("CST_JWTSchema");
+    builder.Services.AddAuthentication(config =>
+    {
+        config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    
+    }).AddJwtBearer();
 
     builder.Services.AddAuthorization(options =>
     {
@@ -52,22 +55,20 @@ try
         });
     });
 
-    builder.Services.AddAuthorization();
-
     // Add services to the container.
 
     builder.Services.AddControllers();
 
     builder.Services.AddLogging();
-
+     
     builder.Services.AddSingleton<database>();
 
     //HERER
     builder.Services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
     //builder.Services.AddScoped<IAuthenticateClass, AuthenticateClass>();
     //builder.Services.AddScoped<IJwtUtility, JwtUtility>();
-
-    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+     
+    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle 
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 

@@ -1,17 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Stressless_Service.Database;
 using Stressless_Service.Models;
-using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
-using Stressless_Service.Logic;
-using System.Net;
-using Microsoft.AspNetCore.Authentication;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Stressless_Service.JwtSecurityTokens;
-using System.Reflection.Metadata.Ecma335;
-using ServiceStack;
 
 namespace Stressless_Service.Controllers
 {
@@ -48,16 +39,20 @@ namespace Stressless_Service.Controllers
         [HttpGet("GetPrompt/{promptType}")]
         public async Task<PromptModel> GetPrompt(string promptType)
         {
-            PromptModel Prompt;
+
+            PromptModel Prompt = new PromptModel();
             var BearerToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
 
             if (!string.IsNullOrEmpty(BearerToken))
             {
-                if ()
+                using (JWTokenValidation tokenValidation = new JWTokenValidation())
                 {
-                    using (database database = new database())
+                    if (await tokenValidation.Handler(BearerToken))
                     {
-                        Prompt = await database.GetPrompt(promptType);
+                        using (database database = new database())
+                        {
+                            Prompt = await database.GetPrompt(promptType);
+                        }
                     }
                 }
             }
@@ -65,84 +60,134 @@ namespace Stressless_Service.Controllers
             return Prompt;
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize]
         [HttpPost("InsertPrompt")]
         public async Task<IActionResult> InsertPrompt([FromBody] PromptRequestModel PromptRequest)
         {
-            if (PromptRequest == null)
-            {
+            if (PromptRequest == null) {
                 return BadRequest("Invalid configuration!");
             }
 
-            using (database database = new database())
+            var BearerToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+            if (!string.IsNullOrEmpty(BearerToken))
             {
-                foreach (var Item in PromptRequest.Prompt)
+                using (JWTokenValidation tokenValidation = new JWTokenValidation())
                 {
-                    await database.InsertPrompt(Item);
+                    if (await tokenValidation.Handler(BearerToken))
+                    {
+                        using (database database = new database())
+                        {
+                            foreach (var Item in PromptRequest.Prompt)
+                            {
+                                await database.InsertPrompt(Item);
+                            }
+                        }
+                    }
                 }
             }
 
             return Ok("Success!");
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize]
         [HttpGet("GetConfiguration")]
         public async Task<ConfigurationModel> GetConfiguration()
         {
-            ConfigurationModel Configuration;
+            ConfigurationModel Configuration = new ConfigurationModel();
+            var BearerToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
 
-            using (database database = new database())
+            if (!string.IsNullOrEmpty(BearerToken))
             {
-                Configuration = await database.GetConfiguration();
+                using (JWTokenValidation tokenValidation = new JWTokenValidation())
+                {
+                    if (await tokenValidation.Handler(BearerToken))
+                    {
+                        using (database database = new database())
+                        {
+                            Configuration = await database.GetConfiguration();
+                        }
+                    }
+                }
             }
 
             return Configuration;
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize]
         [HttpPost("InsertConfiguration")]
         public async Task<IActionResult> InsertConfiguration([FromBody] ConfigurationModel Configuration)
         {
-            if (Configuration == null)
-            {
+            if (Configuration == null) {
                 return BadRequest("Invalid configuration!");
             }
 
-            using (database database = new database())
+            var BearerToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+            if (!string.IsNullOrEmpty(BearerToken))
             {
-                await database.InsertConfiguration(Configuration);
+                using (JWTokenValidation tokenValidation = new JWTokenValidation())
+                {
+                    if (await tokenValidation.Handler(BearerToken))
+                    {
+                        using (database database = new database())
+                        {
+                            await database.InsertConfiguration(Configuration);
+                        }
+                    }
+                }
             } 
 
             return Ok("Success!");
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize]
         [HttpGet("GetUsedPrompt")]
         public async Task<UsedPromptsModel> GetUsedPrompt(int promptID)
         {
-            UsedPromptsModel UsedPrompt;
+            UsedPromptsModel UsedPrompt = new UsedPromptsModel();
+            var BearerToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
 
-            using (database database = new database())
+            if (!string.IsNullOrEmpty(BearerToken))
             {
-                //Will get the last used prompt specified by ID (Ordered by the specified time in the database - DESC [Most recent at the top])
-                UsedPrompt = await database.GetUsedPrompts(promptID);
+                using (JWTokenValidation tokenValidation = new JWTokenValidation())
+                {
+                    if (await tokenValidation.Handler(BearerToken))
+                    {
+                        using (database database = new database())
+                        {
+                            //Will get the last used prompt specified by ID (Ordered by the specified time in the database - DESC [Most recent at the top])
+                            UsedPrompt = await database.GetUsedPrompts(promptID);
+                        }
+                    }
+                }
             }
 
             return UsedPrompt;
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize]
         [HttpPost("InsertUsedPrompt")]
         public async Task<IActionResult> InsertUsedPrompt([FromBody] UsedPromptsModel UsedPrompt)
         {
-            if (UsedPrompt == null)
-            {
+            if (UsedPrompt == null) {
                 return BadRequest("Invalid configuration!");
             }
 
-            using (database database = new database())
+            var BearerToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+            if (!string.IsNullOrEmpty(BearerToken))
             {
-                await database.InsertUsedPrompt(UsedPrompt);
+                using (JWTokenValidation tokenValidation = new JWTokenValidation())
+                {
+                    if (await tokenValidation.Handler(BearerToken))
+                    {
+                        using (database database = new database())
+                        {
+                            await database.InsertUsedPrompt(UsedPrompt);
+                        }
+                    }
+                }
             }
 
             return Ok("Success!");

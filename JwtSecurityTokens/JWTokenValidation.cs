@@ -6,14 +6,23 @@ using Stressless_Service.Logic;
 
 namespace Stressless_Service.JwtSecurityTokens;
 
-public class JWTokenValidation
+public class JWTokenValidation : IDisposable
 {
-    public async Task Handler(string token)
+    public async Task<bool> Handler(string token, string Sub = "", bool returnValue = false)
     {
-        if (!string.IsNullOrEmpty(token))
-        {
-            
+        if (!string.IsNullOrEmpty(token)) {
+            bool isValid = await ValidateToken(token);
+
+            if (isValid) {
+                Sub = GetClaim(token, JwtRegisteredClaimNames.Sub);
+            }
         }
+
+        if (Sub == GlobalConfiguration._configuration["AppSettings:ID"]) {
+            returnValue = true;
+        }
+
+        return returnValue;
     }
 
     public async Task<bool> ValidateToken(string token)
@@ -21,7 +30,6 @@ public class JWTokenValidation
         var mySecurityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(GlobalConfiguration._configuration["AppSettings:Secret"]));
 
         var myIssuer = "stressless-service";
-        string[] myAudience = { "https://localhost:7257", "http://localhost:7257", "https://127.0.0.1:7257", "http://127.0.0.1:7257" };
 
         var tokenHandler = new JwtSecurityTokenHandler();
         try
@@ -30,9 +38,8 @@ public class JWTokenValidation
             {
                 ValidateIssuerSigningKey = true,
                 ValidateIssuer = true,
-                ValidateAudience = true,
+                ValidateAudience = false,
                 ValidIssuer = myIssuer,
-                ValidAudiences = myAudience,
                 IssuerSigningKey = mySecurityKey
             },
             out SecurityToken validatedToken);
@@ -54,4 +61,6 @@ public class JWTokenValidation
 
         return stringClaimValue;
     }
+
+    public void Dispose() => GC.Collect();
 }
