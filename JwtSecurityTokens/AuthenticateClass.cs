@@ -38,7 +38,7 @@ public class AuthenticateClass : IDisposable
                 returnModel = new AuthenticationTokenModel
                 {
                     Token = _tokenGeneratorService.GenerateToken(model.ClientID),
-                    Expires = DateTime.Now.AddDays(1).ToString(),
+                    Expires = DateTime.UtcNow.AddDays(1).ToString(),
                     TokenType = "Bearer"
                 };
             }
