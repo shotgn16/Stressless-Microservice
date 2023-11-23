@@ -15,8 +15,6 @@ public class JWTokenValidation : IDisposable
             (bool, SecurityToken) isValid = await ValidateToken(token);
 
             if (isValid.Item1) {
-                // TESTING
-                Console.WriteLine(isValid.Item2.ToString());
                 Sub = GetClaim(token, "Sub");
             }
         }
@@ -34,33 +32,14 @@ public class JWTokenValidation : IDisposable
         var tokenHandler = new JwtSecurityTokenHandler();
         SecurityToken vToken;
 
-        try
-        {
-            tokenHandler.ValidateToken(token, new TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-
-                ValidIssuer = "stressless-service",
-                ValidAudiences = new string[]
-                { "https://localhost:7257/", 
-                  "https://localhost:7257/",
-                  "https://127.0.0.1:7257/", 
-                  "http://127.0.0.1:7257",
-                  $"https://{await Network.GetIPv4()}:7257/", 
-                  $"http://{await Network.GetIPv4()}:7257/" },
-                TokenDecryptionKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(GlobalConfiguration._configuration["AppSettings:Secret"])),
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(GlobalConfiguration._configuration["AppSettings:Secret"])),
-                ClockSkew = TimeSpan.Zero
-            },
-             out SecurityToken validatedToken);
+        try {
+            tokenHandler.ValidateToken(token, 
+                GlobalTokenValidationParameters.ValidationParameters, 
+                out SecurityToken validatedToken);
 
             vToken = validatedToken;
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex) {
             Log.Error(ex.Message, ex);
             return (false, null);
         }
@@ -83,8 +62,7 @@ public class JWTokenValidation : IDisposable
         var handler = new JwtSecurityTokenHandler();
         var jsonToken = handler.ReadToken(token) as JwtSecurityToken;
 
-        if (jsonToken == null)
-        {
+        if (jsonToken == null) {
             throw new InvalidOperationException("Invalid JWT Token");
         }
 
