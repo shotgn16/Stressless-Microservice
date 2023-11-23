@@ -4,11 +4,8 @@ using Serilog;
 using Stressless_Service.Auto_Run;
 using Stressless_Service.Database;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using Stressless_Service.Logic;
 using Stressless_Service.JwtSecurityTokens;
-using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,41 +17,33 @@ Log.Logger = new LoggerConfiguration()
 try
 {
     builder.Host.UseSerilog();
-
     builder.Logging.AddSerilog(new LoggerConfiguration()
         .CreateLogger());
 
-    builder.Services.AddHttpLogging(logging =>
-    {
+    builder.Services.AddHttpLogging(logging => {
         logging.LoggingFields = HttpLoggingFields.All;
     });
 
-    builder.WebHost.ConfigureKestrel((context, options) =>
-    {
-        options.ListenAnyIP(7257, listenOptions =>
-        {
+    builder.WebHost.ConfigureKestrel((context, options) => {
+        options.ListenAnyIP(7257, listenOptions => {
             listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1AndHttp2AndHttp3;
             listenOptions.UseConnectionLogging();
             listenOptions.UseHttps("Stressless-Service.pfx", "J1998ack");
         });
     });
 
-    builder.Services.AddAuthentication(config =>
-    {
+    builder.Services.AddAuthentication(config => {
         config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
         config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 
-    }).AddJwtBearer(options =>
-    {
+    }).AddJwtBearer(options => {
         options.RequireHttpsMetadata = false;
         options.SaveToken = true;
         options.TokenValidationParameters = GlobalTokenValidationParameters.ValidationParameters;
     });
 
-    builder.Services.AddAuthorization(options =>
-    {
-        options.AddPolicy("isAuthenticated", AuthPolicy =>
-        {
+    builder.Services.AddAuthorization(options => {
+        options.AddPolicy("isAuthenticated", AuthPolicy => {
             AuthPolicy.RequireAuthenticatedUser();
             AuthPolicy.RequireClaim("ID", GlobalConfiguration._configuration["AppSettings:ID"]);
         });
@@ -63,16 +52,11 @@ try
     // Add services to the container.
 
     builder.Services.AddControllers();
-
     builder.Services.AddLogging();
-     
     builder.Services.AddSingleton<database>();
-
-    //HERER
     builder.Services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
-    //builder.Services.AddScoped<IAuthenticateClass, AuthenticateClass>();
-    //builder.Services.AddScoped<IJwtUtility, JwtUtility>();
-     
+
+
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle 
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
@@ -113,34 +97,18 @@ try
 
     var app = builder.Build();
 
-    // Enable HttpLogging (Middleware)
-    // #6 [Order]
     app.UseHttpLogging();
-
-    //// Configure the HTTP request pipeline.
-    //if (app.Environment.IsDevelopment())
-    //{
         app.UseSwaggerUI(options =>
         {
             app.UseSwagger();
             app.UseSwaggerUI();
         });
-    //}
 
-    // Enable Authentication / Authorization middlware in the app
-
-    // #3 [Order]
     app.UseAuthentication();
     app.UseAuthorization();
-
-    //app.UseMiddleware<JwtMiddleware>();
-
-    // #1 [Order]
+    
     app.UseHttpsRedirection();
-
-    app.MapControllers();
-
-    // #2 [Order]
+    app.MapControllers();  
     app.UseHsts();
 
     using (AutoBootTimer autoBoot = new AutoBootTimer())
