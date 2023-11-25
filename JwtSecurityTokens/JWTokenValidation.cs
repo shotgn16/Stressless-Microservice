@@ -2,8 +2,8 @@
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using Serilog;
-using Stressless_Service.Logic;
+using NLog.Fluent;
+using Stressless_Service.Configuration;
 
 namespace Stressless_Service.JwtSecurityTokens;
 
@@ -40,7 +40,7 @@ public class JWTokenValidation : IDisposable
             vToken = validatedToken;
         }
         catch (Exception ex) {
-            Log.Error(ex.Message, ex);
+            Log.Error(ex.Message + ex);
             return (false, null);
         }
         return (true, vToken);

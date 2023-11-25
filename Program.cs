@@ -1,24 +1,22 @@
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.OpenApi.Models;
-using Serilog;
 using Stressless_Service.Auto_Run;
 using Stressless_Service.Database;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Stressless_Service.Logic;
 using Stressless_Service.JwtSecurityTokens;
+using Stressless_Service.Configuration;
+using NLog.Web;
+using NLog.Fluent;
 
 var builder = WebApplication.CreateBuilder(args);
+var configuration = NLog.LogManager.Configuration;
 
-Log.Logger = new LoggerConfiguration()
-    .WriteTo.Console()
-    .ReadFrom.Configuration(builder.Configuration)
-    .CreateLogger();
+NLog.LogManager.GetCurrentClassLogger().Info("Stressless Service Starting....");
 
 try
 {
-    builder.Host.UseSerilog();
-    builder.Logging.AddSerilog(new LoggerConfiguration()
-        .CreateLogger());
+    builder.Host.UseNLog();
+    builder.Logging.AddNLog(configuration);
 
     builder.Services.AddHttpLogging(logging => {
         logging.LoggingFields = HttpLoggingFields.All;
@@ -119,11 +117,11 @@ try
 
 catch (Exception ex)
 {
-    Log.Fatal(ex, "Application terminated unexpectantly");
+    Log.Fatal("Application terminated unexpectantly" + ex);
 }
 
 finally
 {
-    Log.CloseAndFlush();
+    NLog.LogManager.Flush();
 }
 

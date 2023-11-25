@@ -1,6 +1,6 @@
-﻿using Stressless_Service.Controllers;
+﻿using Stressless_Service.Configuration;
+using Stressless_Service.Controllers;
 using Stressless_Service.Database;
-using Stressless_Service.Logic;
 using Stressless_Service.Models;
 
 namespace Stressless_Service.JwtSecurityTokens;

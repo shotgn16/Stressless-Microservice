@@ -5,7 +5,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
-using Stressless_Service.Logic;
+using Stressless_Service.Configuration;
 
 namespace Stressless_Service.JwtSecurityTokens;
 

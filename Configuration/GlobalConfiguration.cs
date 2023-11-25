@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace Stressless_Service.Logic;
+namespace Stressless_Service.Configuration;
 
 public class GlobalConfiguration
 {

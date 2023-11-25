@@ -2,7 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using Stressless_Service.Logic;
 
-namespace Stressless_Service.JwtSecurityTokens;
+namespace Stressless_Service.Configuration;
 
 public class GlobalTokenValidationParameters
 {
