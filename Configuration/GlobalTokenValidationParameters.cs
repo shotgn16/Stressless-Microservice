@@ -1,14 +1,17 @@
 ﻿using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using Stressless_Service.JwtSecurityTokens;
 using Stressless_Service.Logic;
 
 namespace Stressless_Service.Configuration;
 
 public class GlobalTokenValidationParameters
 {
+    private readonly ILogger<GlobalTokenValidationParameters> _logger;
+    public GlobalTokenValidationParameters(ILogger<GlobalTokenValidationParameters> logger) => _logger = logger;
+
     internal static readonly object _lock = new object();
     public static TokenValidationParameters TokenValidationParameters;
-
     public static TokenValidationParameters ValidationParameters
     {
         get

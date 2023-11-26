@@ -7,6 +7,10 @@ namespace Stressless_Service.Auto_Run
 {
     public class AutoBoot : IDisposable
     {
+        private readonly ILogger<AutoBoot> _logger;
+        public AutoBoot(ILogger<AutoBoot> logger) => _logger = logger;
+
+
         private static DateTime LastSynced;
 
         private async Task<bool> CheckTime(bool IsWorkingTime = false)

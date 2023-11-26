@@ -5,6 +5,9 @@ namespace Stressless_Service.Auto_Run
 {
     public class AutoBootTimer : IDisposable
     {
+        private readonly ILogger<AutoBootTimer> _logger;
+        public AutoBootTimer(ILogger<AutoBootTimer> logger) => _logger = logger;
+
         private static System.Timers.Timer timer;
         private static bool isActive = false;
 

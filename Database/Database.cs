@@ -6,14 +6,17 @@ using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Stressless_Service.JwtSecurityTokens;
 using Stressless_Service.Models;
 
 namespace Stressless_Service.Database
 {
     public class database : IDisposable
     {
-        public database()
+        private readonly ILogger<database> _logger;
+        public database(ILogger<database> logger)
         {
+            _logger = logger;
             dbBuild();
         }
 

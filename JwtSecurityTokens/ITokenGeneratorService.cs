@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using Stressless_Service.Configuration;
+using Stressless_Service.Controllers;
 
 namespace Stressless_Service.JwtSecurityTokens;
 
@@ -16,6 +17,9 @@ public interface ITokenGeneratorService
 
 public class TokenGeneratorService : ITokenGeneratorService
 {
+    private readonly ILogger<TokenGeneratorService> _logger;
+    public TokenGeneratorService(ILogger<TokenGeneratorService> logger) => _logger = logger;
+
     public string GenerateToken(string ID)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(GlobalConfiguration._configuration["AppSettings:Secret"]));

@@ -7,16 +7,17 @@ using Stressless_Service.JwtSecurityTokens;
 using Stressless_Service.Configuration;
 using NLog.Web;
 using NLog.Fluent;
+using NLog;
+using NLog.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
-var configuration = NLog.LogManager.Configuration;
 
 NLog.LogManager.GetCurrentClassLogger().Info("Stressless Service Starting....");
 
 try
 {
     builder.Host.UseNLog();
-    builder.Logging.AddNLog(configuration);
+    LoggerFactory.Create(builder => builder.AddNLog());
 
     builder.Services.AddHttpLogging(logging => {
         logging.LoggingFields = HttpLoggingFields.All;

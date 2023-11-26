@@ -1,14 +1,19 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using NLog.Fluent;
 using Stressless_Service.Configuration;
+using Stressless_Service.Controllers;
 
 namespace Stressless_Service.JwtSecurityTokens;
 
 public class JWTokenValidation : IDisposable
 {
+    private readonly ILogger<JWTokenValidation> _logger;
+    public JWTokenValidation(ILogger<JWTokenValidation> logger) => _logger = logger;
+
     public async Task<bool> Handler(string token, string Sub = "", bool returnValue = false)
     {
         if (!string.IsNullOrEmpty(token)) {
