@@ -1,12 +1,17 @@
-﻿namespace Stressless_Service;
+﻿using Stressless_Service.Auto_Run;
 
-public class Startup
+namespace Stressless_Service;
+
+public class Startup : IDisposable
 {
-    public Startup(IConfiguration config) => Configuration = config;
-    public IConfiguration Configuration { get; set; }
+    private readonly ILogger<Startup> _logger;
 
-    public void ConfigureServices(IServiceCollection services)
+    public async Task InitializeSystem()
     {
-
+        using (AutoBootTimer autoBoot = new AutoBootTimer()) {
+            await autoBoot.StartABTimer();
+        }
     }
+
+    public void Dispose() => GC.Collect();
 }

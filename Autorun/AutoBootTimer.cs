@@ -1,13 +1,11 @@
 ﻿using System.Timers;
+using NLog;
 using Stressless_Service.JwtSecurityTokens;
 
 namespace Stressless_Service.Auto_Run
 {
     public class AutoBootTimer : IDisposable
     {
-        private readonly ILogger<AutoBootTimer> _logger;
-        public AutoBootTimer(ILogger<AutoBootTimer> logger) => _logger = logger;
-
         private static System.Timers.Timer timer;
         private static bool isActive = false;
 
@@ -24,7 +22,7 @@ namespace Stressless_Service.Auto_Run
             }
         }
 
-        private static async void OnTimerFinishEvent(Object source, ElapsedEventArgs e)
+        public static async void OnTimerFinishEvent(Object source, ElapsedEventArgs e)
         {
             timer.Stop();
             isActive = false;

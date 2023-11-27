@@ -1,4 +1,5 @@
-﻿using Stressless_Service.Configuration;
+﻿using NLog.Fluent;
+using Stressless_Service.Configuration;
 using Stressless_Service.Controllers;
 using Stressless_Service.Database;
 using Stressless_Service.Models;
@@ -7,10 +8,10 @@ namespace Stressless_Service.JwtSecurityTokens;
 
 public class AuthenticateClass : IDisposable
 {
-    private readonly ILogger<DataController> _logger;
+    private readonly ILogger _logger;
     private readonly ITokenGeneratorService _tokenGeneratorService;
 
-    public AuthenticateClass(ILogger<DataController> logger, ITokenGeneratorService tokenGeneratorService)
+    public AuthenticateClass(ILogger logger, ITokenGeneratorService tokenGeneratorService)
     {
         _logger = logger;
         _tokenGeneratorService = tokenGeneratorService;
@@ -20,7 +21,7 @@ public class AuthenticateClass : IDisposable
     {
         AuthenticationTokenModel returnModel = new AuthenticationTokenModel();
 
-        using (database db = new database())
+        using (database db = new database(_logger))
         {
             // Checking if an authentication request with this MAC and ClientID already exists
             int AuthResponse = AuthExists(model.MACAddress, model.ClientID);
@@ -41,6 +42,8 @@ public class AuthenticateClass : IDisposable
                     Expires = DateTime.UtcNow.AddDays(1).ToString(),
                     TokenType = "Bearer"
                 };
+
+                Log.Info($"Bearer Token Created!\nUser: {model.MACAddress}");
             }
 
             // DOES EXIST = Updates the time of authentication to DateTime.Now 
@@ -55,6 +58,8 @@ public class AuthenticateClass : IDisposable
                     Expires = DateTime.Now.AddDays(1).ToString(),
                     TokenType = "Bearer"
                 };
+
+                Log.Info($"Bearer Token Created!\nUser: {model.MACAddress}");
             }
 
             else if (AuthResponse == 0)
@@ -69,7 +74,7 @@ public class AuthenticateClass : IDisposable
         int value = 10;
         string configID = GlobalConfiguration._configuration.GetSection("AppSettings")["ID"];
 
-        using (database db = new database())
+        using (database db = new database(_logger))
         {
             if (db.GetAuth(MACAddress).Result == 0 && ID == configID)
             {

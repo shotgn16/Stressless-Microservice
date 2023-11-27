@@ -3,6 +3,7 @@ using Stressless_Service.Database;
 using Stressless_Service.Models;
 using Microsoft.AspNetCore.Authorization;
 using Stressless_Service.JwtSecurityTokens;
+using NLog.Fluent;
 
 namespace Stressless_Service.Controllers
 {
@@ -10,7 +11,7 @@ namespace Stressless_Service.Controllers
     [System.Web.Http.Route("[controller]")]
     public class DataController : ControllerBase
     {
-        private readonly ILogger<DataController> _logger;
+        private readonly ILogger _logger;
         private readonly ITokenGeneratorService _tokenGeneratorService;
 
         public DataController(ILogger<DataController> logger, ITokenGeneratorService tokenGeneratorService)
@@ -28,10 +29,16 @@ namespace Stressless_Service.Controllers
                 var response = authenticateClass.Authenticate(model);
 
                 if (response == null)
-                    return BadRequest(new { message = "MAC Address or ClientID incorrect!" });
+                {
+                    Log.Warn($"Authentication Failed for User: {model.MACAddress}\nPlease ensure you have a valid MAC Address and ClientID.");
+                    return BadRequest(new { message = "MAC Address or ClientID incorrect!" }); 
+                }
 
                 else
+                {
+                    Log.Info($"User: {model.MACAddress} Authenticated Successfully!");
                     return Ok(response);
+                }
             }
         }
 
@@ -45,11 +52,11 @@ namespace Stressless_Service.Controllers
 
             if (!string.IsNullOrEmpty(BearerToken))
             {
-                using (JWTokenValidation tokenValidation = new JWTokenValidation())
+                using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
                 {
                     if (await tokenValidation.Handler(BearerToken))
                     {
-                        using (database database = new database())
+                        using (database database = new database(_logger))
                         {
                             Prompt = await database.GetPrompt(promptType);
                         }
@@ -72,11 +79,11 @@ namespace Stressless_Service.Controllers
 
             if (!string.IsNullOrEmpty(BearerToken))
             {
-                using (JWTokenValidation tokenValidation = new JWTokenValidation())
+                using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
                 {
                     if (await tokenValidation.Handler(BearerToken))
                     {
-                        using (database database = new database())
+                        using (database database = new database(_logger))
                         {
                             foreach (var Item in PromptRequest.Prompt)
                             {
@@ -99,11 +106,11 @@ namespace Stressless_Service.Controllers
 
             if (!string.IsNullOrEmpty(BearerToken))
             {
-                using (JWTokenValidation tokenValidation = new JWTokenValidation())
+                using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
                 {
                     if (await tokenValidation.Handler(BearerToken))
                     {
-                        using (database database = new database())
+                        using (database database = new database(_logger))
                         {
                             Configuration = await database.GetConfiguration();
                         }
@@ -126,11 +133,11 @@ namespace Stressless_Service.Controllers
 
             if (!string.IsNullOrEmpty(BearerToken))
             {
-                using (JWTokenValidation tokenValidation = new JWTokenValidation())
+                using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
                 {
                     if (await tokenValidation.Handler(BearerToken))
                     {
-                        using (database database = new database())
+                        using (database database = new database(_logger))
                         {
                             await database.InsertConfiguration(Configuration);
                         }
@@ -149,11 +156,11 @@ namespace Stressless_Service.Controllers
 
             if (!string.IsNullOrEmpty(BearerToken))
             {
-                using (JWTokenValidation tokenValidation = new JWTokenValidation())
+                using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
                 {
                     if (await tokenValidation.Handler(BearerToken))
                     {
-                        using (database database = new database())
+                        using (database database = new database(_logger))
                         {
                             //Will get the last used prompt specified by ID (Ordered by the specified time in the database - DESC [Most recent at the top])
                             UsedPrompt = await database.GetUsedPrompts(promptID);
@@ -177,11 +184,11 @@ namespace Stressless_Service.Controllers
 
             if (!string.IsNullOrEmpty(BearerToken))
             {
-                using (JWTokenValidation tokenValidation = new JWTokenValidation())
+                using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
                 {
                     if (await tokenValidation.Handler(BearerToken))
                     {
-                        using (database database = new database())
+                        using (database database = new database(_logger))
                         {
                             await database.InsertUsedPrompt(UsedPrompt);
                         }

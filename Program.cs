@@ -9,13 +9,15 @@ using NLog.Web;
 using NLog.Fluent;
 using NLog;
 using NLog.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
+using Stressless_Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
 NLog.LogManager.GetCurrentClassLogger().Info("Stressless Service Starting....");
 
-try
-{
+try {
+
     builder.Host.UseNLog();
     LoggerFactory.Create(builder => builder.AddNLog());
 
@@ -110,8 +112,9 @@ try
     app.MapControllers();  
     app.UseHsts();
 
-    using (AutoBootTimer autoBoot = new AutoBootTimer())
-        await autoBoot.StartABTimer();
+    using (Startup Startup = new Startup()) {
+        await Startup.InitializeSystem();
+    }
 
     app.Run();
 }

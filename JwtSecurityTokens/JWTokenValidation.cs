@@ -11,8 +11,8 @@ namespace Stressless_Service.JwtSecurityTokens;
 
 public class JWTokenValidation : IDisposable
 {
-    private readonly ILogger<JWTokenValidation> _logger;
-    public JWTokenValidation(ILogger<JWTokenValidation> logger) => _logger = logger;
+    private readonly ILogger _logger;
+    public JWTokenValidation(ILogger logger) => _logger = logger;
 
     public async Task<bool> Handler(string token, string Sub = "", bool returnValue = false)
     {

@@ -13,8 +13,8 @@ namespace Stressless_Service.Database
 {
     public class database : IDisposable
     {
-        private readonly ILogger<database> _logger;
-        public database(ILogger<database> logger)
+        private readonly ILogger _logger;
+        public database(ILogger logger)
         {
             _logger = logger;
             dbBuild();
