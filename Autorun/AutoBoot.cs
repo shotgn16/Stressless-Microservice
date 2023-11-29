@@ -13,7 +13,7 @@ namespace Stressless_Service.Auto_Run
 
         private async Task<bool> CheckTime(bool IsWorkingTime = false)
         {
-            using (database database = new database((ILogger<database>)_logger)) 
+            using (database database = new database()) 
             {
                 if (await database.ConfigurationExists() == 1)
                 {

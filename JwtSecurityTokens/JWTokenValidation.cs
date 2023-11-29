@@ -14,17 +14,17 @@ public class JWTokenValidation : IDisposable
     private readonly ILogger _logger;
     public JWTokenValidation(ILogger logger) => _logger = logger;
 
-    public async Task<bool> Handler(string token, string Sub = "", bool returnValue = false)
+    public async Task<bool> Handler(string token, string ClientID = "", bool returnValue = false)
     {
         if (!string.IsNullOrEmpty(token)) {
             (bool, SecurityToken) isValid = await ValidateToken(token);
 
             if (isValid.Item1) {
-                Sub = GetClaim(token, "Sub");
+                ClientID = GetClaim(token, "ClientID");
             }
         }
 
-        if (Sub == GlobalConfiguration._configuration["AppSettings:ID"]) {
+        if (ClientID == GlobalConfiguration._configuration["AppSettings:ID"]) {
             returnValue = true;
         }
 

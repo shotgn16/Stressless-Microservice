@@ -25,14 +25,16 @@ try {
         logging.LoggingFields = HttpLoggingFields.All;
     });
 
+    // Configuring Kestrel to enable HTTPS via certificate
     builder.WebHost.ConfigureKestrel((context, options) => {
         options.ListenAnyIP(7257, listenOptions => {
             listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1AndHttp2AndHttp3;
             listenOptions.UseConnectionLogging();
-            listenOptions.UseHttps("Stressless-Service.pfx", "J1998ack");
+            listenOptions.UseHttps(GlobalConfiguration._configuration["Certificate:File"], GlobalConfiguration._configuration["Certificate:Password"]);
         });
     });
 
+    // Configuring JwtBearer Authentication to enable Bearer token authentication
     builder.Services.AddAuthentication(config => {
         config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
         config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -50,10 +52,11 @@ try {
         });
     });
 
-    // Add services to the container.
 
     builder.Services.AddControllers();
     builder.Services.AddLogging();
+
+    // Adding database & TokenGeneratorService to services
     builder.Services.AddSingleton<database>();
     builder.Services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
 
@@ -62,6 +65,7 @@ try {
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
+    // Configuring swager to allow Bearer authentication in the webUI to allow endpoint testing execution via the webUI
     builder.Services.AddSwaggerGen(c =>
     {
         c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "StressLess API", Version = "v1" });
@@ -112,6 +116,7 @@ try {
     app.MapControllers();  
     app.UseHsts();
 
+    // Triggering a method to start a timer that will start the application within the specified working hours
     using (Startup Startup = new Startup()) {
         await Startup.InitializeSystem();
     }
@@ -121,7 +126,7 @@ try {
 
 catch (Exception ex)
 {
-    Log.Fatal("Application terminated unexpectantly" + ex);
+    Log.Error("Application terminated unexpectantly" + ex);
 }
 
 finally
