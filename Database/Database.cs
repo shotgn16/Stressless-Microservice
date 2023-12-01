@@ -95,6 +95,11 @@ namespace Stressless_Service.Database
                     if (table_Auth.Equals(0)) {
                         connection.Execute("CREATE TABLE 'Auth' ('ID' INTEGER, 'MACAddress' TEXT, 'DateCreated' TEXT, 'ClientID' TEXT);");
                     }
+
+                    int table_Calendar = connection.ExecuteScalar<int>("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Calendar';");
+                    if (table_Calendar.Equals(0)) {
+                        connection.Execute("CREATE TABLE 'Calendar' ('ID' INTEGER, 'Name' TEXT, 'Start' TEXT, 'Finish' TEXT);");
+                    }
                 }
 
                 catch (Exception ex)
@@ -378,6 +383,33 @@ namespace Stressless_Service.Database
                     await Connection.OpenAsync();
 
                     await Connection.ExecuteAsync("DELETE * FROM Auth WHERE datetime('now', '-1 day') >= Generated;");
+
+                    await Connection.CloseAsync();
+                }
+            }
+
+            catch (Exception ex)
+            {
+                classLogger.Error(ex.Message, ex);
+            }
+        }
+
+        public async Task InsertCalenderEvents(CalenderModel[] calendarEvents)
+        {
+            List<CalenderModel> Events = new List<CalenderModel>();
+
+            try
+            {
+                Events = calendarEvents.ToList();
+
+                using (SQLiteConnection Connection = await CreateConnection())
+                {
+                    await Connection.OpenAsync();
+
+                    foreach (var item in calendarEvents)
+                    {
+                        Connection.Execute("INSERT INTO 'Calendar' (ID, Name, Start, Finish) VALUES ('" + string.Empty + "', '" + item.name + "', '" + item.start + "', '" + item.finish + "');");
+                    }
 
                     await Connection.CloseAsync();
                 }

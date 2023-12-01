@@ -4,6 +4,7 @@ using Stressless_Service.Models;
 using Microsoft.AspNetCore.Authorization;
 using Stressless_Service.JwtSecurityTokens;
 using NLog.Fluent;
+using Stressless_Service.Prediction;
 
 namespace Stressless_Service.Controllers
 {
@@ -140,6 +141,13 @@ namespace Stressless_Service.Controllers
                         using (database database = new database())
                         {
                             await database.InsertConfiguration(Configuration);
+
+                            await database.InsertCalenderEvents(Configuration.calender);
+
+                            using (ForcastFreeTime pd = new ForcastFreeTime())
+                            {
+                                await pd.Forcast(Configuration.calender);
+                            }
                         }
                     }
                 }
