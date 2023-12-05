@@ -2570,3 +2570,233 @@ System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assem
 2023-11-30 18:20:17.6814 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: ServiceSimplified_File
 2023-11-30 18:20:17.7400 Info Configuration initialized.
 2023-11-30 18:20:18.0448 Info Validating config: Targets=10, ConfigItems=297, FilePath=C:\Users\JackB\Desktop\Software Project - Documentation\Stressless-Service\bin\Release\net7.0\NLog.config
+2023-12-05 11:25:54.1816 Info Loading assembly name: NLog.Web
+2023-12-05 11:25:55.0109 Info NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2023-12-05 11:25:55.4075 Warn Loaded 88 valid types from Assembly: NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c Exception: System.Reflection.ReflectionTypeLoadException: Unable to load one or more of the requested types.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+   at System.Reflection.RuntimeModule.GetTypes(RuntimeModule module)
+   at System.Reflection.Assembly.GetTypes()
+   at NLog.Internal.AssemblyHelpers.SafeGetTypes(Assembly assembly)
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 11:25:55.6191 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 11:25:55.6191 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 11:25:55.6191 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 11:25:55.6191 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 11:25:55.6191 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 11:25:55.6191 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 11:25:55.6365 Info Loading assembly name: NLog.Web.AspNetCore
+2023-12-05 11:25:55.6365 Info NLog.Web.AspNetCore, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2023-12-05 11:25:56.0352 Info Loading assembly name: NLog.Extensions.Logging
+2023-12-05 11:25:56.0352 Info NLog.Extensions.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.407. Product version: 5.3.5+3ca943079eeece2faa1a2249de35eb7c807de188. GlobalAssemblyCache: False
+2023-12-05 11:25:56.0468 Info Loading assembly name: NLog.Targets.Seq
+2023-12-05 11:25:56.1665 Info NLog.Targets.Seq, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aec39280ded1b3a7. File version: 3.0.0.0. Product version: 3.0.0. GlobalAssemblyCache: False
+2023-12-05 11:25:56.4262 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=ServiceSimplified_File)
+2023-12-05 11:25:56.4327 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_File)
+2023-12-05 11:25:56.4327 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_Console)
+2023-12-05 11:25:56.4327 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Networking_File)
+2023-12-05 11:25:56.4327 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=JwtAuthentication_File)
+2023-12-05 11:25:56.4327 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Api_File)
+2023-12-05 11:25:56.4327 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Autorun_File)
+2023-12-05 11:25:56.4428 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Configuration_File)
+2023-12-05 11:25:56.4428 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Database_File)
+2023-12-05 11:25:56.4428 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Exception_File)
+2023-12-05 11:25:56.4695 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=seq)
+2023-12-05 11:25:56.4895 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.6.2256. Product version: 5.2.6+1d441552d39bd7e2bd31062e2e96de6828a83003. GlobalAssemblyCache: False
+2023-12-05 11:25:56.5377 Info Validating config: Targets=10, ConfigItems=293, FilePath=C:\Users\JackB\Desktop\Software Project - Documentation\Stressless-Service\bin\Release\net7.0\NLog.config
+2023-12-05 11:25:56.5539 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: ServiceSimplified_File
+2023-12-05 11:25:56.9954 Info Configuration initialized.
+2023-12-05 11:25:59.9831 Info Validating config: Targets=10, ConfigItems=297, FilePath=C:\Users\JackB\Desktop\Software Project - Documentation\Stressless-Service\bin\Release\net7.0\NLog.config
+2023-12-05 11:34:47.5037 Info Loading assembly name: NLog.Web
+2023-12-05 11:34:47.5894 Info NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2023-12-05 11:34:47.7100 Warn Loaded 88 valid types from Assembly: NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c Exception: System.Reflection.ReflectionTypeLoadException: Unable to load one or more of the requested types.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+   at System.Reflection.RuntimeModule.GetTypes(RuntimeModule module)
+   at System.Reflection.Assembly.GetTypes()
+   at NLog.Internal.AssemblyHelpers.SafeGetTypes(Assembly assembly)
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 11:34:47.7721 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 11:34:47.7721 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 11:34:47.7721 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 11:34:47.7721 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 11:34:47.7721 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 11:34:47.7721 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 11:34:47.7721 Info Loading assembly name: NLog.Web.AspNetCore
+2023-12-05 11:34:47.7896 Info NLog.Web.AspNetCore, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2023-12-05 11:34:47.8247 Info Loading assembly name: NLog.Extensions.Logging
+2023-12-05 11:34:47.8260 Info NLog.Extensions.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.407. Product version: 5.3.5+3ca943079eeece2faa1a2249de35eb7c807de188. GlobalAssemblyCache: False
+2023-12-05 11:34:47.8260 Info Loading assembly name: NLog.Targets.Seq
+2023-12-05 11:34:47.8449 Info NLog.Targets.Seq, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aec39280ded1b3a7. File version: 3.0.0.0. Product version: 3.0.0. GlobalAssemblyCache: False
+2023-12-05 11:34:47.9777 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=ServiceSimplified_File)
+2023-12-05 11:34:47.9777 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_File)
+2023-12-05 11:34:47.9777 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_Console)
+2023-12-05 11:34:47.9777 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Networking_File)
+2023-12-05 11:34:47.9777 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=JwtAuthentication_File)
+2023-12-05 11:34:48.0023 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Api_File)
+2023-12-05 11:34:48.0071 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Autorun_File)
+2023-12-05 11:34:48.0071 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Configuration_File)
+2023-12-05 11:34:48.0071 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Database_File)
+2023-12-05 11:34:48.0071 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Exception_File)
+2023-12-05 11:34:48.0344 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=seq)
+2023-12-05 11:34:48.0550 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.6.2256. Product version: 5.2.6+1d441552d39bd7e2bd31062e2e96de6828a83003. GlobalAssemblyCache: False
+2023-12-05 11:34:48.0975 Info Validating config: Targets=10, ConfigItems=293, FilePath=C:\Users\JackB\Desktop\Software Project - Documentation\Stressless-Service\bin\Release\net7.0\NLog.config
+2023-12-05 11:34:48.1158 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: ServiceSimplified_File
+2023-12-05 11:34:48.1980 Info Configuration initialized.
+2023-12-05 11:34:48.9629 Info Validating config: Targets=10, ConfigItems=297, FilePath=C:\Users\JackB\Desktop\Software Project - Documentation\Stressless-Service\bin\Release\net7.0\NLog.config
+2023-12-05 13:44:18.2777 Info Loading assembly name: NLog.Web
+2023-12-05 13:44:18.8481 Info NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2023-12-05 13:44:19.1618 Warn Loaded 88 valid types from Assembly: NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c Exception: System.Reflection.ReflectionTypeLoadException: Unable to load one or more of the requested types.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+   at System.Reflection.RuntimeModule.GetTypes(RuntimeModule module)
+   at System.Reflection.Assembly.GetTypes()
+   at NLog.Internal.AssemblyHelpers.SafeGetTypes(Assembly assembly)
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 13:44:19.3440 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 13:44:19.3440 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 13:44:19.3440 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 13:44:19.3440 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 13:44:19.3440 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 13:44:19.3440 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 13:44:19.3597 Info Loading assembly name: NLog.Web.AspNetCore
+2023-12-05 13:44:19.3597 Info NLog.Web.AspNetCore, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2023-12-05 13:44:19.6867 Info Loading assembly name: NLog.Extensions.Logging
+2023-12-05 13:44:19.6867 Info NLog.Extensions.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.407. Product version: 5.3.5+3ca943079eeece2faa1a2249de35eb7c807de188. GlobalAssemblyCache: False
+2023-12-05 13:44:19.6867 Info Loading assembly name: NLog.Targets.Seq
+2023-12-05 13:44:19.8078 Info NLog.Targets.Seq, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aec39280ded1b3a7. File version: 3.0.0.0. Product version: 3.0.0. GlobalAssemblyCache: False
+2023-12-05 13:44:20.0196 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=ServiceSimplified_File)
+2023-12-05 13:44:20.0240 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_File)
+2023-12-05 13:44:20.0240 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_Console)
+2023-12-05 13:44:20.0240 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Networking_File)
+2023-12-05 13:44:20.0240 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=JwtAuthentication_File)
+2023-12-05 13:44:20.0240 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Api_File)
+2023-12-05 13:44:20.0240 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Autorun_File)
+2023-12-05 13:44:20.0240 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Configuration_File)
+2023-12-05 13:44:20.0240 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Database_File)
+2023-12-05 13:44:20.0240 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Exception_File)
+2023-12-05 13:44:20.0532 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=seq)
+2023-12-05 13:44:20.0692 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.6.2256. Product version: 5.2.6+1d441552d39bd7e2bd31062e2e96de6828a83003. GlobalAssemblyCache: False
+2023-12-05 13:44:20.1054 Info Validating config: Targets=10, ConfigItems=293, FilePath=C:\Users\JackB\Desktop\Software Project - Documentation\Stressless-Service\bin\Release\net7.0\NLog.config
+2023-12-05 13:44:20.1197 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: ServiceSimplified_File
+2023-12-05 13:44:20.4430 Info Configuration initialized.
+2023-12-05 13:44:22.6697 Info Validating config: Targets=10, ConfigItems=297, FilePath=C:\Users\JackB\Desktop\Software Project - Documentation\Stressless-Service\bin\Release\net7.0\NLog.config
+2023-12-05 15:08:26.7254 Info Loading assembly name: NLog.Web
+2023-12-05 15:08:26.8147 Info NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2023-12-05 15:08:26.9169 Warn Loaded 88 valid types from Assembly: NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c Exception: System.Reflection.ReflectionTypeLoadException: Unable to load one or more of the requested types.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+   at System.Reflection.RuntimeModule.GetTypes(RuntimeModule module)
+   at System.Reflection.Assembly.GetTypes()
+   at NLog.Internal.AssemblyHelpers.SafeGetTypes(Assembly assembly)
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 15:08:26.9480 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 15:08:26.9480 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 15:08:26.9480 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 15:08:26.9480 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 15:08:26.9480 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 15:08:26.9480 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 15:08:26.9649 Info Loading assembly name: NLog.Web.AspNetCore
+2023-12-05 15:08:26.9649 Info NLog.Web.AspNetCore, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2023-12-05 15:08:26.9905 Info Loading assembly name: NLog.Extensions.Logging
+2023-12-05 15:08:26.9905 Info NLog.Extensions.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.407. Product version: 5.3.5+3ca943079eeece2faa1a2249de35eb7c807de188. GlobalAssemblyCache: False
+2023-12-05 15:08:26.9905 Info Loading assembly name: NLog.Targets.Seq
+2023-12-05 15:08:26.9905 Info NLog.Targets.Seq, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aec39280ded1b3a7. File version: 3.0.0.0. Product version: 3.0.0. GlobalAssemblyCache: False
+2023-12-05 15:08:27.1064 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=ServiceSimplified_File)
+2023-12-05 15:08:27.1064 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_File)
+2023-12-05 15:08:27.1064 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_Console)
+2023-12-05 15:08:27.1237 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Networking_File)
+2023-12-05 15:08:27.1438 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=JwtAuthentication_File)
+2023-12-05 15:08:27.1438 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Api_File)
+2023-12-05 15:08:27.1488 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Autorun_File)
+2023-12-05 15:08:27.1488 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Configuration_File)
+2023-12-05 15:08:27.1488 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Database_File)
+2023-12-05 15:08:27.1488 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Exception_File)
+2023-12-05 15:08:27.2250 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=seq)
+2023-12-05 15:08:27.2409 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.6.2256. Product version: 5.2.6+1d441552d39bd7e2bd31062e2e96de6828a83003. GlobalAssemblyCache: False
+2023-12-05 15:08:27.2877 Info Validating config: Targets=10, ConfigItems=293, FilePath=C:\Users\JackB\Desktop\Software Project - Documentation\Stressless-Service\bin\Release\net7.0\NLog.config
+2023-12-05 15:08:27.3028 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: ServiceSimplified_File
+2023-12-05 15:08:27.3955 Info Configuration initialized.
+2023-12-05 15:08:27.7343 Info Validating config: Targets=10, ConfigItems=297, FilePath=C:\Users\JackB\Desktop\Software Project - Documentation\Stressless-Service\bin\Release\net7.0\NLog.config
+2023-12-05 15:20:19.2308 Info Loading assembly name: NLog.Web
+2023-12-05 15:20:19.3149 Info NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2023-12-05 15:20:19.3723 Warn Loaded 88 valid types from Assembly: NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c Exception: System.Reflection.ReflectionTypeLoadException: Unable to load one or more of the requested types.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+   at System.Reflection.RuntimeModule.GetTypes(RuntimeModule module)
+   at System.Reflection.Assembly.GetTypes()
+   at NLog.Internal.AssemblyHelpers.SafeGetTypes(Assembly assembly)
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 15:20:19.3977 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 15:20:19.3977 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 15:20:19.3977 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 15:20:19.3977 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 15:20:19.3977 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 15:20:19.3977 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2023-12-05 15:20:19.3977 Info Loading assembly name: NLog.Web.AspNetCore
+2023-12-05 15:20:19.3977 Info NLog.Web.AspNetCore, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2023-12-05 15:20:19.4281 Info Loading assembly name: NLog.Extensions.Logging
+2023-12-05 15:20:19.4281 Info NLog.Extensions.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.407. Product version: 5.3.5+3ca943079eeece2faa1a2249de35eb7c807de188. GlobalAssemblyCache: False
+2023-12-05 15:20:19.4281 Info Loading assembly name: NLog.Targets.Seq
+2023-12-05 15:20:19.4281 Info NLog.Targets.Seq, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aec39280ded1b3a7. File version: 3.0.0.0. Product version: 3.0.0. GlobalAssemblyCache: False
+2023-12-05 15:20:19.5140 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=ServiceSimplified_File)
+2023-12-05 15:20:19.5140 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_File)
+2023-12-05 15:20:19.5140 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_Console)
+2023-12-05 15:20:19.5140 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Networking_File)
+2023-12-05 15:20:19.5140 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=JwtAuthentication_File)
+2023-12-05 15:20:19.5140 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Api_File)
+2023-12-05 15:20:19.5140 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Autorun_File)
+2023-12-05 15:20:19.5140 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Configuration_File)
+2023-12-05 15:20:19.5140 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Database_File)
+2023-12-05 15:20:19.5140 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Exception_File)
+2023-12-05 15:20:19.5373 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=seq)
+2023-12-05 15:20:19.5373 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.6.2256. Product version: 5.2.6+1d441552d39bd7e2bd31062e2e96de6828a83003. GlobalAssemblyCache: False
+2023-12-05 15:20:19.5739 Info Validating config: Targets=10, ConfigItems=293, FilePath=C:\Users\JackB\Desktop\Software Project - Documentation\Stressless-Service\bin\Release\net7.0\NLog.config
+2023-12-05 15:20:19.5739 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: ServiceSimplified_File
+2023-12-05 15:20:19.6451 Info Configuration initialized.
+2023-12-05 15:20:19.8987 Info Validating config: Targets=10, ConfigItems=297, FilePath=C:\Users\JackB\Desktop\Software Project - Documentation\Stressless-Service\bin\Release\net7.0\NLog.config

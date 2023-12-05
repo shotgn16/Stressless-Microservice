@@ -1,31 +1,52 @@
 ﻿using Microsoft.ML;
 using Microsoft.ML.Transforms.TimeSeries;
 using Stressless_Service.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Stressless_Service.Prediction;
 
 public class ForcastFreeTime : IDisposable
 {
-    public async Task Forcast(CalenderModel[] events)
+    // The context for the forcast in the root of the class (Globally)
+    MLContext Context;
+
+    // The data to be used to make a forcast 
+    IDataView Data;
+
+    // The parameters used during the forcast, such as what the data column is and such...
+    SsaForecastingEstimator Pipeline;
+
+    // The engine used to make the prediction
+    SsaForecastingTransformer Model;
+
+    private async Task prepareData(List<CalenderModel> events)
     {
-        List<CalenderModel> CalendarEvents = events.ToList();
-
-        MLContext context = new MLContext();
-        var data = context.Data.LoadFromEnumerable(CalendarEvents);
-
-        SsaForecastingEstimator Pipeline = context.Forecasting.ForecastBySsa(outputColumnName: "ForecastedLabel", inputColumnName: "Label", windowSize: 5, seriesLength: 20, trainSize: 100, horizon: 5);
-        SsaForecastingTransformer Model = Pipeline.Fit(data);
-
-        var ForcastingEngine = Model.CreateTimeSeriesEngine<CalenderModel, CalendarPrediction>(context);
-        var forecast = ForcastingEngine.Predict();
-
-        foreach (var item in forecast.ForecastedLabel)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(item);
-            Console.ForegroundColor = ConsoleColor.White;
-        }
+        Context = new MLContext();
+        Data = Context.Data.LoadFromEnumerable(events);
     }
+
+    private async Task prepareModel()
+    {
+        Pipeline = Context.Transforms.Conversion
+
+        var trainTestSplit = Context.Data.TrainTestSplit(Data, testFraction: 0.2);
+        Model = Pipeline.Fit(trainTestSplit.TrainSet);
+    }
+
+    public async Task<CalendarPrediction> Forcast(CalenderModel[] events)
+    {
+        List<CalendarPrediction> forcastList = new List<CalendarPrediction>();
+        List<CalenderModel> eList = events.ToList();
+
+        await prepareData(eList);
+        await prepareModel();
+
+        var ForcastingEngine = Model.CreateTimeSeriesEngine<CalenderModel, CalendarPrediction>(Context);
+        var forcast = ForcastingEngine.Predict();
+         
+        return forcast;
+    }
+
 
     public void Dispose() => GC.Collect();
 
