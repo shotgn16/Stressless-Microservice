@@ -4,7 +4,6 @@ using Stressless_Service.Models;
 using Microsoft.AspNetCore.Authorization;
 using Stressless_Service.JwtSecurityTokens;
 using NLog.Fluent;
-using Stressless_Service.Prediction;
 
 namespace Stressless_Service.Controllers
 {
@@ -202,38 +201,38 @@ namespace Stressless_Service.Controllers
             return Ok("Success!");
         }
 
-        [Authorize]
-        [HttpGet("ForcastFreetime")]
-        public async Task<CalendarPrediction> ForcastFreetime()
-        {
-            ConfigurationModel Config = new ConfigurationModel();
-            CalendarPrediction Forcasts = new CalendarPrediction();
+        //[Authorize]
+        //[HttpGet("ForcastFreetime")]
+        //public async Task ForcastFreetime()
+        //{
+        //    ConfigurationModel Config = new ConfigurationModel();
+        //    CalendarPrediction Forcasts = new CalendarPrediction();
 
-            var BearerToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+        //    var BearerToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
 
-            if (!string.IsNullOrEmpty(BearerToken))
-            {
-                using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
-                {
-                    if (await tokenValidation.Handler(BearerToken))
-                    {
-                        using (database database = new database())
-                        {
-                            Config = await database.GetConfiguration();
-                        }
+        //    if (!string.IsNullOrEmpty(BearerToken))
+        //    {
+        //        using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
+        //        {
+        //            if (await tokenValidation.Handler(BearerToken))
+        //            {
+        //                using (database database = new database())
+        //                {
+        //                    Config = await database.GetConfiguration();
+        //                }
 
-                        if (!string.IsNullOrEmpty(Config.calenderImport) && Config.calender[0].name != null)
-                        {
-                            using (ForcastFreeTime forcastClass = new ForcastFreeTime())
-                            {
-                                Forcasts = await forcastClass.Forcast(Config.calender);
-                            }
-                        }
-                    }
-                }
-            }
+        //                if (!string.IsNullOrEmpty(Config.calenderImport) && Config.calender[0].name != null)
+        //                {
+        //                    using (ForcastFreeTime forcastClass = new ForcastFreeTime())
+        //                    {
+        //                        Forcasts = await forcastClass.Forcast(Config.calender);
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
 
-            return Forcasts;
-        }
+        //    return Forcasts;
+        //}
     }
 }

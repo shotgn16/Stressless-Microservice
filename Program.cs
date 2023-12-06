@@ -1,20 +1,16 @@
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.OpenApi.Models;
-using Stressless_Service.Auto_Run;
 using Stressless_Service.Database;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Stressless_Service.JwtSecurityTokens;
 using Stressless_Service.Configuration;
 using NLog.Web;
-using NLog.Fluent;
-using NLog;
 using NLog.Extensions.Logging;
-using Microsoft.Extensions.Hosting;
 using Stressless_Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
-NLog.LogManager.GetCurrentClassLogger().Info("Stressless Service Starting....");
+NLog.LogManager.GetCurrentClassLogger().Info("Stressless Service Starting...");
 
 try {
 
@@ -126,7 +122,7 @@ try {
 
 catch (Exception ex)
 {
-    Log.Error("Application terminated unexpectantly" + ex);
+    Console.WriteLine("Application terminated unexpectantly" + ex);
 }
 
 finally

@@ -1,4 +1,6 @@
-﻿using System.Data.SQLite;
+﻿using System.Collections;
+using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.Net;
 using System.Reflection;
 using System.Text.Json.Nodes;
@@ -9,6 +11,7 @@ using Newtonsoft.Json.Linq;
 using NLog;
 using NLog.Fluent;
 using NLog.Web;
+using Stressless_Service.Forecaster;
 using Stressless_Service.JwtSecurityTokens;
 using Stressless_Service.Models;
 
@@ -78,27 +81,32 @@ namespace Stressless_Service.Database
                 {
                     int table_Configuration = connection.ExecuteScalar<int>("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Prompts';");
                     if (table_Configuration.Equals(0)) {
-                        connection.Execute("CREATE TABLE 'Configuration' ('ID' INTEGER, 'Firstname' TEXT, 'Lastname' INTEGER, 'WorkingDays' TEXT, 'Start_time' TEXT, 'Finish_time' TEXT, 'CalenderImport' TEXT, 'Calender' TEXT, PRIMARY KEY('ID'));");
+                        await connection.ExecuteAsync("CREATE TABLE 'Configuration' ('ID' INTEGER, 'Firstname' TEXT, 'Lastname' INTEGER, 'WorkingDays' TEXT, 'Start_time' TEXT, 'Finish_time' TEXT, 'CalenderImport' TEXT, 'Calender' TEXT, PRIMARY KEY('ID'));");
                     }
 
                     int table_Prompts = connection.ExecuteScalar<int>("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Prompts';");
                     if (table_Configuration.Equals(0)) {
-                        connection.Execute("CREATE TABLE 'Prompts' ('ID' INTEGER, 'Type' TEXT, 'Text' TEXT, PRIMARY KEY('ID'));");
+                        await connection.ExecuteAsync("CREATE TABLE 'Prompts' ('ID' INTEGER, 'Type' TEXT, 'Text' TEXT, PRIMARY KEY('ID'));");
                     }
 
                     int table_UsedPrompts = connection.ExecuteScalar<int>("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='UsedPrompts';");
                     if (table_UsedPrompts.Equals(0)) {
-                        connection.Execute("CREATE TABLE 'UsedPrompts' ('ID' INTEGER, 'PromptID' INTEGER, 'LastUsed' TEXT, FOREIGN KEY('PromptID') REFERENCES 'Prompts', PRIMARY KEY('ID'));");
+                        await connection.ExecuteAsync("CREATE TABLE 'UsedPrompts' ('ID' INTEGER, 'PromptID' INTEGER, 'LastUsed' TEXT, FOREIGN KEY('PromptID') REFERENCES 'Prompts', PRIMARY KEY('ID'));");
                     }
 
                     int table_Auth = connection.ExecuteScalar<int>("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Auth';");
                     if (table_Auth.Equals(0)) {
-                        connection.Execute("CREATE TABLE 'Auth' ('ID' INTEGER, 'MACAddress' TEXT, 'DateCreated' TEXT, 'ClientID' TEXT);");
+                        await connection.ExecuteAsync("CREATE TABLE 'Auth' ('ID' INTEGER, 'MACAddress' TEXT, 'DateCreated' TEXT, 'ClientID' TEXT);");
                     }
 
                     int table_Calendar = connection.ExecuteScalar<int>("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Calendar';");
                     if (table_Calendar.Equals(0)) {
-                        connection.Execute("CREATE TABLE 'Calendar' ('ID' INTEGER, 'Name' TEXT, 'Start' TEXT, 'Finish' TEXT);");
+                        await connection.ExecuteAsync("CREATE TABLE 'Calendar' ('ID' INTEGER, 'Name' TEXT, 'Start' TEXT, 'Finish' TEXT);");
+                    }
+
+                    int table_Events = connection.ExecuteScalar<int>("SELECT count(*) FROM sqlite_master WHERE type='table' and name='Events';");
+                    if (table_Events.Equals(0)) {
+                        await connection.ExecuteAsync("CREATE TABLE 'Events' ('Runtime' TEXT, 'Date' TEXT)");
                     }
                 }
 
@@ -179,7 +187,15 @@ namespace Stressless_Service.Database
                     await Connection.OpenAsync();
 
                     // CREATE A METHOD THAT GETS THE CONFIGURATION - FINDS ITS ID THEN INCREMENTS IT BY +1 for the next time [AND CAN BE USED FOR MORE THAN ONE TYPE]
-                    Connection.Execute("INSERT INTO Configuration (ID, Firstname, Lastname, WorkingDays, Start_time, Finish_time, CalenderImport, Calender) VALUES (1, '" + Configuration.firstname + "', '" + Configuration.lastname + "', '" + JsonConvert.SerializeObject(Configuration.workingDays) + "', '" + Configuration.day_Start + "', '" + Configuration.day_End + "', '" + Configuration.calenderImport + "', '" + JsonConvert.SerializeObject(Configuration.calender) + "');");
+                    Connection.Execute("INSERT INTO Configuration " +
+                        "(ID, Firstname, Lastname, WorkingDays, Start_time, Finish_time, CalenderImport, Calender) VALUES "
+                        + "(1,'" + Configuration.firstname
+                        + "', '" + Configuration.lastname
+                        + "', '" + JsonConvert.SerializeObject(Configuration.workingDays)
+                        + "', '" + Configuration.StartTime.TimeOfDay
+                        + "', '" + Configuration.EndTime.TimeOfDay
+                        + "', '" + Configuration.calenderImport
+                        + "', '" + JsonConvert.SerializeObject(Configuration.calender) + "');");
 
                     await Connection.CloseAsync();
                 }
@@ -408,7 +424,7 @@ namespace Stressless_Service.Database
 
                     foreach (var item in calendarEvents)
                     {
-                        Connection.Execute("INSERT INTO 'Calendar' (ID, Name, Start, Finish) VALUES ('" + string.Empty + "', '" + item.name + "', '" + item.start + "', '" + item.finish + "');");
+                        Connection.Execute("INSERT INTO 'Calendar' (ID, Name, Start, Finish) VALUES ('" + string.Empty + "', '" + item.Name + "', '" + item.StartDate + "', '" + item.EndDate + "');");
                     }
 
                     await Connection.CloseAsync();
@@ -418,6 +434,47 @@ namespace Stressless_Service.Database
             catch (Exception ex)
             {
                 classLogger.Error(ex.Message, ex);
+            }
+        }
+
+        public async Task InsertDay(List<CalendarEvents> Events)
+        {
+            try
+            {
+                using (SQLiteConnection Connection = await CreateConnection())
+                {
+                    foreach (CalendarEvents E in Events)
+                    {
+                        await Connection.OpenAsync();
+
+                        Connection.Execute("INSERT INTO Events (Runtime, Date) VALUES ('" + E.Runtime + "', '" + E.Event + "');");
+
+                        await Connection.CloseAsync();
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message + ex);
+            }
+        }
+
+        public async Task GetDays()
+        {
+            IEnumerable<List<CalendarEvents>> Events;
+
+            try
+            {
+                using (SQLiteConnection Connection = await CreateConnection())
+                {
+                    Events = Connection.Query<List<CalendarEvents>>("SELECT * FROM Events");
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message + ex);
             }
         }
 
