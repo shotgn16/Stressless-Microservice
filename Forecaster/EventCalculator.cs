@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Diagnostics;
+using ServiceStack;
 using Stressless_Service.Database;
 using Stressless_Service.Models;
 
@@ -53,38 +54,36 @@ namespace Stressless_Service.Forecaster
             return FreeTime = WorkingTime - TotalRuntime;
         }
 
-        private async Task StoreDays(List<CalendarEvents> eventRuntimes)
+        public async Task StoreDays(List<CalendarEvents> eventRuntimes)
         {
-            using (database database = new database())
-            {
-                foreach (CalendarEvents calendarEvent in eventRuntimes)
-                {
-                    switch (calendarEvent.Event.DayOfWeek)
-                    {
-                        case DayOfWeek.Monday:
+            List<CalendarEvents[]> OrganisedEvents = new List<CalendarEvents[]>();
+            int AlreadyStored = 0;
 
-                            break;
-                        case DayOfWeek.Tuesday:
+            using (database database = new database()) {
+                List<CalendarEvents> storedDays = await database.GetDays();
+                AlreadyStored = storedDays.Count;
 
-                            break;
-                        case DayOfWeek.Wednesday:
+                if (AlreadyStored + eventRuntimes.Count >= 21 || AlreadyStored >= 21) {
+                    await database.DeleteDays(1); 
+                }
 
-                            break;
-                        case DayOfWeek.Thursday:
+                else if (AlreadyStored + eventRuntimes.Count != 21 && AlreadyStored < 21) {
+                    eventRuntimes = eventRuntimes.OrderBy(e => e.Event.DayOfWeek).ToList();
 
-                            break;
-                        case DayOfWeek.Friday:
-
-                            break;
-                        case DayOfWeek.Saturday:
-
-                            break;
-                        case DayOfWeek.Sunday:
-
-                            break;
-                    }
+                    await database.InsertDay(eventRuntimes);
                 }
             }
+        }
+
+        public async Task CompareDays()
+        {
+            List<CalendarEvents> storedDays = new();
+
+            using (database database = new database())
+            {
+                storedDays = await database.GetDays();
+            }
+
 
         }
     }

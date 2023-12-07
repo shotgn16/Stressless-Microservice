@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Data.Entity.Core.Mapping;
 using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.Net;
@@ -216,9 +217,7 @@ namespace Stressless_Service.Database
                 using (SQLiteConnection Connection = await CreateConnection())
                 {
                     await Connection.OpenAsync();
-
                     Response = Connection.QuerySingle<PromptModel>("SELECT * FROM Prompts WHERE Type = '" + type + "' ORDER BY RANDOM() LIMIT 1;");
-
                     await Connection.CloseAsync();
                 }
             }
@@ -238,8 +237,11 @@ namespace Stressless_Service.Database
                 using (SQLiteConnection Connection = await CreateConnection())
                 {
                     await Connection.OpenAsync();
-
-                    Connection.Execute("INSERT INTO Prompts (ID, Type, Text) VALUES ('" + string.Empty + "','" + Prompt.Type + "','" + Prompt.Text + "');");
+                    Connection.Execute(
+                        "INSERT INTO Prompts (ID, Type, Text) VALUES (" +
+                        "'" + string.Empty + "'," +
+                        "'" + Prompt.Type + "'," +
+                        "'" + Prompt.Text + "');");
 
                     await Connection.CloseAsync();
                 }
@@ -260,9 +262,9 @@ namespace Stressless_Service.Database
                 using (SQLiteConnection Connection = await CreateConnection())
                 {
                     await Connection.OpenAsync();
-
-                    Response = Connection.QuerySingle<UsedPromptsModel>("SELECT * FROM UsedPrompts WHERE PromptID = '" + PromptID + "' ORDER BY LastUsed DESC;");
-
+                    Response = Connection.QuerySingle<UsedPromptsModel>(
+                        "SELECT * FROM UsedPrompts WHERE PromptID = '" + PromptID + "' ORDER BY LastUsed DESC;");
+                    
                     await Connection.CloseAsync();
                 }
             }
@@ -283,7 +285,11 @@ namespace Stressless_Service.Database
                 {
                     await Connection.OpenAsync();
 
-                    Connection.Execute("INSERT INTO UsedPrompts (ID, PromptID, LastUsed) VALUES ('" + string.Empty + "', '" + UsedPrompt.PromptID + "', '" + UsedPrompt.LastUsed + "');");
+                    Connection.Execute(
+                        "INSERT INTO UsedPrompts (ID, PromptID, LastUsed) VALUES (" +
+                        "'" + string.Empty + "', " +
+                        "'" + UsedPrompt.PromptID + "', " +
+                        "'" + UsedPrompt.LastUsed + "');");
 
                     await Connection.CloseAsync();
                 }
@@ -302,9 +308,14 @@ namespace Stressless_Service.Database
                 using (SQLiteConnection Connection = await CreateConnection())
                 {
                     await Connection.OpenAsync();
-
-                    Connection.Execute("INSERT INTO 'Auth' (ID, MACAddress, DateCreated, ClientID) VALUES ('" + string.Empty + "', '" + Authentication.MACAddress + "', '" + DateTime.Now + "', '" + Authentication.ClientID + "');");
-
+                    Connection.Execute(
+                        "INSERT INTO 'Auth' " +
+                        "(ID, MACAddress, DateCreated, ClientID) VALUES (" +
+                        "'" + string.Empty + "', " +
+                        "'" + Authentication.MACAddress + "', " +
+                        "'" + DateTime.Now + "', " +
+                        "'" + Authentication.ClientID + "');");
+                    
                     await Connection.CloseAsync();
                 }
             }
@@ -324,9 +335,7 @@ namespace Stressless_Service.Database
                 using (SQLiteConnection Connection = await CreateConnection())
                 {
                     await Connection.OpenAsync();
-
                     Exists = Connection.ExecuteScalar<int>("SELECT count(*) FROM Auth WHERE MACAddress = '" + MACAddress + "';");
-
                     await Connection.CloseAsync();
                 }
             }
@@ -346,9 +355,7 @@ namespace Stressless_Service.Database
             using (SQLiteConnection Connection = await CreateConnection())
             {
                 await Connection.OpenAsync();
-
                 RowsAffected = Connection.Execute($"UPDATE Auth SET DateCreated = '{DateTime.Now}' WHERE MACAddress = '{MACAddress}';");
-
                 await Connection.CloseAsync();
             }
 
@@ -370,14 +377,12 @@ namespace Stressless_Service.Database
 
                     await Connection.CloseAsync();
 
-                    if (string.IsNullOrEmpty(StartShift) || string.IsNullOrEmpty(FinishShift))
-                    {
-                        throw new ArgumentNullException("Invalid value detected!");
+                    if (string.IsNullOrEmpty(StartShift) || string.IsNullOrEmpty(FinishShift)) {
+                        throw new ArgumentNullException("Invalid value detected!"); 
                     }
 
-                    else
-                    {
-                        times = new DateTime[] { Convert.ToDateTime(StartShift), Convert.ToDateTime(FinishShift) };
+                    else {
+                        times = new DateTime[] { Convert.ToDateTime(StartShift), Convert.ToDateTime(FinishShift) }; 
                     }
                 }
             }
@@ -397,9 +402,7 @@ namespace Stressless_Service.Database
                 using (SQLiteConnection Connection = await CreateConnection())
                 {
                     await Connection.OpenAsync();
-
                     await Connection.ExecuteAsync("DELETE * FROM Auth WHERE datetime('now', '-1 day') >= Generated;");
-
                     await Connection.CloseAsync();
                 }
             }
@@ -424,10 +427,14 @@ namespace Stressless_Service.Database
 
                     foreach (var item in calendarEvents)
                     {
-                        Connection.Execute("INSERT INTO 'Calendar' (ID, Name, Start, Finish) VALUES ('" + string.Empty + "', '" + item.Name + "', '" + item.StartDate + "', '" + item.EndDate + "');");
-                    }
-
-                    await Connection.CloseAsync();
+                        await Connection.ExecuteAsync(
+                            "INSERT INTO 'Calendar' (ID, Name, Start, Finish) VALUES (" +
+                            "'" + string.Empty + "', " +
+                            "'" + item.Name + "', " +
+                            "'" + item.StartDate + "', " +
+                            "'" + item.EndDate + "');");
+                    
+                    } await Connection.CloseAsync();
                 }
             }
 
@@ -446,9 +453,7 @@ namespace Stressless_Service.Database
                     foreach (CalendarEvents E in Events)
                     {
                         await Connection.OpenAsync();
-
-                        Connection.Execute("INSERT INTO Events (Runtime, Date) VALUES ('" + E.Runtime + "', '" + E.Event + "');");
-
+                        await Connection.ExecuteAsync("INSERT INTO Events (Runtime, Date) VALUES ('" + E.Runtime + "', '" + E.Event + "');");
                         await Connection.CloseAsync();
                     }
                 }
@@ -460,15 +465,41 @@ namespace Stressless_Service.Database
             }
         }
 
-        public async Task GetDays()
+        public async Task<List<CalendarEvents>> GetDays()
         {
-            IEnumerable<List<CalendarEvents>> Events;
+            List<CalendarEvents> Events = new List<CalendarEvents>();
 
             try
             {
                 using (SQLiteConnection Connection = await CreateConnection())
                 {
-                    Events = Connection.Query<List<CalendarEvents>>("SELECT * FROM Events");
+                    await Connection.OpenAsync();
+
+                    foreach (List<CalendarEvents> eventList in await Connection.QueryAsync<List<CalendarEvents>>("SELECT * FROM Events"))
+                    {
+                        Events.AddRange(eventList);
+
+                    } await Connection.CloseAsync();
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message + ex);
+            }
+
+            return Events;
+        }
+
+        public async Task DeleteDays(int amount)
+        {
+            try
+            {
+                using (SQLiteConnection Connection = await CreateConnection())
+                {
+                    await Connection.OpenAsync();
+                    await Connection.ExecuteAsync("DELETE FROM Events ORDER BY Date ASC Limit " + amount + ";");
+                    await Connection.CloseAsync();
                 }
             }
 
