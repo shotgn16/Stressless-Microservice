@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Diagnostics;
+using Microsoft.AspNetCore.Mvc.Diagnostics;
 using ServiceStack;
 using Stressless_Service.Database;
 using Stressless_Service.Models;
@@ -32,6 +32,7 @@ namespace Stressless_Service.Forecaster
             return eventRuntime;
         }
 
+		// Returns a singular 'Timespan' value for the total FreeTime after subtracting event time from thr day
         private async Task<TimeSpan> CalculateFeeTime(List<CalendarEvents> eventRuntimes, ConfigurationModel Configuration)
         {
             TimeSpan TotalRuntime = new TimeSpan();
@@ -54,6 +55,10 @@ namespace Stressless_Service.Forecaster
             return FreeTime = WorkingTime - TotalRuntime;
         }
 
+		// Will Retrieve all the days of events from the database
+		// * If they are bigger than or equal to 21 days stored, then 1 will be deleted until there is enough room to store the new entries
+		// * Will only allow 21 days (3 weeks) in the database
+		// * will then indert the new days into the database
         public async Task StoreDays(List<CalendarEvents> eventRuntimes)
         {
             List<CalendarEvents[]> OrganisedEvents = new List<CalendarEvents[]>();
@@ -75,6 +80,7 @@ namespace Stressless_Service.Forecaster
             }
         }
 
+		// Method to compare runtime and determine free time allocation each day
         public async Task CompareDays()
         {
             List<CalendarEvents> storedDays = new();
