@@ -109,6 +109,11 @@ namespace Stressless_Service.Database
                     if (table_Events.Equals(0)) {
                         await connection.ExecuteAsync("CREATE TABLE 'Events' ('Runtime' TEXT, 'Date' TEXT)");
                     }
+
+                    int table_Reminder = connection.ExecuteScalar<int>("SELECT count(*) FROM sqlite_master WHERE type='table' and name='Reminder';");
+                    if (table_Reminder.Equals(0)) {
+                        await connection.ExecuteAsync("CREATE TABLE 'Reminders' ('Date' TEXT, 'Time' TEXT)");
+                    }
                 }
 
                 catch (Exception ex)
@@ -507,6 +512,43 @@ namespace Stressless_Service.Database
             {
                 Log.Error(ex.Message + ex);
             }
+        }
+
+        public async Task InsertReminder(Reminder Reminder)
+        {
+            try {
+                using (SQLiteConnection Connection = await CreateConnection()) 
+                {
+                    await Connection.OpenAsync();
+                    await Connection.ExecuteAsync("INSERT INTO Reminders (Date, Time) VALUES ('" + Reminder.Date + "', '" + Reminder.Time + "');");
+                    await Connection.CloseAsync();
+                }
+            }
+
+            catch (Exception ex) {
+                Log.Error(ex.Message + ex);
+            }
+        }
+
+        public async Task<Reminder> GetReminders()
+        {
+            Reminder reminder = new();
+
+            try 
+            {
+                using (SQLiteConnection Connection = await CreateConnection()) 
+                {
+                    await Connection.OpenAsync();
+                    reminder = await Connection.QuerySingleAsync<Reminder>("SELECT * FROM Reminders ORDER BY LastUsed DESC;");
+                    await Connection.CloseAsync();
+                }
+            }
+
+            catch (Exception ex) {
+                Log.Error(ex.Message + ex);
+            }
+
+            return reminder;
         }
 
         public void Dispose() => GC.Collect();

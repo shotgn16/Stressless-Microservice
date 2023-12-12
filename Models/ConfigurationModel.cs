@@ -27,4 +27,10 @@ namespace Stressless_Service.Models
         public TimeSpan Runtime { get; set; }
         public DateTime Event { get; set; }
     }
+
+    public class Reminder
+    {
+        public DateTime Date { get; set; }
+        public TimeSpan Time { get; set; }
+    }
 }
