@@ -30,8 +30,8 @@ namespace Stressless_Service.Forecaster
                 {
                     eventRuntime.Add(new CalendarEvents
                     {
-                        Runtime = item.StartDate.TimeOfDay - item.EndDate.TimeOfDay,
-                        Event = item.StartDate.Date
+                        Runtime = item.StartTime - item.EndTime,
+                        Event = item.EventDate
                     });
 
                     // EXAMPLE
@@ -68,7 +68,7 @@ namespace Stressless_Service.Forecaster
 
         // Run Order : 3
 
-        public async Task<(TimeSpan, List<CalendarEvents>)> CompareDays(DateTime StartTime, DateTime FinishTime)
+        public async Task<(TimeSpan, List<CalendarEvents>)> CompareDays(TimeOnly StartTime, TimeOnly FinishTime)
         {
             // Defines instances of the classes and variables needed for this method
             List<CalendarEvents> storedDays = new();
@@ -87,7 +87,7 @@ namespace Stressless_Service.Forecaster
                 foreach (var item in days) {
 
                     // If the event ooccurs today
-                    if (item.Event == DateTime.Now.Date) {
+                    if (item.Event == DateOnly.FromDateTime(DateTime.Now)) {
                         
                         // Add the runtime of that event to an array
                         OccupiedTime.Add(item.Runtime);
@@ -116,18 +116,19 @@ namespace Stressless_Service.Forecaster
                 // Check if...
                 // * Date of the event occurred Today [DateTime.Now.Date]
                 // * Time of the event was at least 2 hours ago [DateTime.Now.Subtrace(TimeSpan.FromHours(2))]
-                if (LatestReminders.Date == DateTime.Now.Date && LatestReminders.Time >= DateTime.Now.TimeOfDay.Subtract(TimeSpan.FromHours(2)))
+                if (LatestReminders.Date == DateOnly.FromDateTime(DateTime.Now) && LatestReminders.Time >= TimeOnly.FromDateTime(DateTime.Now - TimeSpan.FromHours(2)))
                 {    
                     // Checks if the 'time of the event' : 'LatestReminder.Time' is within the specific working hours the user specified.  
-                    if (LatestReminders.Time >= config.StartTime.TimeOfDay && LatestReminders.Time <= config.EndTime.TimeOfDay)
+                    if (LatestReminders.Time >= config.StartTime && LatestReminders.Time <= config.EndTime)
                     {
                         // Must have at least 30 minutes spare minutes to allow a 15 minuit break...
                         if (FreeTime.Minutes >= 30)
                         {
                             // If all the criteria is met - Will insert the reminder into the database and return 'True'
+                            await database.InsertReminder(new Reminder { Date = DateOnly.FromDateTime(DateTime.Now), Time = TimeOnly.FromDateTime(DateTime.Now) });
+
                             // [remindUser = True] will trigger a response to the client that will cause a user prompt to take a break
-                            await database.InsertReminder(new Reminder { Date = DateTime.Now.Date, Time = DateTime.Now.TimeOfDay });
-                            remindUser = true;
+                            remindUser = true; 
                         }
                     }
                 }

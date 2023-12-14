@@ -128,3 +128,8 @@ finally
 {
     NLog.LogManager.Flush();
 }
+
+
+//BUGS - See Below 
+//      1) Will NOT correctly store TimeOnly variable. Will store as '00:00', rather than actual time
+//      2) Not parsing any events (Not 100% sure on that, need to check!) 

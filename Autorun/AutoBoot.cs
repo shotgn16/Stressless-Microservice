@@ -19,7 +19,7 @@ namespace Stressless_Service.Auto_Run
                 {
                     ConfigurationModel configuration = await database.GetConfiguration();
 
-                    if (configuration.StartTime.Date != DateTime.MinValue && configuration.EndTime != DateTime.MinValue)
+                    if (configuration.StartTime != TimeOnly.MinValue && configuration.EndTime != TimeOnly.MinValue)
                     {
                         DateTime[] Times = await database.GetShift();
 

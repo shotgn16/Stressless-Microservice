@@ -10,8 +10,8 @@ namespace Stressless_Service
         public async Task InitalizeSystem()
         {
 
-            using (EventCalculator Calculator = new EventCalculator()) {
-                await Calculator.PromptBreak();
+            using (PromptTimer Prompt = new PromptTimer()) {
+                await Prompt.StartTimer();
             }
 
             using (AutoBootTimer Boot = new AutoBootTimer()) {

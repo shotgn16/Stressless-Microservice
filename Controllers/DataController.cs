@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Stressless_Service.JwtSecurityTokens;
 using NLog.Fluent;
 using Stressless_Service.Forecaster;
+using NLog;
 
 namespace Stressless_Service.Controllers
 {
@@ -12,7 +13,7 @@ namespace Stressless_Service.Controllers
     [System.Web.Http.Route("[controller]")]
     public class DataController : ControllerBase
     {
-        private readonly ILogger _logger;
+        private readonly Microsoft.Extensions.Logging.ILogger _logger;
         private readonly ITokenGeneratorService _tokenGeneratorService;
 
         public DataController(ILogger<DataController> logger, ITokenGeneratorService tokenGeneratorService)
@@ -140,9 +141,9 @@ namespace Stressless_Service.Controllers
                     {
                         using (database database = new database())
                         {
-                            ConfigurationModel OriginalConfiguration = await database.GetConfiguration();
+                            var OriginalConfiguration = await database.GetConfiguration();
 
-                            if (!OriginalConfiguration.Equals(Configuration))
+                            if (OriginalConfiguration == null || OriginalConfiguration != Configuration ) 
                             {
                                 await database.DeleteConfiguration();
                                     await database.InsertConfiguration(Configuration);
@@ -209,49 +210,47 @@ namespace Stressless_Service.Controllers
 
         [Authorize]
         [HttpPost("PromptReminder")]
-        public async Task<bool> PromptReminder([FromBody] ConfigurationModel NewConfiguration)
+        public async Task<bool> PromptReminder()
         {
             bool reminderUser = false;
 
-            // Define a varaible and fill it with the Bearer token value that the client should have sent. 
-            // This value will have been generated from the 'Authorize' endpoint on this app but is used to authenticate the application
-            var BearerToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-
-            // Checking that the token value isn't empty 
-            if (!string.IsNullOrEmpty(BearerToken))
+            try
             {
-                using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
+                // Define a varaible and fill it with the Bearer token value that the client should have sent. 
+                // This value will have been generated from the 'Authorize' endpoint on this app but is used to authenticate the application
+                var BearerToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+
+                // Checking that the token value isn't empty 
+                if (!string.IsNullOrEmpty(BearerToken))
                 {
-                    // Validating the BearerToken...
-                    if (await tokenValidation.Handler(BearerToken))
+                    using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
                     {
-                        // If the token is VALID, it will continue into this code...
-
-                        using (database database = new database())
+                        // Validating the BearerToken...
+                        if (await tokenValidation.Handler(BearerToken))
                         {
-                            ConfigurationModel OriginalConfiguration = await database.GetConfiguration();
+                            // If the token is VALID, it will continue into this code...
 
-                            // If the new configuration is NOT equal to the one stored in the database...
-                            if (!OriginalConfiguration.Equals(NewConfiguration))
+                            using (database database = new database())
                             {
-                                // Delete the one stored in the database
-                                await database.DeleteConfiguration();
+                                var Configuration = await database.GetConfiguration();
 
-                                // Insert the new one to replace it
-                                await database.InsertConfiguration(NewConfiguration);
-                            }
-                        }
-
-                        if (!string.IsNullOrEmpty(NewConfiguration.calenderImport) && NewConfiguration.calender[0].Name != null)
-                        {
-                            using (EventCalculator Calculator = new EventCalculator())
-                            {
-                                await Calculator.EventHandler(NewConfiguration.calender, NewConfiguration);
-                                reminderUser = await Calculator.PromptBreak(NewConfiguration);
+                                if (Configuration != null && !string.IsNullOrEmpty(Configuration.calenderImport))
+                                {
+                                    using (EventCalculator Calculator = new EventCalculator())
+                                    {
+                                        await Calculator.EventHandler(Configuration.calender, Configuration);
+                                        reminderUser = await Calculator.PromptBreak(Configuration);
+                                    }
+                                }
                             }
                         }
                     }
                 }
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
             }
 
             // IF:True, Remind User... | IF:False, Do Nothing...

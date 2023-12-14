@@ -92,7 +92,7 @@ namespace Stressless_Service.Database
 
                     int table_Calendar = connection.ExecuteScalar<int>("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Calendar';");
                     if (table_Calendar.Equals(0)) {
-                        await connection.ExecuteAsync("CREATE TABLE 'Calendar' ('ID' INTEGER, 'Name' TEXT, 'Start' TEXT, 'Finish' TEXT);");
+                        await connection.ExecuteAsync("CREATE TABLE 'Calendar' ('ID' INTEGER, 'Name' TEXT, 'Start' TEXT, 'Finish' TEXT, 'Date' TEXT);");
                     }
 
                     int table_Events = connection.ExecuteScalar<int>("SELECT count(*) FROM sqlite_master WHERE type='table' and name='Events';");
@@ -206,8 +206,8 @@ namespace Stressless_Service.Database
                         + "(1,'" + Configuration.firstname
                         + "', '" + Configuration.lastname
                         + "', '" + JsonConvert.SerializeObject(Configuration.workingDays)
-                        + "', '" + Configuration.StartTime.TimeOfDay
-                        + "', '" + Configuration.EndTime.TimeOfDay
+                        + "', '" + Configuration.StartTime
+                        + "', '" + Configuration.EndTime
                         + "', '" + Configuration.calenderImport
                         + "', '" + JsonConvert.SerializeObject(Configuration.calender) + "');");
 
@@ -452,8 +452,9 @@ namespace Stressless_Service.Database
                             "INSERT INTO 'Calendar' (ID, Name, Start, Finish) VALUES (" +
                             "'" + string.Empty + "', " +
                             "'" + item.Name + "', " +
-                            "'" + item.StartDate + "', " +
-                            "'" + item.EndDate + "');");
+                            "'" + item.StartTime + "', " +
+                            "'" + item.EndTime + "', " + 
+                            "'" + item.EventDate + "');");
                     
                     } await Connection.CloseAsync();
                 }
