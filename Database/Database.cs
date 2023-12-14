@@ -1,26 +1,16 @@
-﻿using System.Collections;
-using System.Data.Entity.Core.Mapping;
-using System.Data.SqlClient;
-using System.Data.SQLite;
-using System.Net;
+﻿using System.Data.SQLite;
 using System.Reflection;
-using System.Text.Json.Nodes;
 using Dapper;
-using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using NLog;
-using NLog.Fluent;
 using NLog.Web;
-using Stressless_Service.Forecaster;
-using Stressless_Service.JwtSecurityTokens;
 using Stressless_Service.Models;
 
 namespace Stressless_Service.Database
 {
     public class database : IDisposable
     {
-        Logger classLogger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+        Logger logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
 
         public database() => dbBuild();
         private string _connectionString { get; set; }
@@ -47,7 +37,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                classLogger.Error(ex.Message, ex);
+                logger.Error(ex.Message, ex);
             }
 
         End:
@@ -66,7 +56,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex) 
             {
-                classLogger.Error(ex.Message, ex);
+                logger.Error(ex.Message, ex);
             }
 
             return connection;
@@ -118,7 +108,7 @@ namespace Stressless_Service.Database
 
                 catch (Exception ex)
                 {
-                    classLogger.Error(ex.Message, ex);
+                    logger.Error(ex.Message, ex);
 
                     return Task.FromException(ex);
                 }
@@ -154,7 +144,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                classLogger.Error(ex.Message, ex);
+                logger.Error(ex.Message, ex);
             }
 
             return Response;
@@ -178,10 +168,28 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                classLogger.Error(ex.Message, ex);
+                logger.Error(ex.Message, ex);
             }
 
             return configExists;
+        }
+
+        public async Task DeleteConfiguration()
+        {
+            try
+            {
+                using (SQLiteConnection Connection = await CreateConnection())
+                {
+                    await Connection.OpenAsync();
+                    await Connection.ExecuteAsync("DELETE * FROM CONFIGURATION WHERE ID = '1';");
+                    await Connection.CloseAsync();
+                }
+            }
+
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message, ex);
+            }
         }
 
         public async Task InsertConfiguration(ConfigurationModel Configuration)
@@ -209,7 +217,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                classLogger.Error(ex.Message, ex);
+                logger.Error(ex.Message, ex);
             }
         }
 
@@ -229,7 +237,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                classLogger.Error(ex.Message, ex);
+                logger.Error(ex.Message, ex);
             }
 
             return Response;
@@ -254,7 +262,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                classLogger.Error(ex.Message, ex);
+                logger.Error(ex.Message, ex);
             }
         }
 
@@ -276,7 +284,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                classLogger.Error(ex.Message, ex);
+                logger.Error(ex.Message, ex);
             }
 
             return Response;
@@ -302,7 +310,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                classLogger.Error(ex.Message, ex);
+                logger.Error(ex.Message, ex);
             }
         }
 
@@ -327,7 +335,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                classLogger.Error(ex.Message, ex);
+                logger.Error(ex.Message, ex);
             }
         }
 
@@ -347,7 +355,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                classLogger.Error(ex.Message, ex);
+                logger.Error(ex.Message, ex);
             }
 
             return Exists;
@@ -355,13 +363,21 @@ namespace Stressless_Service.Database
 
         public async Task<int> UpdateAuth(string MACAddress)
         {
-            int RowsAffected;
+            int RowsAffected = 0;
 
-            using (SQLiteConnection Connection = await CreateConnection())
+            try
             {
-                await Connection.OpenAsync();
-                RowsAffected = Connection.Execute($"UPDATE Auth SET DateCreated = '{DateTime.Now}' WHERE MACAddress = '{MACAddress}';");
-                await Connection.CloseAsync();
+                using (SQLiteConnection Connection = await CreateConnection())
+                {
+                    await Connection.OpenAsync();
+                    RowsAffected = Connection.Execute($"UPDATE Auth SET DateCreated = '{DateTime.Now}' WHERE MACAddress = '{MACAddress}';");
+                    await Connection.CloseAsync();
+                }
+            }
+
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message, ex);
             }
 
             return RowsAffected;
@@ -394,7 +410,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                classLogger.Error(ex.Message, ex);
+                logger.Error(ex.Message, ex);
             }
 
             return times;
@@ -414,7 +430,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                classLogger.Error(ex.Message, ex);
+                logger.Error(ex.Message, ex);
             }
         }
 
@@ -445,7 +461,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                classLogger.Error(ex.Message, ex);
+                logger.Error(ex.Message, ex);
             }
         }
 
@@ -466,7 +482,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                Log.Error(ex.Message + ex);
+                logger.Error(ex.Message, ex);
             }
         }
 
@@ -490,7 +506,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                Log.Error(ex.Message + ex);
+                logger.Error(ex.Message, ex);
             }
 
             return Events;
@@ -510,7 +526,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                Log.Error(ex.Message + ex);
+                logger.Error(ex.Message, ex);
             }
         }
 
@@ -526,7 +542,7 @@ namespace Stressless_Service.Database
             }
 
             catch (Exception ex) {
-                Log.Error(ex.Message + ex);
+                logger.Error(ex.Message, ex);
             }
         }
 
@@ -545,7 +561,7 @@ namespace Stressless_Service.Database
             }
 
             catch (Exception ex) {
-                Log.Error(ex.Message + ex);
+                logger.Error(ex.Message, ex);
             }
 
             return reminder;

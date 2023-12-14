@@ -4,6 +4,7 @@ using Stressless_Service.Models;
 using Microsoft.AspNetCore.Authorization;
 using Stressless_Service.JwtSecurityTokens;
 using NLog.Fluent;
+using Stressless_Service.Forecaster;
 
 namespace Stressless_Service.Controllers
 {
@@ -139,9 +140,14 @@ namespace Stressless_Service.Controllers
                     {
                         using (database database = new database())
                         {
-                            await database.InsertConfiguration(Configuration);
+                            ConfigurationModel OriginalConfiguration = await database.GetConfiguration();
 
-                            await database.InsertCalenderEvents(Configuration.calender);
+                            if (!OriginalConfiguration.Equals(Configuration))
+                            {
+                                await database.DeleteConfiguration();
+                                    await database.InsertConfiguration(Configuration);
+                                    await database.InsertCalenderEvents(Configuration.calender);
+                            }
                         }
                     }
                 }
@@ -201,38 +207,55 @@ namespace Stressless_Service.Controllers
             return Ok("Success!");
         }
 
-        //[Authorize]
-        //[HttpGet("ForcastFreetime")]
-        //public async Task ForcastFreetime()
-        //{
-        //    ConfigurationModel Config = new ConfigurationModel();
-        //    CalendarPrediction Forcasts = new CalendarPrediction();
+        [Authorize]
+        [HttpPost("PromptReminder")]
+        public async Task<bool> PromptReminder([FromBody] ConfigurationModel NewConfiguration)
+        {
+            bool reminderUser = false;
 
-        //    var BearerToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            // Define a varaible and fill it with the Bearer token value that the client should have sent. 
+            // This value will have been generated from the 'Authorize' endpoint on this app but is used to authenticate the application
+            var BearerToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
 
-        //    if (!string.IsNullOrEmpty(BearerToken))
-        //    {
-        //        using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
-        //        {
-        //            if (await tokenValidation.Handler(BearerToken))
-        //            {
-        //                using (database database = new database())
-        //                {
-        //                    Config = await database.GetConfiguration();
-        //                }
+            // Checking that the token value isn't empty 
+            if (!string.IsNullOrEmpty(BearerToken))
+            {
+                using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
+                {
+                    // Validating the BearerToken...
+                    if (await tokenValidation.Handler(BearerToken))
+                    {
+                        // If the token is VALID, it will continue into this code...
 
-        //                if (!string.IsNullOrEmpty(Config.calenderImport) && Config.calender[0].name != null)
-        //                {
-        //                    using (ForcastFreeTime forcastClass = new ForcastFreeTime())
-        //                    {
-        //                        Forcasts = await forcastClass.Forcast(Config.calender);
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
+                        using (database database = new database())
+                        {
+                            ConfigurationModel OriginalConfiguration = await database.GetConfiguration();
 
-        //    return Forcasts;
-        //}
+                            // If the new configuration is NOT equal to the one stored in the database...
+                            if (!OriginalConfiguration.Equals(NewConfiguration))
+                            {
+                                // Delete the one stored in the database
+                                await database.DeleteConfiguration();
+
+                                // Insert the new one to replace it
+                                await database.InsertConfiguration(NewConfiguration);
+                            }
+                        }
+
+                        if (!string.IsNullOrEmpty(NewConfiguration.calenderImport) && NewConfiguration.calender[0].Name != null)
+                        {
+                            using (EventCalculator Calculator = new EventCalculator())
+                            {
+                                await Calculator.EventHandler(NewConfiguration.calender, NewConfiguration);
+                                reminderUser = await Calculator.PromptBreak(NewConfiguration);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // IF:True, Remind User... | IF:False, Do Nothing...
+            return reminderUser;
+        }
     }
 }

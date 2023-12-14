@@ -6,12 +6,16 @@ namespace Stressless_Service.Forecaster
 {
     public class EventCalculator : IDisposable
     {
+        private static TimeSpan FreeTime;
+
         public async Task EventHandler(CalenderModel[] calenderEvents, ConfigurationModel configuration)
         {
             List<CalendarEvents> events = await FormatEventData(calenderEvents);
 
             await StoreDays(events);
-            await CompareDays(configuration.StartTime, configuration.EndTime);
+            (TimeSpan, List<CalendarEvents>) Comparison = await CompareDays(configuration.StartTime, configuration.EndTime);
+
+            FreeTime = Comparison.Item1;
         }
 
         // Run Order : 1
@@ -63,19 +67,32 @@ namespace Stressless_Service.Forecaster
         }
 
         // Run Order : 3
-        public async Task<TimeSpan> CompareDays(DateTime StartTime, DateTime FinishTime)
-        {
-            List<CalendarEvents> storedDays = new List<CalendarEvents>();
-            TimeSpan WorkTime = StartTime - FinishTime;
-            TimeSpan OccupiedTime = new TimeSpan();
-            TimeSpan FreeTime = new TimeSpan();
 
+        public async Task<(TimeSpan, List<CalendarEvents>)> CompareDays(DateTime StartTime, DateTime FinishTime)
+        {
+            // Defines instances of the classes and variables needed for this method
+            List<CalendarEvents> storedDays = new();
+            TimeSpan OccupiedTime = new();
+            TimeSpan FreeTime = new();
+
+            // Works out the total time spend in meetings and events by working out the difference between the start and finish times in a specified working day.
+            TimeSpan WorkTime = StartTime - FinishTime;
+
+            // Using a database instance to get a list of all the days stored in the database. 
+            // The 'Using' statement makes use of 'Disposable' classes, ensuring that they can be cleaned up after they are finished with (reducing the risk of memory leaks).
             using (database database = new database()) {
                 var days = await database.GetDays();
                 
+                // Foreach event in the list of days returned from the database...
                 foreach (var item in days) {
+
+                    // If the event ooccurs today
                     if (item.Event == DateTime.Now.Date) {
+                        
+                        // Add the runtime of that event to an array
                         OccupiedTime.Add(item.Runtime);
+
+                        // Add the event to the List Events for later use.
                         storedDays.Add(item);
                     }
                 }
@@ -83,11 +100,11 @@ namespace Stressless_Service.Forecaster
                 FreeTime = WorkTime - OccupiedTime;
             }
 
-            return FreeTime;
+            return (FreeTime, storedDays);
         }
 
         // True: Generate Notification | False: Don't do anything...
-        public async Task<bool> PromptBreak()
+        public async Task<bool> PromptBreak(ConfigurationModel config = null)
         {
             Reminder LatestReminders = new();
             bool remindUser = false;
@@ -96,11 +113,23 @@ namespace Stressless_Service.Forecaster
             {
                 LatestReminders = await database.GetReminders();
 
-                if (LatestReminders.Date == DateTime.Now.Date && 
-                    LatestReminders.Time >= DateTime.Now.TimeOfDay.Subtract(TimeSpan.FromHours(2))) 
+                // Check if...
+                // * Date of the event occurred Today [DateTime.Now.Date]
+                // * Time of the event was at least 2 hours ago [DateTime.Now.Subtrace(TimeSpan.FromHours(2))]
+                if (LatestReminders.Date == DateTime.Now.Date && LatestReminders.Time >= DateTime.Now.TimeOfDay.Subtract(TimeSpan.FromHours(2)))
                 {    
-                    remindUser = true;   
-                    await database.InsertReminder(new Reminder { Date = DateTime.Now.Date, Time = DateTime.Now.TimeOfDay });
+                    // Checks if the 'time of the event' : 'LatestReminder.Time' is within the specific working hours the user specified.  
+                    if (LatestReminders.Time >= config.StartTime.TimeOfDay && LatestReminders.Time <= config.EndTime.TimeOfDay)
+                    {
+                        // Must have at least 30 minutes spare minutes to allow a 15 minuit break...
+                        if (FreeTime.Minutes >= 30)
+                        {
+                            // If all the criteria is met - Will insert the reminder into the database and return 'True'
+                            // [remindUser = True] will trigger a response to the client that will cause a user prompt to take a break
+                            await database.InsertReminder(new Reminder { Date = DateTime.Now.Date, Time = DateTime.Now.TimeOfDay });
+                            remindUser = true;
+                        }
+                    }
                 }
             }
 

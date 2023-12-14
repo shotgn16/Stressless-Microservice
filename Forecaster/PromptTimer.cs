@@ -3,7 +3,7 @@ using System.Timers;
 
 namespace Stressless_Service.Forecaster
 {
-    public class PromptTimer
+    public class PromptTimer : IDisposable
     {
         private static System.Timers.Timer prTimer;
         private static bool isActive = false;
@@ -34,6 +34,8 @@ namespace Stressless_Service.Forecaster
 
             GC.Collect();
         }
+
+        public void Dispose() => GC.Collect();
 
     }
 }

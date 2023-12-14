@@ -112,9 +112,8 @@ try {
     app.MapControllers();  
     app.UseHsts();
 
-    // Triggering a method to start a timer that will start the application within the specified working hours
-    using (Startup Startup = new Startup()) {
-        await Startup.InitializeSystem();
+    using (timers bootTimers = new timers()) {
+        await bootTimers.InitalizeSystem();
     }
 
     app.Run();
@@ -129,4 +128,3 @@ finally
 {
     NLog.LogManager.Flush();
 }
-
