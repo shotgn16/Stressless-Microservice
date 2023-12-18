@@ -7,6 +7,8 @@ using Stressless_Service.Configuration;
 using NLog.Web;
 using NLog.Extensions.Logging;
 using Stressless_Service;
+using System.Data.SQLite;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,7 +49,6 @@ try {
             AuthPolicy.RequireClaim("ID", GlobalConfiguration._configuration["AppSettings:ID"]);
         });
     });
-
 
     builder.Services.AddControllers();
     builder.Services.AddLogging();
@@ -128,8 +129,3 @@ finally
 {
     NLog.LogManager.Flush();
 }
-
-
-//BUGS - See Below 
-//      1) Will NOT correctly store TimeOnly variable. Will store as '00:00', rather than actual time
-//      2) Not parsing any events (Not 100% sure on that, need to check!) 

@@ -21,7 +21,7 @@ public class AuthenticateClass : IDisposable
     {
         AuthenticationTokenModel returnModel = new AuthenticationTokenModel();
 
-        using (database db = new database())
+        using (database db = new database(_logger))
         {
             // Checking if an authentication request with this MAC and ClientID already exists
             int AuthResponse = AuthExists(model.MACAddress, model.ClientID);
@@ -74,7 +74,7 @@ public class AuthenticateClass : IDisposable
         int value = 10;
         string configID = GlobalConfiguration._configuration.GetSection("AppSettings")["ID"];
 
-        using (database db = new database())
+        using (database db = new database(_logger))
         {
             if (db.GetAuth(MACAddress).Result == 0 && ID == configID)
             {

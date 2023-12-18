@@ -1,142 +1,49 @@
-﻿using System.Data.SQLite;
+﻿using System.Data.Common;
+using System.Data.Entity.Infrastructure;
+using System.Data.SQLite;
 using System.Reflection;
 using Dapper;
 using Newtonsoft.Json;
-using NLog;
-using NLog.Web;
+using Stressless_Service.Factories;
 using Stressless_Service.Models;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace Stressless_Service.Database
 {
     public class database : IDisposable
     {
-        Logger logger = NLog.LogManager.Setup().LoadConfigurationFromAppSettings().GetCurrentClassLogger();
+        private ILogger logger { get; set; }
+        private DatabaseFactory _databaseFactory;
 
-        public database() => dbBuild();
-        private string _connectionString { get; set; }
-
-        private async Task<bool> dbBuild()
+        public database(ILogger _logger)
         {
-            bool dbExists = false;
-            
-            try
-            {
-                _connectionString = $"Data Source={Path.GetDirectoryName(Assembly.GetEntryAssembly().Location)}\\database.db;Version=3;";
+            logger = _logger;
 
-                if (File.Exists($"{Path.GetDirectoryName(Assembly.GetEntryAssembly().Location)}\\database.db"))
-                {
-                    dbExists = true;
-                    goto End;
-                }
-
-                else if (!File.Exists($"{Path.GetDirectoryName(Assembly.GetEntryAssembly().Location)}\\database.db"))
-                {
-                    SQLiteConnection.CreateFile($"{Path.GetDirectoryName(Assembly.GetEntryAssembly().Location)}\\database.db");
-                }
-            }
-
-            catch (Exception ex)
-            {
-                logger.Error(ex.Message, ex);
-            }
-
-        End:
-            await dbSetup();
-            return dbExists;
-        }
-
-        public async Task<SQLiteConnection> CreateConnection()
-          {
-            SQLiteConnection connection = null;
-
-            try
-            {
-                connection = new SQLiteConnection(_connectionString);
-            }
-
-            catch (Exception ex) 
-            {
-                logger.Error(ex.Message, ex);
-            }
-
-            return connection;
-        }
-
-        public async Task<Task> dbSetup()
-        {
-            using (SQLiteConnection connection = await CreateConnection())
-            {
-                await connection.OpenAsync();
-
-                try
-                {
-                    int table_Configuration = connection.ExecuteScalar<int>("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Prompts';");
-                    if (table_Configuration.Equals(0)) {
-                        await connection.ExecuteAsync("CREATE TABLE 'Configuration' ('ID' INTEGER, 'Firstname' TEXT, 'Lastname' INTEGER, 'WorkingDays' TEXT, 'Start_time' TEXT, 'Finish_time' TEXT, 'CalenderImport' TEXT, 'Calender' TEXT, PRIMARY KEY('ID'));");
-                    }
-
-                    int table_Prompts = connection.ExecuteScalar<int>("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Prompts';");
-                    if (table_Configuration.Equals(0)) {
-                        await connection.ExecuteAsync("CREATE TABLE 'Prompts' ('ID' INTEGER, 'Type' TEXT, 'Text' TEXT, PRIMARY KEY('ID'));");
-                    }
-
-                    int table_UsedPrompts = connection.ExecuteScalar<int>("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='UsedPrompts';");
-                    if (table_UsedPrompts.Equals(0)) {
-                        await connection.ExecuteAsync("CREATE TABLE 'UsedPrompts' ('ID' INTEGER, 'PromptID' INTEGER, 'LastUsed' TEXT, FOREIGN KEY('PromptID') REFERENCES 'Prompts', PRIMARY KEY('ID'));");
-                    }
-
-                    int table_Auth = connection.ExecuteScalar<int>("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Auth';");
-                    if (table_Auth.Equals(0)) {
-                        await connection.ExecuteAsync("CREATE TABLE 'Auth' ('ID' INTEGER, 'MACAddress' TEXT, 'DateCreated' TEXT, 'ClientID' TEXT);");
-                    }
-
-                    int table_Calendar = connection.ExecuteScalar<int>("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='Calendar';");
-                    if (table_Calendar.Equals(0)) {
-                        await connection.ExecuteAsync("CREATE TABLE 'Calendar' ('ID' INTEGER, 'Name' TEXT, 'Start' TEXT, 'Finish' TEXT, 'Date' TEXT);");
-                    }
-
-                    int table_Events = connection.ExecuteScalar<int>("SELECT count(*) FROM sqlite_master WHERE type='table' and name='Events';");
-                    if (table_Events.Equals(0)) {
-                        await connection.ExecuteAsync("CREATE TABLE 'Events' ('Runtime' TEXT, 'Date' TEXT)");
-                    }
-
-                    int table_Reminder = connection.ExecuteScalar<int>("SELECT count(*) FROM sqlite_master WHERE type='table' and name='Reminder';");
-                    if (table_Reminder.Equals(0)) {
-                        await connection.ExecuteAsync("CREATE TABLE 'Reminders' ('Date' TEXT, 'Time' TEXT)");
-                    }
-                }
-
-                catch (Exception ex)
-                {
-                    logger.Error(ex.Message, ex);
-
-                    return Task.FromException(ex);
-                }
-
-                return Task.CompletedTask;
-            }
+            _databaseFactory = new DatabaseFactory(logger);
+            _databaseFactory.databasebBuild($"Data Source={Path.GetDirectoryName(Assembly.GetEntryAssembly().Location)}\\database.db;Version=3;");
         }
 
         public async Task<ConfigurationModel> GetConfiguration()
         {
-            ConfigurationModel Response = new ConfigurationModel();
-            List<CalenderModel> Results = new List<CalenderModel>();
+            ConfigurationModel TaskResponse_Configuration = new();
+            List<CalenderModel> Calenderlist = new();
 
             try
             {
-                using (SQLiteConnection Connection = await CreateConnection())
+                using (SQLiteConnection Connection = await _databaseFactory.CreateConnection())
                 {
                     await Connection.OpenAsync();
 
-                    Response = Connection.QueryFirstOrDefault<ConfigurationModel>("SELECT ID, Firstname, Lastname, Start_time, Finish_time, CalenderImport FROM Configuration WHERE ID = '1'");
+                    TaskResponse_Configuration = await Connection.QueryFirstAsync<ConfigurationModel>("SELECT ID, FirstName, LastName, DayStartTime, DayEndTime, CalenderImport FROM Configuration");
 
-                    string Calender = Connection.QueryFirstOrDefault<string>("SELECT Calender FROM Configuration WHERE ID = '1'");
+                    string strCalender = await Connection.QueryFirstAsync<string>("SELECT Calender FROM Configuration");
+                    string strWorkingDays = await Connection.QueryFirstAsync<string>("SELECT WorkingDays FROM Configuration");
 
-                    Results = JsonConvert.DeserializeObject<List<CalenderModel>>(Calender);
-                    Response.calender = Results.ToArray();
+                    Calenderlist = JsonConvert.DeserializeObject<List<CalenderModel>>(strCalender);
 
-                    string days = Connection.QueryFirstOrDefault<string>("SELECT workingdays FROM Configuration WHERE ID = '1'"); ;
-                    Response.workingDays = JsonConvert.DeserializeObject<string[]>(days);
+                    // Assigning the remaining values
+                    TaskResponse_Configuration.WorkingDays = JsonConvert.DeserializeObject<string[]>(strWorkingDays);
+                    TaskResponse_Configuration.Calender = Calenderlist.ToArray();
 
                     await Connection.CloseAsync();
                 }
@@ -144,10 +51,10 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                logger.Error(ex.Message, ex);
+                logger.LogError(ex.Message, ex);
             }
 
-            return Response;
+            return TaskResponse_Configuration;
         }
 
         public async Task<int> ConfigurationExists()
@@ -156,7 +63,7 @@ namespace Stressless_Service.Database
 
             try
             {
-                using (SQLiteConnection Connection = await CreateConnection())
+                using (SQLiteConnection Connection = await _databaseFactory.CreateConnection())
                 {
                     await Connection.OpenAsync();
 
@@ -168,7 +75,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                logger.Error(ex.Message, ex);
+                logger.LogError(ex.Message, ex);
             }
 
             return configExists;
@@ -178,7 +85,7 @@ namespace Stressless_Service.Database
         {
             try
             {
-                using (SQLiteConnection Connection = await CreateConnection())
+                using (SQLiteConnection Connection = await _databaseFactory.CreateConnection())
                 {
                     await Connection.OpenAsync();
                     await Connection.ExecuteAsync("DELETE * FROM CONFIGURATION WHERE ID = '1';");
@@ -188,7 +95,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                logger.Error(ex.Message, ex);
+                logger.LogError(ex.Message, ex);
             }
         }
 
@@ -196,20 +103,14 @@ namespace Stressless_Service.Database
         {
             try
             {
-                using (SQLiteConnection Connection = await CreateConnection())
+                using (SQLiteConnection Connection = await _databaseFactory.CreateConnection())
                 {
                     await Connection.OpenAsync();
 
-                    // CREATE A METHOD THAT GETS THE CONFIGURATION - FINDS ITS ID THEN INCREMENTS IT BY +1 for the next time [AND CAN BE USED FOR MORE THAN ONE TYPE]
-                    Connection.Execute("INSERT INTO Configuration " +
-                        "(ID, Firstname, Lastname, WorkingDays, Start_time, Finish_time, CalenderImport, Calender) VALUES "
-                        + "(1,'" + Configuration.firstname
-                        + "', '" + Configuration.lastname
-                        + "', '" + JsonConvert.SerializeObject(Configuration.workingDays)
-                        + "', '" + Configuration.StartTime
-                        + "', '" + Configuration.EndTime
-                        + "', '" + Configuration.calenderImport
-                        + "', '" + JsonConvert.SerializeObject(Configuration.calender) + "');");
+                    await Connection.ExecuteAsync("INSERT INTO Configuration (ID, FirstName, LastName, WorkingDays, DayStartTime, DayEndTime, CalenderImport, Calender) " +
+                        "VALUES (1, '"
+                        + Configuration.FirstName + "', '" + Configuration.LastName + "', '" + JsonConvert.SerializeObject(Configuration.WorkingDays) + "', '" + Configuration.DayStartTime + "', '"
+                        + Configuration.DayEndTime + "', '" + Configuration.CalenderImport + "', '" + JsonConvert.SerializeObject(Configuration.Calender) + "');");
 
                     await Connection.CloseAsync();
                 }
@@ -217,7 +118,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                logger.Error(ex.Message, ex);
+                logger.LogError(ex.Message, ex);
             }
         }
 
@@ -227,7 +128,7 @@ namespace Stressless_Service.Database
 
             try
             {
-                using (SQLiteConnection Connection = await CreateConnection())
+                using (SQLiteConnection Connection = await _databaseFactory.CreateConnection())
                 {
                     await Connection.OpenAsync();
                     Response = Connection.QuerySingle<PromptModel>("SELECT * FROM Prompts WHERE Type = '" + type + "' ORDER BY RANDOM() LIMIT 1;");
@@ -237,7 +138,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                logger.Error(ex.Message, ex);
+                logger.LogError(ex.Message, ex);
             }
 
             return Response;
@@ -247,7 +148,7 @@ namespace Stressless_Service.Database
         {
             try
             {
-                using (SQLiteConnection Connection = await CreateConnection())
+                using (SQLiteConnection Connection = await _databaseFactory.CreateConnection())
                 {
                     await Connection.OpenAsync();
                     Connection.Execute(
@@ -262,7 +163,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                logger.Error(ex.Message, ex);
+                logger.LogError(ex.Message, ex);
             }
         }
 
@@ -272,7 +173,7 @@ namespace Stressless_Service.Database
 
             try
             {
-                using (SQLiteConnection Connection = await CreateConnection())
+                using (SQLiteConnection Connection = await _databaseFactory.CreateConnection())
                 {
                     await Connection.OpenAsync();
                     Response = Connection.QuerySingle<UsedPromptsModel>(
@@ -284,7 +185,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                logger.Error(ex.Message, ex);
+                logger.LogError(ex.Message, ex);
             }
 
             return Response;
@@ -294,7 +195,7 @@ namespace Stressless_Service.Database
         {
             try
             {
-                using (SQLiteConnection Connection = await CreateConnection())
+                using (SQLiteConnection Connection = await _databaseFactory.CreateConnection())
                 {
                     await Connection.OpenAsync();
 
@@ -310,7 +211,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                logger.Error(ex.Message, ex);
+                logger.LogError(ex.Message, ex);
             }
         }
 
@@ -318,7 +219,7 @@ namespace Stressless_Service.Database
         {
             try
             {
-                using (SQLiteConnection Connection = await CreateConnection())
+                using (SQLiteConnection Connection = await _databaseFactory.CreateConnection())
                 {
                     await Connection.OpenAsync();
                     Connection.Execute(
@@ -335,7 +236,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                logger.Error(ex.Message, ex);
+                logger.LogError(ex.Message, ex);
             }
         }
 
@@ -345,7 +246,7 @@ namespace Stressless_Service.Database
 
             try
             {
-                using (SQLiteConnection Connection = await CreateConnection())
+                using (SQLiteConnection Connection = await _databaseFactory.CreateConnection())
                 {
                     await Connection.OpenAsync();
                     Exists = Connection.ExecuteScalar<int>("SELECT count(*) FROM Auth WHERE MACAddress = '" + MACAddress + "';");
@@ -355,7 +256,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                logger.Error(ex.Message, ex);
+                logger.LogError(ex.Message, ex);
             }
 
             return Exists;
@@ -367,7 +268,7 @@ namespace Stressless_Service.Database
 
             try
             {
-                using (SQLiteConnection Connection = await CreateConnection())
+                using (SQLiteConnection Connection = await _databaseFactory.CreateConnection())
                 {
                     await Connection.OpenAsync();
                     RowsAffected = Connection.Execute($"UPDATE Auth SET DateCreated = '{DateTime.Now}' WHERE MACAddress = '{MACAddress}';");
@@ -377,7 +278,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                logger.Error(ex.Message, ex);
+                logger.LogError(ex.Message, ex);
             }
 
             return RowsAffected;
@@ -389,7 +290,7 @@ namespace Stressless_Service.Database
 
             try
             {
-                using (SQLiteConnection Connection = await CreateConnection())
+                using (SQLiteConnection Connection = await _databaseFactory.CreateConnection())
                 {
                     await Connection.OpenAsync();
 
@@ -410,7 +311,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                logger.Error(ex.Message, ex);
+                logger.LogError(ex.Message, ex);
             }
 
             return times;
@@ -420,7 +321,7 @@ namespace Stressless_Service.Database
         {
             try
             {
-                using (SQLiteConnection Connection = await CreateConnection())
+                using (SQLiteConnection Connection = await _databaseFactory.CreateConnection())
                 {
                     await Connection.OpenAsync();
                     await Connection.ExecuteAsync("DELETE * FROM Auth WHERE datetime('now', '-1 day') >= Generated;");
@@ -430,7 +331,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                logger.Error(ex.Message, ex);
+                logger.LogError(ex.Message, ex);
             }
         }
 
@@ -442,7 +343,7 @@ namespace Stressless_Service.Database
             {
                 Events = calendarEvents.ToList();
 
-                using (SQLiteConnection Connection = await CreateConnection())
+                using (SQLiteConnection Connection = await _databaseFactory.CreateConnection())
                 {
                     await Connection.OpenAsync();
 
@@ -462,17 +363,17 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                logger.Error(ex.Message, ex);
+                logger.LogError(ex.Message, ex);
             }
         }
 
-        public async Task InsertDay(List<CalendarEvents> Events)
+        public async Task InsertDay(List<CalenderEvents> Events)
         {
             try
             {
-                using (SQLiteConnection Connection = await CreateConnection())
+                using (SQLiteConnection Connection = await _databaseFactory.CreateConnection())
                 {
-                    foreach (CalendarEvents E in Events)
+                    foreach (CalenderEvents E in Events)
                     {
                         await Connection.OpenAsync();
                         await Connection.ExecuteAsync("INSERT INTO Events (Runtime, Date) VALUES ('" + E.Runtime + "', '" + E.Event + "');");
@@ -483,21 +384,21 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                logger.Error(ex.Message, ex);
+                logger.LogError(ex.Message, ex);
             }
         }
 
-        public async Task<List<CalendarEvents>> GetDays()
+        public async Task<List<CalenderEvents>> GetDays()
         {
-            List<CalendarEvents> Events = new List<CalendarEvents>();
+            List<CalenderEvents> Events = new List<CalenderEvents>();
 
             try
             {
-                using (SQLiteConnection Connection = await CreateConnection())
+                using (SQLiteConnection Connection = await _databaseFactory.CreateConnection())
                 {
                     await Connection.OpenAsync();
 
-                    foreach (List<CalendarEvents> eventList in await Connection.QueryAsync<List<CalendarEvents>>("SELECT * FROM Events"))
+                    foreach (List<CalenderEvents> eventList in await Connection.QueryAsync<List<CalenderEvents>>("SELECT * FROM Events"))
                     {
                         Events.AddRange(eventList);
 
@@ -507,7 +408,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                logger.Error(ex.Message, ex);
+                logger.LogError(ex.Message, ex);
             }
 
             return Events;
@@ -517,7 +418,7 @@ namespace Stressless_Service.Database
         {
             try
             {
-                using (SQLiteConnection Connection = await CreateConnection())
+                using (SQLiteConnection Connection = await _databaseFactory.CreateConnection())
                 {
                     await Connection.OpenAsync();
                     await Connection.ExecuteAsync("DELETE FROM Events ORDER BY Date ASC Limit " + amount + ";");
@@ -527,14 +428,14 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                logger.Error(ex.Message, ex);
+                logger.LogError(ex.Message, ex);
             }
         }
 
         public async Task InsertReminder(Reminder Reminder)
         {
             try {
-                using (SQLiteConnection Connection = await CreateConnection()) 
+                using (SQLiteConnection Connection = await _databaseFactory.CreateConnection()) 
                 {
                     await Connection.OpenAsync();
                     await Connection.ExecuteAsync("INSERT INTO Reminders (Date, Time) VALUES ('" + Reminder.Date + "', '" + Reminder.Time + "');");
@@ -543,7 +444,7 @@ namespace Stressless_Service.Database
             }
 
             catch (Exception ex) {
-                logger.Error(ex.Message, ex);
+                logger.LogError(ex.Message, ex);
             }
         }
 
@@ -553,7 +454,7 @@ namespace Stressless_Service.Database
 
             try 
             {
-                using (SQLiteConnection Connection = await CreateConnection()) 
+                using (SQLiteConnection Connection = await _databaseFactory.CreateConnection()) 
                 {
                     await Connection.OpenAsync();
                     reminder = await Connection.QuerySingleAsync<Reminder>("SELECT * FROM Reminders ORDER BY LastUsed DESC;");
@@ -562,7 +463,7 @@ namespace Stressless_Service.Database
             }
 
             catch (Exception ex) {
-                logger.Error(ex.Message, ex);
+                logger.LogError(ex.Message, ex);
             }
 
             return reminder;

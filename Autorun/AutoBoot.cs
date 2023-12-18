@@ -13,13 +13,13 @@ namespace Stressless_Service.Auto_Run
 
         private async Task<bool> CheckTime(bool IsWorkingTime = false)
         {
-            using (database database = new database()) 
+            using (database database = new database(_logger)) 
             {
                 if (await database.ConfigurationExists() == 1)
                 {
                     ConfigurationModel configuration = await database.GetConfiguration();
 
-                    if (configuration.StartTime != TimeOnly.MinValue && configuration.EndTime != TimeOnly.MinValue)
+                    if (configuration.DayStartTime != TimeOnly.MinValue && configuration.DayEndTime != TimeOnly.MinValue)
                     {
                         DateTime[] Times = await database.GetShift();
 

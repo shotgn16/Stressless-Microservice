@@ -58,7 +58,7 @@ namespace Stressless_Service.Controllers
                 {
                     if (await tokenValidation.Handler(BearerToken))
                     {
-                        using (database database = new database())
+                        using (database database = new database(_logger))
                         {
                             Prompt = await database.GetPrompt(promptType);
                         }
@@ -85,7 +85,7 @@ namespace Stressless_Service.Controllers
                 {
                     if (await tokenValidation.Handler(BearerToken))
                     {
-                        using (database database = new database())
+                        using (database database = new database(_logger))
                         {
                             foreach (var Item in PromptRequest.Prompt)
                             {
@@ -112,7 +112,7 @@ namespace Stressless_Service.Controllers
                 {
                     if (await tokenValidation.Handler(BearerToken))
                     {
-                        using (database database = new database())
+                        using (database database = new database(_logger))
                         {
                             Configuration = await database.GetConfiguration();
                         }
@@ -139,7 +139,7 @@ namespace Stressless_Service.Controllers
                 {
                     if (await tokenValidation.Handler(BearerToken))
                     {
-                        using (database database = new database())
+                        using (database database = new database(_logger))
                         {
                             var OriginalConfiguration = await database.GetConfiguration();
 
@@ -147,7 +147,7 @@ namespace Stressless_Service.Controllers
                             {
                                 await database.DeleteConfiguration();
                                     await database.InsertConfiguration(Configuration);
-                                    await database.InsertCalenderEvents(Configuration.calender);
+                                    await database.InsertCalenderEvents(Configuration.Calender);
                             }
                         }
                     }
@@ -169,7 +169,7 @@ namespace Stressless_Service.Controllers
                 {
                     if (await tokenValidation.Handler(BearerToken))
                     {
-                        using (database database = new database())
+                        using (database database = new database(_logger))
                         {
                             //Will get the last used prompt specified by ID (Ordered by the specified time in the database - DESC [Most recent at the top])
                             UsedPrompt = await database.GetUsedPrompts(promptID);
@@ -197,7 +197,7 @@ namespace Stressless_Service.Controllers
                 {
                     if (await tokenValidation.Handler(BearerToken))
                     {
-                        using (database database = new database())
+                        using (database database = new database(_logger))
                         {
                             await database.InsertUsedPrompt(UsedPrompt);
                         }
@@ -230,15 +230,15 @@ namespace Stressless_Service.Controllers
                         {
                             // If the token is VALID, it will continue into this code...
 
-                            using (database database = new database())
+                            using (database database = new database(_logger))
                             {
                                 var Configuration = await database.GetConfiguration();
 
-                                if (Configuration != null && !string.IsNullOrEmpty(Configuration.calenderImport))
+                                if (Configuration != null && !string.IsNullOrEmpty(Configuration.CalenderImport))
                                 {
-                                    using (EventCalculator Calculator = new EventCalculator())
+                                    using (EventCalculator Calculator = new EventCalculator(_logger))
                                     {
-                                        await Calculator.EventHandler(Configuration.calender, Configuration);
+                                        await Calculator.EventHandler(Configuration.Calender, Configuration);
                                         reminderUser = await Calculator.PromptBreak(Configuration);
                                     }
                                 }
@@ -256,5 +256,5 @@ namespace Stressless_Service.Controllers
             // IF:True, Remind User... | IF:False, Do Nothing...
             return reminderUser;
         }
-    }
+    } 
 }

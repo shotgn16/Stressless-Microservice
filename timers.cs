@@ -10,7 +10,7 @@ namespace Stressless_Service
         public async Task InitalizeSystem()
         {
 
-            using (PromptTimer Prompt = new PromptTimer()) {
+            using (PromptTimer Prompt = new PromptTimer(logger)) {
                 await Prompt.StartTimer();
             }
 

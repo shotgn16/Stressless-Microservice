@@ -7,28 +7,31 @@ namespace Stressless_Service.Forecaster
     public class EventCalculator : IDisposable
     {
         private static TimeSpan FreeTime;
+        private ILogger logger;
+
+        public EventCalculator(ILogger _logger) => logger = _logger;
 
         public async Task EventHandler(CalenderModel[] calenderEvents, ConfigurationModel configuration)
         {
-            List<CalendarEvents> events = await FormatEventData(calenderEvents);
+            List<CalenderEvents> events = await FormatEventData(calenderEvents);
 
             await StoreDays(events);
-            (TimeSpan, List<CalendarEvents>) Comparison = await CompareDays(configuration.StartTime, configuration.EndTime);
+            (TimeSpan, List<CalenderEvents>) Comparison = await CompareDays(configuration.DayStartTime, configuration.DayEndTime);
 
             FreeTime = Comparison.Item1;
         }
 
         // Run Order : 1
-        private async Task<List<CalendarEvents>> FormatEventData(CalenderModel[] calenderEvents)
+        private async Task<List<CalenderEvents>> FormatEventData(CalenderModel[] calenderEvents)
         {
             List<CalenderModel> events = calenderEvents.ToList();
-            List<CalendarEvents> eventRuntime = new List<CalendarEvents>(); 
+            List<CalenderEvents> eventRuntime = new List<CalenderEvents>(); 
 
             if (events.Count > 0) 
             {
                 foreach (var item in events)
                 {
-                    eventRuntime.Add(new CalendarEvents
+                    eventRuntime.Add(new CalenderEvents
                     {
                         Runtime = item.StartTime - item.EndTime,
                         Event = item.EventDate
@@ -45,13 +48,12 @@ namespace Stressless_Service.Forecaster
         }
 
         // Run Order : 2
-        public async Task StoreDays(List<CalendarEvents> eventRuntimes)
+        public async Task StoreDays(List<CalenderEvents> eventRuntimes)
         {
-            List<CalendarEvents[]> OrganisedEvents = new List<CalendarEvents[]>();
             int AlreadyStored = 0;
 
-            using (database database = new database()) {
-                List<CalendarEvents> storedDays = await database.GetDays();
+            using (database database = new database(logger)) {
+                List<CalenderEvents> storedDays = await database.GetDays();
                 AlreadyStored = storedDays.Count;
 
                 if (AlreadyStored + eventRuntimes.Count >= 21 || AlreadyStored >= 21) {
@@ -68,10 +70,10 @@ namespace Stressless_Service.Forecaster
 
         // Run Order : 3
 
-        public async Task<(TimeSpan, List<CalendarEvents>)> CompareDays(TimeOnly StartTime, TimeOnly FinishTime)
+        public async Task<(TimeSpan, List<CalenderEvents>)> CompareDays(TimeOnly StartTime, TimeOnly FinishTime)
         {
             // Defines instances of the classes and variables needed for this method
-            List<CalendarEvents> storedDays = new();
+            List<CalenderEvents> storedDays = new();
             TimeSpan OccupiedTime = new();
             TimeSpan FreeTime = new();
 
@@ -80,7 +82,7 @@ namespace Stressless_Service.Forecaster
 
             // Using a database instance to get a list of all the days stored in the database. 
             // The 'Using' statement makes use of 'Disposable' classes, ensuring that they can be cleaned up after they are finished with (reducing the risk of memory leaks).
-            using (database database = new database()) {
+            using (database database = new database(logger)) {
                 var days = await database.GetDays();
                 
                 // Foreach event in the list of days returned from the database...
@@ -109,7 +111,7 @@ namespace Stressless_Service.Forecaster
             Reminder LatestReminders = new();
             bool remindUser = false;
 
-            using (database database = new database())
+            using (database database = new database(logger))
             {
                 LatestReminders = await database.GetReminders();
 
@@ -119,7 +121,7 @@ namespace Stressless_Service.Forecaster
                 if (LatestReminders.Date == DateOnly.FromDateTime(DateTime.Now) && LatestReminders.Time >= TimeOnly.FromDateTime(DateTime.Now - TimeSpan.FromHours(2)))
                 {    
                     // Checks if the 'time of the event' : 'LatestReminder.Time' is within the specific working hours the user specified.  
-                    if (LatestReminders.Time >= config.StartTime && LatestReminders.Time <= config.EndTime)
+                    if (LatestReminders.Time >= config.DayStartTime && LatestReminders.Time <= config.DayEndTime)
                     {
                         // Must have at least 30 minutes spare minutes to allow a 15 minuit break...
                         if (FreeTime.Minutes >= 30)

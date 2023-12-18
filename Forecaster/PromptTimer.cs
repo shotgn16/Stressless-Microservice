@@ -7,6 +7,9 @@ namespace Stressless_Service.Forecaster
     {
         private static System.Timers.Timer prTimer;
         private static bool isActive = false;
+        private ILogger logger;
+
+        public PromptTimer(ILogger _logger) => logger = _logger; 
 
         public async Task StartTimer()
         {
@@ -28,7 +31,7 @@ namespace Stressless_Service.Forecaster
             prTimer.Stop();
             isActive = false;
 
-            using EventCalculator Calculator = new EventCalculator(); {
+            using EventCalculator Calculator = new EventCalculator(logger); {
                 await Calculator.PromptBreak();
             }
 
