@@ -58,7 +58,7 @@ namespace Stressless_Service.Controllers
                 {
                     if (await tokenValidation.Handler(BearerToken))
                     {
-                        using (database database = new database(_logger))
+                        using (database database = new database())
                         {
                             Prompt = await database.GetPrompt(promptType);
                         }
@@ -85,7 +85,7 @@ namespace Stressless_Service.Controllers
                 {
                     if (await tokenValidation.Handler(BearerToken))
                     {
-                        using (database database = new database(_logger))
+                        using (database database = new database())
                         {
                             foreach (var Item in PromptRequest.Prompt)
                             {
@@ -112,7 +112,7 @@ namespace Stressless_Service.Controllers
                 {
                     if (await tokenValidation.Handler(BearerToken))
                     {
-                        using (database database = new database(_logger))
+                        using (database database = new database())
                         {
                             Configuration = await database.GetConfiguration();
                         }
@@ -139,7 +139,7 @@ namespace Stressless_Service.Controllers
                 {
                     if (await tokenValidation.Handler(BearerToken))
                     {
-                        using (database database = new database(_logger))
+                        using (database database = new database())
                         {
                             var OriginalConfiguration = await database.GetConfiguration();
 
@@ -169,7 +169,7 @@ namespace Stressless_Service.Controllers
                 {
                     if (await tokenValidation.Handler(BearerToken))
                     {
-                        using (database database = new database(_logger))
+                        using (database database = new database())
                         {
                             //Will get the last used prompt specified by ID (Ordered by the specified time in the database - DESC [Most recent at the top])
                             UsedPrompt = await database.GetUsedPrompts(promptID);
@@ -197,7 +197,7 @@ namespace Stressless_Service.Controllers
                 {
                     if (await tokenValidation.Handler(BearerToken))
                     {
-                        using (database database = new database(_logger))
+                        using (database database = new database())
                         {
                             await database.InsertUsedPrompt(UsedPrompt);
                         }
@@ -230,7 +230,7 @@ namespace Stressless_Service.Controllers
                         {
                             // If the token is VALID, it will continue into this code...
 
-                            using (database database = new database(_logger))
+                            using (database database = new database())
                             {
                                 var Configuration = await database.GetConfiguration();
 

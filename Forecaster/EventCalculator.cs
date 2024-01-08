@@ -52,7 +52,7 @@ namespace Stressless_Service.Forecaster
         {
             int AlreadyStored = 0;
 
-            using (database database = new database(logger)) {
+            using (database database = new database()) {
                 List<CalenderEvents> storedDays = await database.GetDays();
                 AlreadyStored = storedDays.Count;
 
@@ -82,7 +82,7 @@ namespace Stressless_Service.Forecaster
 
             // Using a database instance to get a list of all the days stored in the database. 
             // The 'Using' statement makes use of 'Disposable' classes, ensuring that they can be cleaned up after they are finished with (reducing the risk of memory leaks).
-            using (database database = new database(logger)) {
+            using (database database = new database()) {
                 var days = await database.GetDays();
                 
                 // Foreach event in the list of days returned from the database...
@@ -111,7 +111,7 @@ namespace Stressless_Service.Forecaster
             Reminder LatestReminders = new();
             bool remindUser = false;
 
-            using (database database = new database(logger))
+            using (database database = new database())
             {
                 LatestReminders = await database.GetReminders();
 

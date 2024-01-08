@@ -7,12 +7,15 @@ using Stressless_Service.Configuration;
 using NLog.Web;
 using NLog.Extensions.Logging;
 using Stressless_Service;
-using System.Data.SQLite;
-using System.Reflection;
+using System.Diagnostics;
+using Stressless_Service.logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
 NLog.LogManager.GetCurrentClassLogger().Info("Stressless Service Starting...");
+
+System.Diagnostics.Trace.Listeners.Add(new NLog.NLogTraceListener { Name = "NLog" });
+Trace.Listeners.Add(new NLogTraceListener());
 
 try {
 
@@ -21,6 +24,13 @@ try {
 
     builder.Services.AddHttpLogging(logging => {
         logging.LoggingFields = HttpLoggingFields.All;
+    });
+
+    // Configuring Logging (ILoggerFactory)
+    builder.Services.AddLogging(builder =>
+    {
+        builder.AddConsole();
+        builder.AddDebug();
     });
 
     // Configuring Kestrel to enable HTTPS via certificate
@@ -51,12 +61,11 @@ try {
     });
 
     builder.Services.AddControllers();
-    builder.Services.AddLogging();
 
     // Adding database & TokenGeneratorService to services
+    builder.Services.AddLogging();
     builder.Services.AddSingleton<database>();
     builder.Services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
-
 
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle 
     builder.Services.AddEndpointsApiExplorer();
@@ -95,7 +104,7 @@ try {
                 new List<string>()
             }
         });
-    });
+    }); 
 
     var app = builder.Build();
 

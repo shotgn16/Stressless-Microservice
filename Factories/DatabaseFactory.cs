@@ -11,8 +11,9 @@ namespace Stressless_Service.Factories
 
     public class DatabaseFactory : IDBDatabaseFactory, IDisposable
     {
-        private readonly ILogger _logger;
         private string ConnectingString;
+        private ILogger _logger;
+
         public DatabaseFactory(ILogger logger)
         {
             _logger = logger;
