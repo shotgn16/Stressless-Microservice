@@ -1593,3 +1593,1037 @@ System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assem
    at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
    at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
    at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)
+2024-01-09 16:30:02.9357 Info Loading assembly name: NLog.Web
+2024-01-09 16:30:03.1014 Info NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2024-01-09 16:30:03.1573 Warn Loaded 88 valid types from Assembly: NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c Exception: System.Reflection.ReflectionTypeLoadException: Unable to load one or more of the requested types.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+   at System.Reflection.RuntimeModule.GetTypes(RuntimeModule module)
+   at System.Reflection.RuntimeModule.GetTypes()
+   at NLog.Internal.AssemblyHelpers.SafeGetTypes(Assembly assembly)
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 16:30:03.1815 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 16:30:03.1815 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 16:30:03.1815 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 16:30:03.1815 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 16:30:03.1815 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 16:30:03.1815 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 16:30:03.1815 Info Loading assembly name: NLog.Web.AspNetCore
+2024-01-09 16:30:03.1815 Info NLog.Web.AspNetCore, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2024-01-09 16:30:03.3112 Info Loading assembly name: NLog.Extensions.Logging
+2024-01-09 16:30:03.3112 Info NLog.Extensions.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.407. Product version: 5.3.5+3ca943079eeece2faa1a2249de35eb7c807de188. GlobalAssemblyCache: False
+2024-01-09 16:30:03.3112 Info Loading assembly name: NLog.Targets.Seq
+2024-01-09 16:30:03.3595 Info NLog.Targets.Seq, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aec39280ded1b3a7. File version: 3.0.0.0. Product version: 3.0.0. GlobalAssemblyCache: False
+2024-01-09 16:30:03.4070 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=ServiceSimplified_File)
+2024-01-09 16:30:03.4070 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_File)
+2024-01-09 16:30:03.4070 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_Console)
+2024-01-09 16:30:03.4110 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Networking_File)
+2024-01-09 16:30:03.4110 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=JwtAuthentication_File)
+2024-01-09 16:30:03.4110 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Api_File)
+2024-01-09 16:30:03.4110 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Autorun_File)
+2024-01-09 16:30:03.4110 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Configuration_File)
+2024-01-09 16:30:03.4110 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Database_File)
+2024-01-09 16:30:03.4110 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Exception_File)
+2024-01-09 16:30:03.4110 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=seq)
+2024-01-09 16:30:03.4281 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.6.2256. Product version: 5.2.6+1d441552d39bd7e2bd31062e2e96de6828a83003. GlobalAssemblyCache: False
+2024-01-09 16:30:03.4454 Info Validating config: Targets=10, ConfigItems=293, FilePath=C:\Users\Jack Butcher-Barnard\source\repos\Github\shotgn16\Stressless-Microservice\bin\Debug\net8.0\NLog.config
+2024-01-09 16:30:03.4454 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: ServiceSimplified_File
+2024-01-09 16:30:03.5144 Info Configuration initialized.
+2024-01-09 16:30:08.5649 Error Seq(Name=seq_wrapped): Failed sending LogEvents. Uri=http://localhost:5341/api/events/raw Exception: System.Net.Http.HttpRequestException: No connection could be made because the target machine actively refused it. (localhost:5341)
+ ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionWithTelemetryAsync(HttpRequestMessage request, HttpConnectionPool pool, Boolean async, CancellationToken requestCancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
+   at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)
+2024-01-09 16:30:58.5579 Info Loading assembly name: NLog.Web
+2024-01-09 16:30:58.6919 Info NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2024-01-09 16:30:58.9309 Warn Loaded 88 valid types from Assembly: NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c Exception: System.Reflection.ReflectionTypeLoadException: Unable to load one or more of the requested types.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+   at System.Reflection.RuntimeModule.GetTypes(RuntimeModule module)
+   at System.Reflection.RuntimeModule.GetTypes()
+   at NLog.Internal.AssemblyHelpers.SafeGetTypes(Assembly assembly)
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 16:30:58.9679 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 16:30:58.9679 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 16:30:58.9679 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 16:30:58.9679 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 16:30:58.9679 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 16:30:58.9679 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 16:30:58.9758 Info Loading assembly name: NLog.Web.AspNetCore
+2024-01-09 16:30:58.9758 Info NLog.Web.AspNetCore, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2024-01-09 16:30:59.0012 Info Loading assembly name: NLog.Extensions.Logging
+2024-01-09 16:30:59.0012 Info NLog.Extensions.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.407. Product version: 5.3.5+3ca943079eeece2faa1a2249de35eb7c807de188. GlobalAssemblyCache: False
+2024-01-09 16:30:59.0052 Info Loading assembly name: NLog.Targets.Seq
+2024-01-09 16:30:59.0052 Info NLog.Targets.Seq, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aec39280ded1b3a7. File version: 3.0.0.0. Product version: 3.0.0. GlobalAssemblyCache: False
+2024-01-09 16:30:59.0873 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=ServiceSimplified_File)
+2024-01-09 16:30:59.0873 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_File)
+2024-01-09 16:30:59.0873 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_Console)
+2024-01-09 16:30:59.0873 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Networking_File)
+2024-01-09 16:30:59.0873 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=JwtAuthentication_File)
+2024-01-09 16:30:59.0873 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Api_File)
+2024-01-09 16:30:59.0873 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Autorun_File)
+2024-01-09 16:30:59.0873 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Configuration_File)
+2024-01-09 16:30:59.0985 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Database_File)
+2024-01-09 16:30:59.0985 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Exception_File)
+2024-01-09 16:30:59.0985 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=seq)
+2024-01-09 16:30:59.1165 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.6.2256. Product version: 5.2.6+1d441552d39bd7e2bd31062e2e96de6828a83003. GlobalAssemblyCache: False
+2024-01-09 16:30:59.1304 Info Validating config: Targets=10, ConfigItems=293, FilePath=C:\Users\Jack Butcher-Barnard\source\repos\Github\shotgn16\Stressless-Microservice\bin\Debug\net8.0\NLog.config
+2024-01-09 16:30:59.1304 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: ServiceSimplified_File
+2024-01-09 16:30:59.1875 Info Configuration initialized.
+2024-01-09 16:30:59.5129 Info Validating config: Targets=10, ConfigItems=297, FilePath=C:\Users\Jack Butcher-Barnard\source\repos\Github\shotgn16\Stressless-Microservice\bin\Debug\net8.0\NLog.config
+2024-01-09 16:31:03.8189 Error Seq(Name=seq_wrapped): Failed sending LogEvents. Uri=http://localhost:5341/api/events/raw Exception: System.Net.Http.HttpRequestException: No connection could be made because the target machine actively refused it. (localhost:5341)
+ ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionWithTelemetryAsync(HttpRequestMessage request, HttpConnectionPool pool, Boolean async, CancellationToken requestCancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
+   at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)
+2024-01-09 16:31:12.1882 Info Loading assembly name: NLog.Web
+2024-01-09 16:31:12.2523 Info NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2024-01-09 16:31:12.3373 Warn Loaded 88 valid types from Assembly: NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c Exception: System.Reflection.ReflectionTypeLoadException: Unable to load one or more of the requested types.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+   at System.Reflection.RuntimeModule.GetTypes(RuntimeModule module)
+   at System.Reflection.RuntimeModule.GetTypes()
+   at NLog.Internal.AssemblyHelpers.SafeGetTypes(Assembly assembly)
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 16:31:12.3921 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 16:31:12.3921 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 16:31:12.3921 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 16:31:12.3921 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 16:31:12.3955 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 16:31:12.3955 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 16:31:12.3955 Info Loading assembly name: NLog.Web.AspNetCore
+2024-01-09 16:31:12.3955 Info NLog.Web.AspNetCore, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2024-01-09 16:31:12.4439 Info Loading assembly name: NLog.Extensions.Logging
+2024-01-09 16:31:12.4439 Info NLog.Extensions.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.407. Product version: 5.3.5+3ca943079eeece2faa1a2249de35eb7c807de188. GlobalAssemblyCache: False
+2024-01-09 16:31:12.4439 Info Loading assembly name: NLog.Targets.Seq
+2024-01-09 16:31:12.4613 Info NLog.Targets.Seq, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aec39280ded1b3a7. File version: 3.0.0.0. Product version: 3.0.0. GlobalAssemblyCache: False
+2024-01-09 16:31:12.5231 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=ServiceSimplified_File)
+2024-01-09 16:31:12.5231 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_File)
+2024-01-09 16:31:12.5231 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_Console)
+2024-01-09 16:31:12.5231 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Networking_File)
+2024-01-09 16:31:12.5231 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=JwtAuthentication_File)
+2024-01-09 16:31:12.5231 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Api_File)
+2024-01-09 16:31:12.5231 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Autorun_File)
+2024-01-09 16:31:12.5231 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Configuration_File)
+2024-01-09 16:31:12.5231 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Database_File)
+2024-01-09 16:31:12.5231 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Exception_File)
+2024-01-09 16:31:12.5438 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=seq)
+2024-01-09 16:31:12.5540 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.6.2256. Product version: 5.2.6+1d441552d39bd7e2bd31062e2e96de6828a83003. GlobalAssemblyCache: False
+2024-01-09 16:31:12.5729 Info Validating config: Targets=10, ConfigItems=293, FilePath=C:\Users\Jack Butcher-Barnard\source\repos\Github\shotgn16\Stressless-Microservice\bin\Debug\net8.0\NLog.config
+2024-01-09 16:31:12.5729 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: ServiceSimplified_File
+2024-01-09 16:31:12.6381 Info Configuration initialized.
+2024-01-09 16:31:13.0083 Info Validating config: Targets=10, ConfigItems=297, FilePath=C:\Users\Jack Butcher-Barnard\source\repos\Github\shotgn16\Stressless-Microservice\bin\Debug\net8.0\NLog.config
+2024-01-09 16:31:17.3049 Error Seq(Name=seq_wrapped): Failed sending LogEvents. Uri=http://localhost:5341/api/events/raw Exception: System.Net.Http.HttpRequestException: No connection could be made because the target machine actively refused it. (localhost:5341)
+ ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionWithTelemetryAsync(HttpRequestMessage request, HttpConnectionPool pool, Boolean async, CancellationToken requestCancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
+   at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)
+2024-01-09 17:21:38.9896 Info Loading assembly name: NLog.Web
+2024-01-09 17:21:39.1921 Info NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2024-01-09 17:21:39.2434 Warn Loaded 88 valid types from Assembly: NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c Exception: System.Reflection.ReflectionTypeLoadException: Unable to load one or more of the requested types.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+   at System.Reflection.RuntimeModule.GetTypes(RuntimeModule module)
+   at System.Reflection.RuntimeModule.GetTypes()
+   at NLog.Internal.AssemblyHelpers.SafeGetTypes(Assembly assembly)
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:21:39.2663 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:21:39.2663 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:21:39.2663 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:21:39.2663 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:21:39.2663 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:21:39.2663 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:21:39.2735 Info Loading assembly name: NLog.Web.AspNetCore
+2024-01-09 17:21:39.2735 Info NLog.Web.AspNetCore, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2024-01-09 17:21:39.4136 Info Loading assembly name: NLog.Extensions.Logging
+2024-01-09 17:21:39.4136 Info NLog.Extensions.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.407. Product version: 5.3.5+3ca943079eeece2faa1a2249de35eb7c807de188. GlobalAssemblyCache: False
+2024-01-09 17:21:39.4136 Info Loading assembly name: NLog.Targets.Seq
+2024-01-09 17:21:39.4652 Info NLog.Targets.Seq, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aec39280ded1b3a7. File version: 3.0.0.0. Product version: 3.0.0. GlobalAssemblyCache: False
+2024-01-09 17:21:39.5048 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=ServiceSimplified_File)
+2024-01-09 17:21:39.5048 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_File)
+2024-01-09 17:21:39.5048 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_Console)
+2024-01-09 17:21:39.5048 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Networking_File)
+2024-01-09 17:21:39.5048 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=JwtAuthentication_File)
+2024-01-09 17:21:39.5048 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Api_File)
+2024-01-09 17:21:39.5048 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Autorun_File)
+2024-01-09 17:21:39.5048 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Configuration_File)
+2024-01-09 17:21:39.5048 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Database_File)
+2024-01-09 17:21:39.5048 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Exception_File)
+2024-01-09 17:21:39.5209 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=seq)
+2024-01-09 17:21:39.5209 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.6.2256. Product version: 5.2.6+1d441552d39bd7e2bd31062e2e96de6828a83003. GlobalAssemblyCache: False
+2024-01-09 17:21:39.5361 Info Validating config: Targets=10, ConfigItems=293, FilePath=C:\Users\Jack Butcher-Barnard\source\repos\Github\shotgn16\Stressless-Microservice\bin\Debug\net8.0\NLog.config
+2024-01-09 17:21:39.5361 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: ServiceSimplified_File
+2024-01-09 17:21:39.6030 Info Configuration initialized.
+2024-01-09 17:21:40.4462 Info Validating config: Targets=10, ConfigItems=297, FilePath=C:\Users\Jack Butcher-Barnard\source\repos\Github\shotgn16\Stressless-Microservice\bin\Debug\net8.0\NLog.config
+2024-01-09 17:21:44.5121 Error Seq(Name=seq_wrapped): Failed sending LogEvents. Uri=http://localhost:5341/api/events/raw Exception: System.Net.Http.HttpRequestException: No connection could be made because the target machine actively refused it. (localhost:5341)
+ ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionWithTelemetryAsync(HttpRequestMessage request, HttpConnectionPool pool, Boolean async, CancellationToken requestCancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
+   at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)
+2024-01-09 17:21:57.6157 Error Seq(Name=seq_wrapped): Failed sending LogEvents. Uri=http://localhost:5341/api/events/raw Exception: System.Net.Http.HttpRequestException: No connection could be made because the target machine actively refused it. (localhost:5341)
+ ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionWithTelemetryAsync(HttpRequestMessage request, HttpConnectionPool pool, Boolean async, CancellationToken requestCancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
+   at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)
+2024-01-09 17:28:27.5680 Info Loading assembly name: NLog.Web
+2024-01-09 17:28:27.6604 Info NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2024-01-09 17:28:27.7919 Warn Loaded 88 valid types from Assembly: NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c Exception: System.Reflection.ReflectionTypeLoadException: Unable to load one or more of the requested types.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+   at System.Reflection.RuntimeModule.GetTypes(RuntimeModule module)
+   at System.Reflection.RuntimeModule.GetTypes()
+   at NLog.Internal.AssemblyHelpers.SafeGetTypes(Assembly assembly)
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:28:27.8331 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:28:27.8331 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:28:27.8331 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:28:27.8331 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:28:27.8331 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:28:27.8331 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:28:27.8331 Info Loading assembly name: NLog.Web.AspNetCore
+2024-01-09 17:28:27.8331 Info NLog.Web.AspNetCore, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2024-01-09 17:28:27.8723 Info Loading assembly name: NLog.Extensions.Logging
+2024-01-09 17:28:27.8723 Info NLog.Extensions.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.407. Product version: 5.3.5+3ca943079eeece2faa1a2249de35eb7c807de188. GlobalAssemblyCache: False
+2024-01-09 17:28:27.8723 Info Loading assembly name: NLog.Targets.Seq
+2024-01-09 17:28:27.8888 Info NLog.Targets.Seq, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aec39280ded1b3a7. File version: 3.0.0.0. Product version: 3.0.0. GlobalAssemblyCache: False
+2024-01-09 17:28:27.9604 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=ServiceSimplified_File)
+2024-01-09 17:28:27.9604 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_File)
+2024-01-09 17:28:27.9604 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_Console)
+2024-01-09 17:28:27.9604 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Networking_File)
+2024-01-09 17:28:27.9604 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=JwtAuthentication_File)
+2024-01-09 17:28:27.9604 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Api_File)
+2024-01-09 17:28:27.9604 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Autorun_File)
+2024-01-09 17:28:27.9739 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Configuration_File)
+2024-01-09 17:28:27.9739 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Database_File)
+2024-01-09 17:28:27.9739 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Exception_File)
+2024-01-09 17:28:27.9984 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=seq)
+2024-01-09 17:28:28.0097 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.6.2256. Product version: 5.2.6+1d441552d39bd7e2bd31062e2e96de6828a83003. GlobalAssemblyCache: False
+2024-01-09 17:28:28.0365 Info Validating config: Targets=10, ConfigItems=293, FilePath=C:\Users\Jack Butcher-Barnard\source\repos\Github\shotgn16\Stressless-Microservice\bin\Debug\net8.0\NLog.config
+2024-01-09 17:28:28.0365 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: ServiceSimplified_File
+2024-01-09 17:28:28.1000 Info Configuration initialized.
+2024-01-09 17:28:28.3775 Info Validating config: Targets=10, ConfigItems=297, FilePath=C:\Users\Jack Butcher-Barnard\source\repos\Github\shotgn16\Stressless-Microservice\bin\Debug\net8.0\NLog.config
+2024-01-09 17:28:32.6949 Error Seq(Name=seq_wrapped): Failed sending LogEvents. Uri=http://localhost:5341/api/events/raw Exception: System.Net.Http.HttpRequestException: No connection could be made because the target machine actively refused it. (localhost:5341)
+ ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionWithTelemetryAsync(HttpRequestMessage request, HttpConnectionPool pool, Boolean async, CancellationToken requestCancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
+   at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)
+2024-01-09 17:28:37.2385 Error Seq(Name=seq_wrapped): Failed sending LogEvents. Uri=http://localhost:5341/api/events/raw Exception: System.Net.Http.HttpRequestException: No connection could be made because the target machine actively refused it. (localhost:5341)
+ ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionWithTelemetryAsync(HttpRequestMessage request, HttpConnectionPool pool, Boolean async, CancellationToken requestCancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
+   at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)
+2024-01-09 17:33:04.2885 Info Loading assembly name: NLog.Web
+2024-01-09 17:33:04.3825 Info NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2024-01-09 17:33:04.4684 Warn Loaded 88 valid types from Assembly: NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c Exception: System.Reflection.ReflectionTypeLoadException: Unable to load one or more of the requested types.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+   at System.Reflection.RuntimeModule.GetTypes(RuntimeModule module)
+   at System.Reflection.RuntimeModule.GetTypes()
+   at NLog.Internal.AssemblyHelpers.SafeGetTypes(Assembly assembly)
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:33:04.5106 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:33:04.5106 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:33:04.5106 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:33:04.5106 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:33:04.5106 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:33:04.5106 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:33:04.5206 Info Loading assembly name: NLog.Web.AspNetCore
+2024-01-09 17:33:04.5206 Info NLog.Web.AspNetCore, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2024-01-09 17:33:04.5451 Info Loading assembly name: NLog.Extensions.Logging
+2024-01-09 17:33:04.5451 Info NLog.Extensions.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.407. Product version: 5.3.5+3ca943079eeece2faa1a2249de35eb7c807de188. GlobalAssemblyCache: False
+2024-01-09 17:33:04.5451 Info Loading assembly name: NLog.Targets.Seq
+2024-01-09 17:33:04.5613 Info NLog.Targets.Seq, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aec39280ded1b3a7. File version: 3.0.0.0. Product version: 3.0.0. GlobalAssemblyCache: False
+2024-01-09 17:33:04.6380 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=ServiceSimplified_File)
+2024-01-09 17:33:04.6380 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_File)
+2024-01-09 17:33:04.6380 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_Console)
+2024-01-09 17:33:04.6380 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Networking_File)
+2024-01-09 17:33:04.6380 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=JwtAuthentication_File)
+2024-01-09 17:33:04.6454 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Api_File)
+2024-01-09 17:33:04.6454 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Autorun_File)
+2024-01-09 17:33:04.6454 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Configuration_File)
+2024-01-09 17:33:04.6454 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Database_File)
+2024-01-09 17:33:04.6454 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Exception_File)
+2024-01-09 17:33:04.6633 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=seq)
+2024-01-09 17:33:04.6633 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.6.2256. Product version: 5.2.6+1d441552d39bd7e2bd31062e2e96de6828a83003. GlobalAssemblyCache: False
+2024-01-09 17:33:04.6919 Info Validating config: Targets=10, ConfigItems=293, FilePath=C:\Users\Jack Butcher-Barnard\source\repos\Github\shotgn16\Stressless-Microservice\bin\Debug\net8.0\NLog.config
+2024-01-09 17:33:04.7181 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: ServiceSimplified_File
+2024-01-09 17:33:04.7775 Info Configuration initialized.
+2024-01-09 17:33:05.0555 Info Validating config: Targets=10, ConfigItems=297, FilePath=C:\Users\Jack Butcher-Barnard\source\repos\Github\shotgn16\Stressless-Microservice\bin\Debug\net8.0\NLog.config
+2024-01-09 17:33:09.4199 Error Seq(Name=seq_wrapped): Failed sending LogEvents. Uri=http://localhost:5341/api/events/raw Exception: System.Net.Http.HttpRequestException: No connection could be made because the target machine actively refused it. (localhost:5341)
+ ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionWithTelemetryAsync(HttpRequestMessage request, HttpConnectionPool pool, Boolean async, CancellationToken requestCancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
+   at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)
+2024-01-09 17:33:34.2301 Info Loading assembly name: NLog.Web
+2024-01-09 17:33:34.2805 Info NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2024-01-09 17:33:34.3574 Warn Loaded 88 valid types from Assembly: NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c Exception: System.Reflection.ReflectionTypeLoadException: Unable to load one or more of the requested types.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+   at System.Reflection.RuntimeModule.GetTypes(RuntimeModule module)
+   at System.Reflection.RuntimeModule.GetTypes()
+   at NLog.Internal.AssemblyHelpers.SafeGetTypes(Assembly assembly)
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:33:34.3992 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:33:34.3992 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:33:34.3992 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:33:34.3992 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:33:34.3992 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:33:34.3992 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:33:34.3992 Info Loading assembly name: NLog.Web.AspNetCore
+2024-01-09 17:33:34.3992 Info NLog.Web.AspNetCore, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2024-01-09 17:33:34.4440 Info Loading assembly name: NLog.Extensions.Logging
+2024-01-09 17:33:34.4440 Info NLog.Extensions.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.407. Product version: 5.3.5+3ca943079eeece2faa1a2249de35eb7c807de188. GlobalAssemblyCache: False
+2024-01-09 17:33:34.4440 Info Loading assembly name: NLog.Targets.Seq
+2024-01-09 17:33:34.4659 Info NLog.Targets.Seq, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aec39280ded1b3a7. File version: 3.0.0.0. Product version: 3.0.0. GlobalAssemblyCache: False
+2024-01-09 17:33:34.5521 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=ServiceSimplified_File)
+2024-01-09 17:33:34.5521 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_File)
+2024-01-09 17:33:34.5521 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_Console)
+2024-01-09 17:33:34.5521 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Networking_File)
+2024-01-09 17:33:34.5521 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=JwtAuthentication_File)
+2024-01-09 17:33:34.5521 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Api_File)
+2024-01-09 17:33:34.5521 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Autorun_File)
+2024-01-09 17:33:34.5521 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Configuration_File)
+2024-01-09 17:33:34.5521 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Database_File)
+2024-01-09 17:33:34.5521 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Exception_File)
+2024-01-09 17:33:34.5773 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=seq)
+2024-01-09 17:33:34.5874 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.6.2256. Product version: 5.2.6+1d441552d39bd7e2bd31062e2e96de6828a83003. GlobalAssemblyCache: False
+2024-01-09 17:33:34.5984 Info Validating config: Targets=10, ConfigItems=293, FilePath=C:\Users\Jack Butcher-Barnard\source\repos\Github\shotgn16\Stressless-Microservice\bin\Debug\net8.0\NLog.config
+2024-01-09 17:33:34.6168 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: ServiceSimplified_File
+2024-01-09 17:33:34.6881 Info Configuration initialized.
+2024-01-09 17:33:35.1209 Info Validating config: Targets=10, ConfigItems=297, FilePath=C:\Users\Jack Butcher-Barnard\source\repos\Github\shotgn16\Stressless-Microservice\bin\Debug\net8.0\NLog.config
+2024-01-09 17:33:39.3681 Error Seq(Name=seq_wrapped): Failed sending LogEvents. Uri=http://localhost:5341/api/events/raw Exception: System.Net.Http.HttpRequestException: No connection could be made because the target machine actively refused it. (localhost:5341)
+ ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionWithTelemetryAsync(HttpRequestMessage request, HttpConnectionPool pool, Boolean async, CancellationToken requestCancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
+   at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)
+2024-01-09 17:35:01.9368 Info Loading assembly name: NLog.Web
+2024-01-09 17:35:02.0044 Info NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2024-01-09 17:35:02.0625 Warn Loaded 88 valid types from Assembly: NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c Exception: System.Reflection.ReflectionTypeLoadException: Unable to load one or more of the requested types.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+   at System.Reflection.RuntimeModule.GetTypes(RuntimeModule module)
+   at System.Reflection.RuntimeModule.GetTypes()
+   at NLog.Internal.AssemblyHelpers.SafeGetTypes(Assembly assembly)
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:35:02.0960 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:35:02.0960 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:35:02.0960 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:35:02.0983 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:35:02.0983 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:35:02.0983 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:35:02.0983 Info Loading assembly name: NLog.Web.AspNetCore
+2024-01-09 17:35:02.1138 Info NLog.Web.AspNetCore, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2024-01-09 17:35:02.1430 Info Loading assembly name: NLog.Extensions.Logging
+2024-01-09 17:35:02.1430 Info NLog.Extensions.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.407. Product version: 5.3.5+3ca943079eeece2faa1a2249de35eb7c807de188. GlobalAssemblyCache: False
+2024-01-09 17:35:02.1466 Info Loading assembly name: NLog.Targets.Seq
+2024-01-09 17:35:02.1466 Info NLog.Targets.Seq, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aec39280ded1b3a7. File version: 3.0.0.0. Product version: 3.0.0. GlobalAssemblyCache: False
+2024-01-09 17:35:02.2442 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=ServiceSimplified_File)
+2024-01-09 17:35:02.2442 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_File)
+2024-01-09 17:35:02.2442 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_Console)
+2024-01-09 17:35:02.2558 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Networking_File)
+2024-01-09 17:35:02.2558 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=JwtAuthentication_File)
+2024-01-09 17:35:02.2558 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Api_File)
+2024-01-09 17:35:02.2558 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Autorun_File)
+2024-01-09 17:35:02.2558 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Configuration_File)
+2024-01-09 17:35:02.2558 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Database_File)
+2024-01-09 17:35:02.2558 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Exception_File)
+2024-01-09 17:35:02.2851 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=seq)
+2024-01-09 17:35:02.2851 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.6.2256. Product version: 5.2.6+1d441552d39bd7e2bd31062e2e96de6828a83003. GlobalAssemblyCache: False
+2024-01-09 17:35:02.3274 Info Validating config: Targets=10, ConfigItems=293, FilePath=C:\Users\Jack Butcher-Barnard\source\repos\Github\shotgn16\Stressless-Microservice\bin\Debug\net8.0\NLog.config
+2024-01-09 17:35:02.3409 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: ServiceSimplified_File
+2024-01-09 17:35:02.4158 Info Configuration initialized.
+2024-01-09 17:35:07.1777 Error Seq(Name=seq_wrapped): Failed sending LogEvents. Uri=http://localhost:5341/api/events/raw Exception: System.Net.Http.HttpRequestException: No connection could be made because the target machine actively refused it. (localhost:5341)
+ ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionWithTelemetryAsync(HttpRequestMessage request, HttpConnectionPool pool, Boolean async, CancellationToken requestCancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
+   at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)
+2024-01-09 17:41:19.2286 Info Loading assembly name: NLog.Web
+2024-01-09 17:41:19.3229 Info NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2024-01-09 17:41:19.4867 Warn Loaded 88 valid types from Assembly: NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c Exception: System.Reflection.ReflectionTypeLoadException: Unable to load one or more of the requested types.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+   at System.Reflection.RuntimeModule.GetTypes(RuntimeModule module)
+   at System.Reflection.RuntimeModule.GetTypes()
+   at NLog.Internal.AssemblyHelpers.SafeGetTypes(Assembly assembly)
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:41:19.5378 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:41:19.5378 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:41:19.5378 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:41:19.5378 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:41:19.5378 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:41:19.5378 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:41:19.5516 Info Loading assembly name: NLog.Web.AspNetCore
+2024-01-09 17:41:19.5516 Info NLog.Web.AspNetCore, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2024-01-09 17:41:19.6074 Info Loading assembly name: NLog.Extensions.Logging
+2024-01-09 17:41:19.6074 Info NLog.Extensions.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.407. Product version: 5.3.5+3ca943079eeece2faa1a2249de35eb7c807de188. GlobalAssemblyCache: False
+2024-01-09 17:41:19.6074 Info Loading assembly name: NLog.Targets.Seq
+2024-01-09 17:41:19.6266 Info NLog.Targets.Seq, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aec39280ded1b3a7. File version: 3.0.0.0. Product version: 3.0.0. GlobalAssemblyCache: False
+2024-01-09 17:41:19.7254 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=ServiceSimplified_File)
+2024-01-09 17:41:19.7254 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_File)
+2024-01-09 17:41:19.7254 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_Console)
+2024-01-09 17:41:19.7254 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Networking_File)
+2024-01-09 17:41:19.7254 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=JwtAuthentication_File)
+2024-01-09 17:41:19.7254 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Api_File)
+2024-01-09 17:41:19.7254 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Autorun_File)
+2024-01-09 17:41:19.7392 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Configuration_File)
+2024-01-09 17:41:19.7392 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Database_File)
+2024-01-09 17:41:19.7392 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Exception_File)
+2024-01-09 17:41:19.7615 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=seq)
+2024-01-09 17:41:19.7717 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.6.2256. Product version: 5.2.6+1d441552d39bd7e2bd31062e2e96de6828a83003. GlobalAssemblyCache: False
+2024-01-09 17:41:19.8015 Info Validating config: Targets=10, ConfigItems=293, FilePath=C:\Users\Jack Butcher-Barnard\source\repos\Github\shotgn16\Stressless-Microservice\bin\Debug\net8.0\NLog.config
+2024-01-09 17:41:19.8015 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: ServiceSimplified_File
+2024-01-09 17:41:19.8916 Info Configuration initialized.
+2024-01-09 17:41:24.4843 Error Seq(Name=seq_wrapped): Failed sending LogEvents. Uri=http://localhost:5341/api/events/raw Exception: System.Net.Http.HttpRequestException: No connection could be made because the target machine actively refused it. (localhost:5341)
+ ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionWithTelemetryAsync(HttpRequestMessage request, HttpConnectionPool pool, Boolean async, CancellationToken requestCancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
+   at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)
+2024-01-09 17:41:43.3409 Info Loading assembly name: NLog.Web
+2024-01-09 17:41:43.4230 Info NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2024-01-09 17:41:43.4891 Warn Loaded 88 valid types from Assembly: NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c Exception: System.Reflection.ReflectionTypeLoadException: Unable to load one or more of the requested types.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+   at System.Reflection.RuntimeModule.GetTypes(RuntimeModule module)
+   at System.Reflection.RuntimeModule.GetTypes()
+   at NLog.Internal.AssemblyHelpers.SafeGetTypes(Assembly assembly)
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:41:43.5231 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:41:43.5231 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:41:43.5231 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:41:43.5231 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:41:43.5231 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:41:43.5231 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:41:43.5231 Info Loading assembly name: NLog.Web.AspNetCore
+2024-01-09 17:41:43.5231 Info NLog.Web.AspNetCore, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2024-01-09 17:41:43.5581 Info Loading assembly name: NLog.Extensions.Logging
+2024-01-09 17:41:43.5581 Info NLog.Extensions.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.407. Product version: 5.3.5+3ca943079eeece2faa1a2249de35eb7c807de188. GlobalAssemblyCache: False
+2024-01-09 17:41:43.5581 Info Loading assembly name: NLog.Targets.Seq
+2024-01-09 17:41:43.5824 Info NLog.Targets.Seq, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aec39280ded1b3a7. File version: 3.0.0.0. Product version: 3.0.0. GlobalAssemblyCache: False
+2024-01-09 17:41:43.6902 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=ServiceSimplified_File)
+2024-01-09 17:41:43.6934 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_File)
+2024-01-09 17:41:43.6934 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_Console)
+2024-01-09 17:41:43.7087 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Networking_File)
+2024-01-09 17:41:43.7087 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=JwtAuthentication_File)
+2024-01-09 17:41:43.7087 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Api_File)
+2024-01-09 17:41:43.7087 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Autorun_File)
+2024-01-09 17:41:43.7087 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Configuration_File)
+2024-01-09 17:41:43.7087 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Database_File)
+2024-01-09 17:41:43.7087 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Exception_File)
+2024-01-09 17:41:43.7445 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=seq)
+2024-01-09 17:41:43.7575 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.6.2256. Product version: 5.2.6+1d441552d39bd7e2bd31062e2e96de6828a83003. GlobalAssemblyCache: False
+2024-01-09 17:41:43.7904 Info Validating config: Targets=10, ConfigItems=293, FilePath=C:\Users\Jack Butcher-Barnard\source\repos\Github\shotgn16\Stressless-Microservice\bin\Debug\net8.0\NLog.config
+2024-01-09 17:41:43.8034 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: ServiceSimplified_File
+2024-01-09 17:41:43.8837 Info Configuration initialized.
+2024-01-09 17:41:48.4812 Error Seq(Name=seq_wrapped): Failed sending LogEvents. Uri=http://localhost:5341/api/events/raw Exception: System.Net.Http.HttpRequestException: No connection could be made because the target machine actively refused it. (localhost:5341)
+ ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionWithTelemetryAsync(HttpRequestMessage request, HttpConnectionPool pool, Boolean async, CancellationToken requestCancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
+   at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)
+2024-01-09 17:42:02.9764 Info Validating config: Targets=10, ConfigItems=297, FilePath=C:\Users\Jack Butcher-Barnard\source\repos\Github\shotgn16\Stressless-Microservice\bin\Debug\net8.0\NLog.config
+2024-01-09 17:42:07.5849 Error Seq(Name=seq_wrapped): Failed sending LogEvents. Uri=http://localhost:5341/api/events/raw Exception: System.Net.Http.HttpRequestException: No connection could be made because the target machine actively refused it. (localhost:5341)
+ ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionWithTelemetryAsync(HttpRequestMessage request, HttpConnectionPool pool, Boolean async, CancellationToken requestCancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
+   at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)
+2024-01-09 17:42:58.6053 Info Loading assembly name: NLog.Web
+2024-01-09 17:42:58.6621 Info NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2024-01-09 17:42:58.7222 Warn Loaded 88 valid types from Assembly: NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c Exception: System.Reflection.ReflectionTypeLoadException: Unable to load one or more of the requested types.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+   at System.Reflection.RuntimeModule.GetTypes(RuntimeModule module)
+   at System.Reflection.RuntimeModule.GetTypes()
+   at NLog.Internal.AssemblyHelpers.SafeGetTypes(Assembly assembly)
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:42:58.7717 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:42:58.7717 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:42:58.7717 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:42:58.7717 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:42:58.7717 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:42:58.7717 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:42:58.7717 Info Loading assembly name: NLog.Web.AspNetCore
+2024-01-09 17:42:58.7717 Info NLog.Web.AspNetCore, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2024-01-09 17:42:58.8287 Info Loading assembly name: NLog.Extensions.Logging
+2024-01-09 17:42:58.8287 Info NLog.Extensions.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.407. Product version: 5.3.5+3ca943079eeece2faa1a2249de35eb7c807de188. GlobalAssemblyCache: False
+2024-01-09 17:42:58.8337 Info Loading assembly name: NLog.Targets.Seq
+2024-01-09 17:42:58.8695 Info NLog.Targets.Seq, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aec39280ded1b3a7. File version: 3.0.0.0. Product version: 3.0.0. GlobalAssemblyCache: False
+2024-01-09 17:42:58.9938 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=ServiceSimplified_File)
+2024-01-09 17:42:58.9938 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_File)
+2024-01-09 17:42:58.9938 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_Console)
+2024-01-09 17:42:58.9938 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Networking_File)
+2024-01-09 17:42:58.9938 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=JwtAuthentication_File)
+2024-01-09 17:42:58.9938 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Api_File)
+2024-01-09 17:42:59.0047 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Autorun_File)
+2024-01-09 17:42:59.0047 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Configuration_File)
+2024-01-09 17:42:59.0047 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Database_File)
+2024-01-09 17:42:59.0047 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Exception_File)
+2024-01-09 17:42:59.0217 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=seq)
+2024-01-09 17:42:59.0217 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.6.2256. Product version: 5.2.6+1d441552d39bd7e2bd31062e2e96de6828a83003. GlobalAssemblyCache: False
+2024-01-09 17:42:59.0616 Info Validating config: Targets=10, ConfigItems=293, FilePath=C:\Users\Jack Butcher-Barnard\source\repos\Github\shotgn16\Stressless-Microservice\bin\Debug\net8.0\NLog.config
+2024-01-09 17:42:59.0730 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: ServiceSimplified_File
+2024-01-09 17:42:59.1498 Info Configuration initialized.
+2024-01-09 17:43:03.8259 Error Seq(Name=seq_wrapped): Failed sending LogEvents. Uri=http://localhost:5341/api/events/raw Exception: System.Net.Http.HttpRequestException: No connection could be made because the target machine actively refused it. (localhost:5341)
+ ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionWithTelemetryAsync(HttpRequestMessage request, HttpConnectionPool pool, Boolean async, CancellationToken requestCancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
+   at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)
+2024-01-09 17:44:00.1252 Info Loading assembly name: NLog.Web
+2024-01-09 17:44:00.1706 Info NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2024-01-09 17:44:00.2169 Warn Loaded 88 valid types from Assembly: NLog.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c Exception: System.Reflection.ReflectionTypeLoadException: Unable to load one or more of the requested types.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+   at System.Reflection.RuntimeModule.GetTypes(RuntimeModule module)
+   at System.Reflection.RuntimeModule.GetTypes()
+   at NLog.Internal.AssemblyHelpers.SafeGetTypes(Assembly assembly)
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:44:00.2369 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:44:00.2427 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:44:00.2427 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.IHttpModule' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:44:00.2427 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:44:00.2427 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:44:00.2427 Warn Type load exception. Exception: System.TypeLoadException: Could not load type 'System.Web.HttpCookie' from assembly 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.
+2024-01-09 17:44:00.2427 Info Loading assembly name: NLog.Web.AspNetCore
+2024-01-09 17:44:00.2427 Info NLog.Web.AspNetCore, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.967. Product version: 5.3.5+b3d46f80b6ea51e91ee7fe419da22e5abd972951. GlobalAssemblyCache: False
+2024-01-09 17:44:00.2669 Info Loading assembly name: NLog.Extensions.Logging
+2024-01-09 17:44:00.2669 Info NLog.Extensions.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.3.5.407. Product version: 5.3.5+3ca943079eeece2faa1a2249de35eb7c807de188. GlobalAssemblyCache: False
+2024-01-09 17:44:00.2703 Info Loading assembly name: NLog.Targets.Seq
+2024-01-09 17:44:00.2703 Info NLog.Targets.Seq, Version=1.0.0.0, Culture=neutral, PublicKeyToken=aec39280ded1b3a7. File version: 3.0.0.0. Product version: 3.0.0. GlobalAssemblyCache: False
+2024-01-09 17:44:00.3255 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=ServiceSimplified_File)
+2024-01-09 17:44:00.3255 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_File)
+2024-01-09 17:44:00.3255 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Service_Console)
+2024-01-09 17:44:00.3255 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Networking_File)
+2024-01-09 17:44:00.3255 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=JwtAuthentication_File)
+2024-01-09 17:44:00.3319 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Api_File)
+2024-01-09 17:44:00.3319 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Autorun_File)
+2024-01-09 17:44:00.3319 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Configuration_File)
+2024-01-09 17:44:00.3319 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Database_File)
+2024-01-09 17:44:00.3319 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=Exception_File)
+2024-01-09 17:44:00.3319 Info Registered target NLog.Targets.Wrappers.AsyncTargetWrapper(Name=seq)
+2024-01-09 17:44:00.3520 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.2.6.2256. Product version: 5.2.6+1d441552d39bd7e2bd31062e2e96de6828a83003. GlobalAssemblyCache: False
+2024-01-09 17:44:00.3687 Info Validating config: Targets=10, ConfigItems=293, FilePath=C:\Users\Jack Butcher-Barnard\source\repos\Github\shotgn16\Stressless-Microservice\bin\Debug\net8.0\NLog.config
+2024-01-09 17:44:00.3687 Warn Unused target detected. Add a rule for this target to the configuration. TargetName: ServiceSimplified_File
+2024-01-09 17:44:00.4428 Info Configuration initialized.
+2024-01-09 17:44:00.7135 Info Validating config: Targets=10, ConfigItems=297, FilePath=C:\Users\Jack Butcher-Barnard\source\repos\Github\shotgn16\Stressless-Microservice\bin\Debug\net8.0\NLog.config
+2024-01-09 17:44:05.0301 Error Seq(Name=seq_wrapped): Failed sending LogEvents. Uri=http://localhost:5341/api/events/raw Exception: System.Net.Http.HttpRequestException: No connection could be made because the target machine actively refused it. (localhost:5341)
+ ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionWithTelemetryAsync(HttpRequestMessage request, HttpConnectionPool pool, Boolean async, CancellationToken requestCancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
+   at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)
+2024-01-09 17:44:09.6473 Error Seq(Name=seq_wrapped): Failed sending LogEvents. Uri=http://localhost:5341/api/events/raw Exception: System.Net.Http.HttpRequestException: No connection could be made because the target machine actively refused it. (localhost:5341)
+ ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionWithTelemetryAsync(HttpRequestMessage request, HttpConnectionPool pool, Boolean async, CancellationToken requestCancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
+   at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)
+2024-01-09 17:44:14.0079 Error Seq(Name=seq_wrapped): Failed sending LogEvents. Uri=http://localhost:5341/api/events/raw Exception: System.Net.Http.HttpRequestException: No connection could be made because the target machine actively refused it. (localhost:5341)
+ ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionWithTelemetryAsync(HttpRequestMessage request, HttpConnectionPool pool, Boolean async, CancellationToken requestCancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
+   at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)
+2024-01-09 17:44:29.2445 Error Seq(Name=seq_wrapped): Failed sending LogEvents. Uri=http://localhost:5341/api/events/raw Exception: System.Net.Http.HttpRequestException: No connection could be made because the target machine actively refused it. (localhost:5341)
+ ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionWithTelemetryAsync(HttpRequestMessage request, HttpConnectionPool pool, Boolean async, CancellationToken requestCancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
+   at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)
+2024-01-09 17:44:33.6381 Error Seq(Name=seq_wrapped): Failed sending LogEvents. Uri=http://localhost:5341/api/events/raw Exception: System.Net.Http.HttpRequestException: No connection could be made because the target machine actively refused it. (localhost:5341)
+ ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionWithTelemetryAsync(HttpRequestMessage request, HttpConnectionPool pool, Boolean async, CancellationToken requestCancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
+   at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)
+2024-01-09 17:44:38.0060 Error Seq(Name=seq_wrapped): Failed sending LogEvents. Uri=http://localhost:5341/api/events/raw Exception: System.Net.Http.HttpRequestException: No connection could be made because the target machine actively refused it. (localhost:5341)
+ ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionWithTelemetryAsync(HttpRequestMessage request, HttpConnectionPool pool, Boolean async, CancellationToken requestCancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
+   at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)
+2024-01-09 17:44:44.2892 Error Seq(Name=seq_wrapped): Failed sending LogEvents. Uri=http://localhost:5341/api/events/raw Exception: System.Net.Http.HttpRequestException: No connection could be made because the target machine actively refused it. (localhost:5341)
+ ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionWithTelemetryAsync(HttpRequestMessage request, HttpConnectionPool pool, Boolean async, CancellationToken requestCancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
+   at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)
+2024-01-09 17:44:48.8534 Error Seq(Name=seq_wrapped): Failed sending LogEvents. Uri=http://localhost:5341/api/events/raw Exception: System.Net.Http.HttpRequestException: No connection could be made because the target machine actively refused it. (localhost:5341)
+ ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionWithTelemetryAsync(HttpRequestMessage request, HttpConnectionPool pool, Boolean async, CancellationToken requestCancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
+   at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)
+2024-01-09 17:45:09.9081 Error Seq(Name=seq_wrapped): Failed sending LogEvents. Uri=http://localhost:5341/api/events/raw Exception: System.Net.Http.HttpRequestException: No connection could be made because the target machine actively refused it. (localhost:5341)
+ ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionWithTelemetryAsync(HttpRequestMessage request, HttpConnectionPool pool, Boolean async, CancellationToken requestCancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
+   at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)
+2024-01-09 17:45:14.4078 Error Seq(Name=seq_wrapped): Failed sending LogEvents. Uri=http://localhost:5341/api/events/raw Exception: System.Net.Http.HttpRequestException: No connection could be made because the target machine actively refused it. (localhost:5341)
+ ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionWithTelemetryAsync(HttpRequestMessage request, HttpConnectionPool pool, Boolean async, CancellationToken requestCancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
+   at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)
+2024-01-09 17:45:42.3800 Error Seq(Name=seq_wrapped): Failed sending LogEvents. Uri=http://localhost:5341/api/events/raw Exception: System.Net.Http.HttpRequestException: No connection could be made because the target machine actively refused it. (localhost:5341)
+ ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionWithTelemetryAsync(HttpRequestMessage request, HttpConnectionPool pool, Boolean async, CancellationToken requestCancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
+   at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)
+2024-01-09 17:45:46.7805 Error Seq(Name=seq_wrapped): Failed sending LogEvents. Uri=http://localhost:5341/api/events/raw Exception: System.Net.Http.HttpRequestException: No connection could be made because the target machine actively refused it. (localhost:5341)
+ ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionWithTelemetryAsync(HttpRequestMessage request, HttpConnectionPool pool, Boolean async, CancellationToken requestCancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
+   at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)
+2024-01-09 17:46:10.3188 Error Seq(Name=seq_wrapped): Failed sending LogEvents. Uri=http://localhost:5341/api/events/raw Exception: System.Net.Http.HttpRequestException: No connection could be made because the target machine actively refused it. (localhost:5341)
+ ---> System.Net.Sockets.SocketException (10061): No connection could be made because the target machine actively refused it.
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.ThrowException(SocketError error, CancellationToken cancellationToken)
+   at System.Net.Sockets.Socket.AwaitableSocketAsyncEventArgs.System.Threading.Tasks.Sources.IValueTaskSource.GetResult(Int16 token)
+   at System.Net.Sockets.Socket.<ConnectAsync>g__WaitForConnectWithCancellation|285_0(AwaitableSocketAsyncEventArgs saea, ValueTask connectTask, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.ConnectAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.CreateHttp11ConnectionAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.AddHttp11ConnectionAsync(QueueItem queueItem)
+   at System.Threading.Tasks.TaskCompletionSourceWithCancellation`1.WaitWithCancellationAsync(CancellationToken cancellationToken)
+   at System.Net.Http.HttpConnectionPool.HttpConnectionWaiter`1.WaitForConnectionWithTelemetryAsync(HttpRequestMessage request, HttpConnectionPool pool, Boolean async, CancellationToken requestCancellationToken)
+   at System.Net.Http.HttpConnectionPool.SendWithVersionDetectionAndRetryAsync(HttpRequestMessage request, Boolean async, Boolean doRequestAuth, CancellationToken cancellationToken)
+   at System.Net.Http.RedirectHandler.SendAsync(HttpRequestMessage request, Boolean async, CancellationToken cancellationToken)
+   at System.Net.Http.HttpClient.<SendAsync>g__Core|83_0(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationTokenSource cts, Boolean disposeCts, CancellationTokenSource pendingRequestsCts, CancellationToken originalCancellationToken)
+   at NLog.Targets.Seq.SeqTarget.PostBatch(IList`1 logEvents)
+   at NLog.Targets.Seq.SeqTarget.Write(IList`1 logEvents)

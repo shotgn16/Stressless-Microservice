@@ -9,6 +9,8 @@ using NLog.Extensions.Logging;
 using Stressless_Service;
 using System.Diagnostics;
 using Stressless_Service.logging;
+using Stressless_Service.Autorun;
+using Stressless_Service.Forecaster;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +36,7 @@ try {
     });
 
     // Configuring Kestrel to enable HTTPS via certificate
+    //https://learn.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel/endpoints?view=aspnetcore-8.0
     builder.WebHost.ConfigureKestrel((context, options) => {
         options.ListenAnyIP(7257, listenOptions => {
             listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1AndHttp2AndHttp3;
@@ -64,8 +67,14 @@ try {
 
     // Adding database & TokenGeneratorService to services
     builder.Services.AddLogging();
-    builder.Services.AddSingleton<database>();
+    builder.Services.AddTransient<IProductRepository, ProductRepository>();
+    builder.Services.AddScoped<DBConnectionFactory>();
     builder.Services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
+    builder.Services.AddScoped<TimerInitiation>();
+    builder.Services.AddScoped<BootController>();
+    builder.Services.AddScoped<PromptController>();
+    builder.Services.AddScoped<EventController>();
+    builder.Services.AddScoped<AuthenticationController>();
 
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle 
     builder.Services.AddEndpointsApiExplorer();
@@ -122,8 +131,12 @@ try {
     app.MapControllers();  
     app.UseHsts();
 
-    using (timers bootTimers = new timers()) {
-        await bootTimers.InitalizeSystem();
+    using (var serviceScope = app.Services.CreateScope())
+    {
+        var services = serviceScope.ServiceProvider;
+
+        var myTimeService = services.GetRequiredService<TimerInitiation>();
+        await myTimeService.InitalizeSystem();
     }
 
     app.Run();

@@ -15,32 +15,33 @@ namespace Stressless_Service.Controllers
     {
         private readonly Microsoft.Extensions.Logging.ILogger _logger;
         private readonly ITokenGeneratorService _tokenGeneratorService;
+        private readonly IProductRepository _productRepository;
+        private readonly EventController _eventController;
+        private readonly AuthenticationController _authenticationController;
 
-        public DataController(ILogger<DataController> logger, ITokenGeneratorService tokenGeneratorService)
+        public DataController(ILogger<DataController> logger, ITokenGeneratorService tokenGeneratorService, IProductRepository productRepository, EventController eventController, AuthenticationController authenticationController)
         {
             _logger = logger;
             _tokenGeneratorService = tokenGeneratorService;
+            _productRepository = productRepository;
+            _eventController = eventController;
+            _authenticationController = authenticationController;
         }
 
         // Authorization Request
         [HttpPost("Authorize")]
         public async Task<ActionResult<AuthenticationTokenModel>> Authorize([FromBody] AuthorizeModel model)
         {
-            using (AuthenticateClass authenticateClass = new AuthenticateClass(_logger, _tokenGeneratorService))
-            {
-                var response = authenticateClass.Authenticate(model);
+            var response = _authenticationController.Authenticate(model);
 
-                if (response == null)
-                {
-                    Log.Warn($"Authentication Failed for User: {model.MACAddress}\nPlease ensure you have a valid MAC Address and ClientID.");
-                    return BadRequest(new { message = "MAC Address or ClientID incorrect!" }); 
-                }
+            if (response == null) {
+                _logger.LogInformation($"Authentication Failed for User: {model.MACAddress}\nPlease ensure you have a valid MAC Address and ClientID.");
+                return BadRequest(new { message = "MAC Address or ClientID incorrect!" });
+            }
 
-                else
-                {
-                    Log.Info($"User: {model.MACAddress} Authenticated Successfully!");
-                    return Ok(response);
-                }
+            else {
+                _logger.LogInformation($"User: {model.MACAddress} Authenticated Successfully!");
+                return Ok(response);
             }
         }
 
@@ -58,10 +59,7 @@ namespace Stressless_Service.Controllers
                 {
                     if (await tokenValidation.Handler(BearerToken))
                     {
-                        using (database database = new database())
-                        {
-                            Prompt = await database.GetPrompt(promptType);
-                        }
+                        Prompt = await _productRepository.GetPrompt(promptType);
                     }
                 }
             }
@@ -85,12 +83,9 @@ namespace Stressless_Service.Controllers
                 {
                     if (await tokenValidation.Handler(BearerToken))
                     {
-                        using (database database = new database())
+                        foreach (var Item in PromptRequest.Prompt)
                         {
-                            foreach (var Item in PromptRequest.Prompt)
-                            {
-                                await database.InsertPrompt(Item);
-                            }
+                            _productRepository.InsertPrompt(Item);
                         }
                     }
                 }
@@ -112,10 +107,7 @@ namespace Stressless_Service.Controllers
                 {
                     if (await tokenValidation.Handler(BearerToken))
                     {
-                        using (database database = new database())
-                        {
-                            Configuration = await database.GetConfiguration();
-                        }
+                        Configuration = await _productRepository.GetConfiguration();
                     }
                 }
             }
@@ -139,16 +131,13 @@ namespace Stressless_Service.Controllers
                 {
                     if (await tokenValidation.Handler(BearerToken))
                     {
-                        using (database database = new database())
-                        {
-                            var OriginalConfiguration = await database.GetConfiguration();
+                        var OriginalConfiguration = await _productRepository.GetConfiguration();
 
-                            if (OriginalConfiguration == null || OriginalConfiguration != Configuration ) 
-                            {
-                                await database.DeleteConfiguration();
-                                    await database.InsertConfiguration(Configuration);
-                                    await database.InsertCalenderEvents(Configuration.Calender);
-                            }
+                        if (OriginalConfiguration == null || OriginalConfiguration != Configuration)
+                        {
+                            _productRepository.DeleteConfiguration();
+                            _productRepository.InsertConfiguration(Configuration);
+                            _productRepository.InsertCalenderEvents(Configuration.Calender);
                         }
                     }
                 }
@@ -169,11 +158,8 @@ namespace Stressless_Service.Controllers
                 {
                     if (await tokenValidation.Handler(BearerToken))
                     {
-                        using (database database = new database())
-                        {
-                            //Will get the last used prompt specified by ID (Ordered by the specified time in the database - DESC [Most recent at the top])
-                            UsedPrompt = await database.GetUsedPrompts(promptID);
-                        }
+                        //Will get the last used prompt specified by ID (Ordered by the specified time in the database - DESC [Most recent at the top])
+                        UsedPrompt = await _productRepository.GetUsedPrompt(promptID);
                     }
                 }
             }
@@ -197,10 +183,7 @@ namespace Stressless_Service.Controllers
                 {
                     if (await tokenValidation.Handler(BearerToken))
                     {
-                        using (database database = new database())
-                        {
-                            await database.InsertUsedPrompt(UsedPrompt);
-                        }
+                        _productRepository.InsertUsedPrompt(UsedPrompt);
                     }
                 }
             }
@@ -230,18 +213,12 @@ namespace Stressless_Service.Controllers
                         {
                             // If the token is VALID, it will continue into this code...
 
-                            using (database database = new database())
-                            {
-                                var Configuration = await database.GetConfiguration();
+                            ConfigurationModel Configuration = await _productRepository.GetConfiguration();
 
-                                if (Configuration != null && !string.IsNullOrEmpty(Configuration.CalenderImport))
-                                {
-                                    using (EventCalculator Calculator = new EventCalculator(_logger))
-                                    {
-                                        await Calculator.EventHandler(Configuration.Calender, Configuration);
-                                        reminderUser = await Calculator.PromptBreak(Configuration);
-                                    }
-                                }
+                            if (Configuration != null && !string.IsNullOrEmpty(Configuration.CalenderImport))
+                            {
+                                await _eventController.EventHandler(Configuration.Calender, Configuration);
+                                reminderUser = await _eventController.PromptBreak(Configuration);
                             }
                         }
                     }

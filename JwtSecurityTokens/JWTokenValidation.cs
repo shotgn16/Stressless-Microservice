@@ -1,18 +1,19 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.IdentityModel.JsonWebTokens;
+using System.Web.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using NLog.Fluent;
 using Stressless_Service.Configuration;
-using Stressless_Service.Controllers;
 
 namespace Stressless_Service.JwtSecurityTokens;
 
-public class JWTokenValidation : IDisposable
+public class JWTokenValidation : Controller, IDisposable
 {
     private readonly ILogger _logger;
-    public JWTokenValidation(ILogger logger) => _logger = logger;
+    public JWTokenValidation(ILogger logger)
+    {
+        _logger = logger;
+    }
 
     public async Task<bool> Handler(string token, string ClientID = "", bool returnValue = false)
     {
@@ -45,7 +46,7 @@ public class JWTokenValidation : IDisposable
             vToken = validatedToken;
         }
         catch (Exception ex) {
-            Log.Error(ex.Message + ex);
+            _logger.LogError(ex.Message + ex);
             return (false, null);
         }
         return (true, vToken);
