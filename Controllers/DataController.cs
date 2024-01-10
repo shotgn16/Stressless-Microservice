@@ -30,17 +30,17 @@ namespace Stressless_Service.Controllers
 
         // Authorization Request
         [HttpPost("Authorize")]
-        public async Task<ActionResult<AuthenticationTokenModel>> Authorize([FromBody] AuthorizeModel model)
+        public async Task<ActionResult<AuthenticationTokenModel>> Authorize(string macAddress, string clientID)
         {
-            var response = _authenticationController.Authenticate(model);
+            var response = _authenticationController.Authenticate(macAddress, clientID);
 
             if (response == null) {
-                _logger.LogInformation($"Authentication Failed for User: {model.MACAddress}\nPlease ensure you have a valid MAC Address and ClientID.");
+                _logger.LogInformation($"Authentication Failed for User: {macAddress}\nPlease ensure you have a valid MAC Address and ClientID.");
                 return BadRequest(new { message = "MAC Address or ClientID incorrect!" });
             }
 
             else {
-                _logger.LogInformation($"User: {model.MACAddress} Authenticated Successfully!");
+                _logger.LogInformation($"User: {macAddress} Authenticated Successfully!");
                 return Ok(response);
             }
         }

@@ -237,7 +237,7 @@ namespace Stressless_Service.Database
             }
         }
 
-        public async Task<int> GetAuthentication(string MACAddress)
+        public async Task<int> UserPreviousAuthenticated(string MACAddress)
         {
             int Exists = 0;
 
@@ -257,6 +257,48 @@ namespace Stressless_Service.Database
             }
 
             return Exists;
+        }
+
+        public async Task<AuthorizeModel> GetLatestAuthorization(string macAddress)
+        {
+            AuthorizeModel Authorization = new();
+
+            try
+            {
+                using (var connection = _connectionFactory.CreateConnection())
+                {
+                    connection.Open();
+                    Authorization = connection.QueryFirst<AuthorizeModel>("SELECT * FROM AUTH WHERE MACAddress = '" + macAddress + "';");
+                }
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+            }
+
+            return Authorization;
+        }
+
+        public async Task<int> GetAuthentication(string macAddress)
+        {
+            int exists = 0;
+
+            try
+            {
+                using (var connection = _connectionFactory.CreateConnection())
+                {
+                    connection.Open();
+                    exists = connection.ExecuteScalar<int>("SELECT count(*) FROM Auth WHERE MACAddress = '" + macAddress + "';");
+                }
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+            }
+
+            return exists;
         }
 
         public async Task<int> UpdateAuthentication(string MACAddress)
@@ -475,5 +517,4 @@ namespace Stressless_Service.Database
 
         public void Dispose() => GC.Collect();
     }
-
 }

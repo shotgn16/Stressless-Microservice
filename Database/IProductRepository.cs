@@ -11,8 +11,10 @@ namespace Stressless_Service.Database
         Task<List<CalenderEvents>> GetDayEvents();
         Task<ConfigurationModel> GetConfiguration();
         Task<int> GetAuthentication(string macAddress);
+        Task<int> UserPreviousAuthenticated(string macAddress);
         Task<int> UpdateAuthentication(string macAddress);
         Task<UsedPromptsModel> GetUsedPrompt(int promptid);
+        Task<AuthorizeModel> GetLatestAuthorization(string macAddress);
 
         void DeleteExpiredTokens();
         void DeleteConfiguration();
