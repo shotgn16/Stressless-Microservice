@@ -90,25 +90,16 @@ namespace Stressless_Service.JwtSecurityTokens
 
             string configurationID = GlobalConfiguration._configuration.GetSection("AppSettings")["ID"];
 
-            if (CountOfUserAuth == 0 && id == configurationID)
-            {
-                // NEW USER - [REGISTER] GENERATE TOKEN & INSERT AUTH
-
-                returnValue = 1;
+            if (CountOfUserAuth == 0 && id == configurationID) { // NEW USER - [REGISTER] GENERATE TOKEN & INSERT AUTH
+                returnValue = 1; 
             }
 
-            else if (CountOfUserAuth >= 1 && id == configurationID)
-            {
-                // PREVIOUS USER - [AUTHENTICATE] RETRIEVE TOKEN (IF LESS THAN EXPIRY) & PUSH TO USER
-
-                returnValue = 2;
+            else if (CountOfUserAuth >= 1 && id == configurationID) { // PREVIOUS USER - [AUTHENTICATE] RETRIEVE TOKEN (IF LESS THAN EXPIRY) & PUSH TO USER
+                returnValue = 2; 
             }
 
-            else if (id != configurationID)
-            {
-                // INVALID - [ERROR] CLIENTID INCORRECT
-
-                returnValue = -1;
+            else if (id != configurationID) { // INVALID - [ERROR] CLIENTID INCORRECT
+                returnValue = -1; 
             }
 
             return returnValue;
