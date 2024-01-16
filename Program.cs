@@ -11,6 +11,8 @@ using System.Diagnostics;
 using Stressless_Service.logging;
 using Stressless_Service.Autorun;
 using Stressless_Service.Forecaster;
+using Stressless_Service.Database_EFCore;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -63,13 +65,18 @@ try {
         });
     });
 
+    builder.Services.AddDbContext<DatabaseContext>(options =>
+    {
+        options.UseSqlite(@$"Data Source={AppDomain.CurrentDomain.BaseDirectory}\\stressless-db.db");
+    });
+
     builder.Services.AddControllers();
 
     // Adding database & TokenGeneratorService to services
     builder.Services.AddLogging();
 
-    builder.Services.AddTransient<IProductRepository, ProductRepository>();
-    builder.Services.AddScoped<DBConnectionFactory>();
+    builder.Services.AddTransient<IProductRepository, ProductRepository>();;
+    builder.Services.AddTransient<DatabaseContext, DatabaseContext>();
     builder.Services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
 
     builder.Services.AddScoped<TimerInitiation>();

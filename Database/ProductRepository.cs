@@ -1,47 +1,36 @@
 ﻿using Dapper;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using NLog.Fluent;
 using ServiceStack;
+using Stressless_Service.Database_EFCore;
 using Stressless_Service.Models;
+using System.Data.Entity;
 using System.Data.SQLite;
+using System.Net.Mail;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Stressless_Service.Database
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly DBConnectionFactory _connectionFactory;
+        private DatabaseContext _context;
         private ILogger<ProductRepository> _logger;
 
-        public ProductRepository(DBConnectionFactory connectionFactory, ILogger<ProductRepository> logger)
+        public ProductRepository(DatabaseContext context, ILogger<ProductRepository> logger)
         {
-            _connectionFactory = connectionFactory;
+            _context = context;
             _logger = logger;
         }
 
         public async Task<ConfigurationModel> GetConfiguration()
         {
             ConfigurationModel TR_Config = new();
-            List<CalenderModel> CalenderList = new();
 
             try
             {
-                using (var conn = _connectionFactory.CreateConnection())
-                {
-                    conn.Open();
-
-                    TR_Config = await conn.QueryFirstAsync<ConfigurationModel>("SELECT ID, FirstName, LastName, DayStartTime, DayEndTime, CalenderImport FROM Configuration");
-
-                    string strCalender = await conn.QueryFirstAsync<string>("SELECT Calender FROM Configuration");
-                    string strWorkingDays = await conn.QueryFirstAsync<string>("SELECT WorkingDays FROM Configuration");
-
-                    CalenderList = JsonConvert.DeserializeObject<List<CalenderModel>>(strCalender);
-
-                    // Assigning the remaining values
-                    TR_Config.WorkingDays = JsonConvert.DeserializeObject<string[]>(strWorkingDays);
-                    TR_Config.Calender = CalenderList.ToArray();
-
-                    conn.Close();
-                }
+                TR_Config = await _context.Configuration.
+                    FirstOrDefaultAsync();
             }
 
             catch (Exception ex)
@@ -54,18 +43,13 @@ namespace Stressless_Service.Database
 
         public async Task<int> CheckConfigurationExists()
         {
-            int configexists = 0;
+            int result = 0;
 
             try
             {
-                using (var conn = _connectionFactory.CreateConnection())
-                {
-                    conn.Open();
-
-                    configexists = conn.ExecuteScalar<int>("SELECT COUNT(1) FROM CONFIGURATION WHERE ID = 1;");
-
-                    conn.Close();
-                }
+                result = _context.Configuration
+                    .Where(e => e.ConfigurationID == 1)
+                    .Count();
             }
 
             catch (Exception ex)
@@ -73,19 +57,16 @@ namespace Stressless_Service.Database
                 _logger.LogError("");
             }
 
-            return configexists;
+            return result;
         }
 
-        public void DeleteConfiguration()
+        public async Task DeleteConfiguration()
         {
             try
             {
-                using (var Connection = _connectionFactory.CreateConnection())
-                {
-                    Connection.Open();
-                    Connection.ExecuteAsync("DELETE * FROM CONFIGURATION WHERE ID = '1';");
-                    Connection.Close();
-                }
+                _context.Configuration.Remove(
+                    await _context.Configuration
+                        .Where(e => e.ConfigurationID == 1).SingleOrDefaultAsync());
             }
 
             catch (Exception ex)
@@ -94,21 +75,11 @@ namespace Stressless_Service.Database
             }
         }
 
-        public void InsertConfiguration(ConfigurationModel Configuration)
+        public async Task InsertConfiguration(ConfigurationModel Configuration)
         {
             try
             {
-                using (var Connection = _connectionFactory.CreateConnection())
-                {
-                    Connection.Open();
-
-                    Connection.ExecuteAsync("INSERT INTO Configuration (ID, FirstName, LastName, WorkingDays, DayStartTime, DayEndTime, CalenderImport, Calender) " +
-                        "VALUES (1, '"
-                        + Configuration.FirstName + "', '" + Configuration.LastName + "', '" + JsonConvert.SerializeObject(Configuration.WorkingDays) + "', '" + Configuration.DayStartTime + "', '"
-                        + Configuration.DayEndTime + "', '" + Configuration.CalenderImport + "', '" + JsonConvert.SerializeObject(Configuration.Calender) + "');");
-
-                    Connection.Close();
-                }
+                await _context.Configuration.AddAsync(Configuration);
             }
 
             catch (Exception ex)
@@ -123,12 +94,11 @@ namespace Stressless_Service.Database
 
             try
             {
-                using (var Connection = _connectionFactory.CreateConnection())
-                {
-                    Connection.Open();
-                    Response = Connection.QuerySingle<PromptModel>("SELECT * FROM Prompts WHERE Type = '" + type + "' ORDER BY RANDOM() LIMIT 1;");
-                    Connection.Close();
-                }
+                var prompt = _context.Prompts
+                    .Where(p => p.Type == type)
+                    .OrderBy(p => Guid.NewGuid())
+                    .Take(1)
+                    .FirstOrDefaultAsync();
             }
 
             catch (Exception ex)
@@ -143,18 +113,7 @@ namespace Stressless_Service.Database
         {
             try
             {
-                using (var Connection = _connectionFactory.CreateConnection())
-                {
-                    Connection.Open();
-                    
-                    Connection.Execute(
-                        "INSERT INTO Prompts (ID, Type, Text) VALUES (" +
-                        "'" + string.Empty + "'," +
-                        "'" + Prompt.Type + "'," +
-                        "'" + Prompt.Text + "');");
-
-                    Connection.Close();
-                }
+                _context.Prompts.AddAsync(Prompt);
             }
 
             catch (Exception ex)
@@ -169,14 +128,11 @@ namespace Stressless_Service.Database
 
             try
             {
-                using (var Connection = _connectionFactory.CreateConnection())
-                {
-                    Connection.Open();
-                    Response = Connection.QuerySingle<UsedPromptsModel>(
-                        "SELECT * FROM UsedPrompts WHERE PromptID = '" + PromptID + "' ORDER BY LastUsed DESC;");
-
-                    Connection.Close();
-                }
+                Response = await _context.UsedPrompts
+                    .Where(p => p.PromptID == PromptID)
+                    .OrderByDescending(p => p.LastUsed)
+                    .Take(1)
+                    .FirstOrDefaultAsync();
             }
 
             catch (Exception ex)
@@ -191,18 +147,7 @@ namespace Stressless_Service.Database
         {
             try
             {
-                using (var Connection = _connectionFactory.CreateConnection())
-                {
-                    Connection.Open();
-
-                    Connection.Execute(
-                        "INSERT INTO UsedPrompts (ID, PromptID, LastUsed) VALUES (" +
-                        "'" + string.Empty + "', " +
-                        "'" + UsedPrompt.PromptID + "', " +
-                        "'" + UsedPrompt.LastUsed + "');");
-
-                    Connection.Close();
-                }
+                _context.UsedPrompts.AddAsync(UsedPrompt);
             }
 
             catch (Exception ex)
@@ -215,20 +160,13 @@ namespace Stressless_Service.Database
         {
             try
             {
-                using (var Connection = _connectionFactory.CreateConnection())
+                _context.Authorize.AddAsync(new AuthorizeModel
                 {
-                    Connection.Open();
-                    
-                    Connection.Execute(
-                        "INSERT INTO 'Auth' " +
-                        "(ID, MACAddress, DateCreated, ClientID) VALUES (" +
-                        "'" + string.Empty + "', " +
-                        "'" + Authentication.MACAddress + "', " +
-                        "'" + DateTime.Now + "', " +
-                        "'" + Authentication.ClientID + "');");
-
-                    Connection.Close();
-                }
+                    AuthorizeID = 0,
+                    MACAddress = Authentication.MACAddress,
+                    LatestLogin = DateTime.Now.ToString(),
+                    ClientID = Authentication.ClientID
+                });
             }
 
             catch (Exception ex)
@@ -243,12 +181,10 @@ namespace Stressless_Service.Database
 
             try
             {
-                using (var Connection = _connectionFactory.CreateConnection())
-                {
-                    Connection.Open();
-                    Exists = Connection.ExecuteScalar<int>("SELECT count(*) FROM Auth WHERE MACAddress = '" + MACAddress + "';");
-                    Connection.Close();
-                }
+                Exists = _context.Authorize
+                    .Where(e => e.MACAddress == MACAddress)
+                    .SelectMany(e => e.MACAddress)
+                    .Count();
             }
 
             catch (Exception ex)
@@ -265,11 +201,9 @@ namespace Stressless_Service.Database
 
             try
             {
-                using (var connection = _connectionFactory.CreateConnection())
-                {
-                    connection.Open();
-                    Authorization = connection.QueryFirst<AuthorizeModel>("SELECT * FROM AUTH WHERE MACAddress = '" + macAddress + "';");
-                }
+                Authorization = await _context.Authorize
+                    .Where(e => e.MACAddress == macAddress)
+                        .FirstAsync();
             }
 
             catch (Exception ex)
@@ -286,11 +220,10 @@ namespace Stressless_Service.Database
 
             try
             {
-                using (var connection = _connectionFactory.CreateConnection())
-                {
-                    connection.Open();
-                    exists = connection.ExecuteScalar<int>("SELECT count(*) FROM Auth WHERE MACAddress = '" + macAddress + "';");
-                }
+                exists = _context.Authorize
+                    .Where(e => e.MACAddress == macAddress)
+                    .SelectMany(e => e.MACAddress)
+                    .Count();
             }
 
             catch (Exception ex)
@@ -307,11 +240,15 @@ namespace Stressless_Service.Database
 
             try
             {
-                using (var Connection = _connectionFactory.CreateConnection())
-                {
-                    Connection.Open();
-                    RowsAffected = Connection.Execute($"UPDATE Auth SET DateCreated = '{DateTime.Now}' WHERE MACAddress = '{MACAddress}';");
-                    Connection.Close();
+                if (MACAddress != null) {
+                    var updateAuth = _context.Authorize
+                        .Where(e => e.MACAddress == MACAddress)
+                            .FirstOrDefault();
+
+                    updateAuth.LatestLogin = DateTime.Now.ToString();
+                    RowsAffected = 1;
+
+                    await _context.SaveChangesAsync();
                 }
             }
 
@@ -329,24 +266,18 @@ namespace Stressless_Service.Database
 
             try
             {
-                using (var Connection = _connectionFactory.CreateConnection())
-                {
-                    Connection.Open();
+                var configuration = _context.Configuration.Single();
 
-                    string StartShift = Connection.QuerySingle<string>("SELECT Start_time, Finish_time FROM Configuration");
-                    string FinishShift = Connection.QuerySingle<string>("SELECT Finish_time FROM Configuration");
+                if (string.IsNullOrEmpty(configuration.DayStartTime.ToString()) || string.IsNullOrEmpty(configuration.DayEndTime.ToString())) {
+                    throw new ArgumentNullException("Invalid value detected!");
+                }
 
-                    Connection.Close();
-
-                    if (string.IsNullOrEmpty(StartShift) || string.IsNullOrEmpty(FinishShift))
+                else {
+                    times = new DateTime[]
                     {
-                        throw new ArgumentNullException("Invalid value detected!");
-                    }
-
-                    else
-                    {
-                        times = new DateTime[] { Convert.ToDateTime(StartShift), Convert.ToDateTime(FinishShift) };
-                    }
+                        Convert.ToDateTime(configuration.DayStartTime),
+                        Convert.ToDateTime(configuration.DayEndTime)
+                    };
                 }
             }
 
@@ -362,12 +293,9 @@ namespace Stressless_Service.Database
         {
             try
             {
-                using (var Connection = _connectionFactory.CreateConnection())
-                {
-                    Connection.Open();
-                    Connection.ExecuteAsync("DELETE * FROM Auth WHERE datetime('now', '-1 day') >= Generated;");
-                    Connection.Close();
-                }
+                _context.Authorize.RemoveRange(
+                    _context.Authorize.
+                        Where(a => a.Expires <= DateTime.Now.AddDays(-1)));
             }
 
             catch (Exception ex)
@@ -382,25 +310,7 @@ namespace Stressless_Service.Database
 
             try
             {
-                Events = calendarEvents.ToList();
-
-                using (var Connection = _connectionFactory.CreateConnection())
-                {
-                    Connection.Open();
-
-                    foreach (var item in calendarEvents)
-                    {
-                        Connection.ExecuteAsync(
-                            "INSERT INTO 'Calendar' (ID, Name, Start, Finish) VALUES (" +
-                            "'" + string.Empty + "', " +
-                            "'" + item.Name + "', " +
-                            "'" + item.StartTime + "', " +
-                            "'" + item.EndTime + "', " +
-                            "'" + item.EventDate + "');");
-
-                    }
-                    Connection.Close();
-                }
+                _context.Calender.AddRangeAsync(calendarEvents);
             }
 
             catch (Exception ex)
@@ -413,15 +323,7 @@ namespace Stressless_Service.Database
         {
             try
             {
-                using (var Connection = _connectionFactory.CreateConnection())
-                {
-                    foreach (CalenderEvents E in Events)
-                    {
-                        Connection.Open();
-                        Connection.ExecuteAsync("INSERT INTO Events (Runtime, Date) VALUES ('" + E.Runtime + "', '" + E.Event + "');");
-                        Connection.Close();
-                    }
-                }
+                _context.CalenderEvents.AddRangeAsync(Events);
             }
 
             catch (Exception ex)
@@ -436,17 +338,7 @@ namespace Stressless_Service.Database
 
             try
             {
-                using (var Connection = _connectionFactory.CreateConnection())
-                {
-                    Connection.Open();
-
-                    foreach (List<CalenderEvents> eventList in await Connection.QueryAsync<List<CalenderEvents>>("SELECT * FROM Events"))
-                    {
-                        Events.AddRange(eventList);
-
-                    }
-                    Connection.Close();
-                }
+                Events = await _context.CalenderEvents.ToListAsync();
             }
 
             catch (Exception ex)
@@ -461,12 +353,9 @@ namespace Stressless_Service.Database
         {
             try
             {
-                using (var Connection = _connectionFactory.CreateConnection())
-                {
-                    Connection.Open();
-                    Connection.ExecuteAsync("DELETE FROM Events ORDER BY Date ASC Limit " + amount + ";");
-                    Connection.Close();
-                }
+                _context.CalenderEvents.RemoveRange(_context.CalenderEvents
+                    .OrderBy(e => e.Event)
+                    .Take(amount));
             }
 
             catch (Exception ex)
@@ -475,16 +364,11 @@ namespace Stressless_Service.Database
             }
         }
 
-        public void InsertReminders(Reminder Reminder)
+        public void InsertReminders(ReminderModel Reminder)
         {
             try
             {
-                using (var Connection = _connectionFactory.CreateConnection())
-                {
-                    Connection.Open();
-                    Connection.ExecuteAsync("INSERT INTO Reminders (Date, Time) VALUES ('" + Reminder.Date + "', '" + Reminder.Time + "');");
-                    Connection.Close();
-                }
+                _context.Reminders.AddAsync(Reminder);
             }
 
             catch (Exception ex)
@@ -493,18 +377,15 @@ namespace Stressless_Service.Database
             }
         }
 
-        public async Task<Reminder> GetReminders()
+        public async Task<ReminderModel> GetReminders()
         {
-            Reminder reminder = new();
+            ReminderModel reminder = new();
 
             try
             {
-                using (var Connection = _connectionFactory.CreateConnection())
-                {
-                    Connection.Open();
-                    reminder = await Connection.QuerySingleAsync<Reminder>("SELECT * FROM Reminders ORDER BY LastUsed DESC;");
-                    Connection.Close();
-                }
+                reminder = await _context.Reminders
+                    .OrderByDescending(e => e.Date)
+                    .FirstAsync();
             }
 
             catch (Exception ex)

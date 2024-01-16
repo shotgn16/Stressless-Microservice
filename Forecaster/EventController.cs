@@ -108,7 +108,7 @@ namespace Stressless_Service.Forecaster
         // True: Generate Notification | False: Don't do anything...
         public async Task<bool> PromptBreak(ConfigurationModel config = null)
         {
-            Reminder LatestReminders = new();
+            ReminderModel LatestReminders = new();
             bool remindUser = false;
 
             LatestReminders = await _productRepository.GetReminders();
@@ -125,7 +125,7 @@ namespace Stressless_Service.Forecaster
                     if (FreeTime.Minutes >= 30)
                     {
                         // If all the criteria is met - Will insert the reminder into the database and return 'True'
-                        _productRepository.InsertReminders(new Reminder { Date = DateOnly.FromDateTime(DateTime.Now), Time = TimeOnly.FromDateTime(DateTime.Now) });
+                        _productRepository.InsertReminders(new ReminderModel { Date = DateOnly.FromDateTime(DateTime.Now), Time = TimeOnly.FromDateTime(DateTime.Now) });
 
                         // [remindUser = True] will trigger a response to the client that will cause a user prompt to take a break
                         remindUser = true;

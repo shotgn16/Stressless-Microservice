@@ -9,7 +9,7 @@ namespace Stressless_Service.Database
 
         public DBConnectionFactory(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _connectionString = configuration.GetConnectionString("Database:SqLite");
         }
 
         public IDbConnection CreateConnection()

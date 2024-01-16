@@ -5,7 +5,7 @@ namespace Stressless_Service.Database
     public interface IProductRepository
     {
         Task<DateTime[]> GetShift();
-        Task<Reminder> GetReminders();
+        Task<ReminderModel> GetReminders();
         Task<int> CheckConfigurationExists();
         Task<PromptModel> GetPrompt(string type);
         Task<List<CalenderEvents>> GetDayEvents();
@@ -17,14 +17,14 @@ namespace Stressless_Service.Database
         Task<AuthorizeModel> GetLatestAuthorization(string macAddress);
 
         void DeleteExpiredTokens();
-        void DeleteConfiguration();
+        Task DeleteConfiguration();
         void DeleteDayEvents(int amount);
         void InsertPrompt(PromptModel prompt);
-        void InsertReminders(Reminder reminder);
+        void InsertReminders(ReminderModel reminder);
         void InsertUsedPrompt(UsedPromptsModel prompt);
         void InsertCalenderEvents(CalenderModel[] events);
         void InsertDayEvents(List<CalenderEvents> events);
         void InsertAuthentication(AuthorizeModel authorize);
-        void InsertConfiguration(ConfigurationModel configuration);
+        Task InsertConfiguration(ConfigurationModel Configuration);
     }
 }
