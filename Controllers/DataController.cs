@@ -135,9 +135,9 @@ namespace Stressless_Service.Controllers
 
                         if (OriginalConfiguration == null || OriginalConfiguration != Configuration)
                         {
-                            _productRepository.DeleteConfiguration();
-                            _productRepository.InsertConfiguration(Configuration);
-                            _productRepository.InsertCalenderEvents(Configuration.Calender);
+                            await _productRepository.DeleteConfiguration();
+                            await _productRepository.InsertConfiguration(Configuration);
+                            await _productRepository.InsertCalenderEvents(Configuration.Calender);
                         }
                     }
                 }
@@ -147,7 +147,7 @@ namespace Stressless_Service.Controllers
 
         [Authorize]
         [HttpGet("GetUsedPrompt")]
-        public async Task<UsedPromptsModel> GetUsedPrompt(int promptID)
+        public async Task<UsedPromptsModel> GetUsedPrompt(Guid promptID)
         {
             UsedPromptsModel UsedPrompt = new UsedPromptsModel();
             var BearerToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
@@ -217,7 +217,7 @@ namespace Stressless_Service.Controllers
 
                             if (Configuration != null && !string.IsNullOrEmpty(Configuration.CalenderImport))
                             {
-                                await _eventController.EventHandler(Configuration.Calender, Configuration);
+                                await _eventController.EventHandler((CalenderModel[])Configuration.Calender, Configuration);
                                 reminderUser = await _eventController.PromptBreak(Configuration);
                             }
                         }

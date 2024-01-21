@@ -6,12 +6,12 @@ using Stressless_Service.JwtSecurityTokens;
 using Stressless_Service.Configuration;
 using NLog.Web;
 using NLog.Extensions.Logging;
+using Microsoft.EntityFrameworkCore.Sqlite;
 using Stressless_Service;
 using System.Diagnostics;
 using Stressless_Service.logging;
 using Stressless_Service.Autorun;
 using Stressless_Service.Forecaster;
-using Stressless_Service.Database_EFCore;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,6 +35,10 @@ try {
     {
         builder.AddConsole();
         builder.AddDebug();
+    });
+
+    builder.Services.AddDbContext<DatabaseContext>(o => {
+        o.UseSqlite(GlobalConfiguration._configuration["Database:SqLite"]);
     });
 
     // Configuring Kestrel to enable HTTPS via certificate
@@ -63,11 +67,6 @@ try {
             AuthPolicy.RequireAuthenticatedUser();
             AuthPolicy.RequireClaim("ID", GlobalConfiguration._configuration["AppSettings:ID"]);
         });
-    });
-
-    builder.Services.AddDbContext<DatabaseContext>(options =>
-    {
-        options.UseSqlite(@$"Data Source={AppDomain.CurrentDomain.BaseDirectory}\\stressless-db.db");
     });
 
     builder.Services.AddControllers();

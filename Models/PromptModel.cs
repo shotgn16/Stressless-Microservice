@@ -1,12 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Stressless_Service.Database_EFCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Stressless_Service.Models
 {
-    public class PromptModel : DbContext
+    public class PromptModel
     {
-        public int PromptID { get; set; } // Primary Key
+        [Column("PromptID")]
+        public Guid ID { get; set; }
+
         public string Type { get; set; }
         public string Text { get; set; }
     }

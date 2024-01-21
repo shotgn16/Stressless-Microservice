@@ -1,12 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ServiceStack.DataAnnotations;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Stressless_Service.Models
 {
-    public class CalenderModel : DbContext
+    public class CalenderModel
     {
-        public int CalenderID { get; set; } // Primary Key
-        public int ConfigurationID { get; set; } // Foreign Key
+        [Column("CalenderID")]
+        public Guid ID { get; set; }
+
         public string Name { get; set; }
         public string Location { get; set; }
         public TimeOnly StartTime { get; set; }

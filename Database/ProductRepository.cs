@@ -1,9 +1,7 @@
-﻿using Dapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using NLog.Fluent;
 using ServiceStack;
-using Stressless_Service.Database_EFCore;
 using Stressless_Service.Models;
 using System.Data.Entity;
 using System.Data.SQLite;
@@ -21,6 +19,8 @@ namespace Stressless_Service.Database
         {
             _context = context;
             _logger = logger;
+
+            _context.Database.EnsureCreated();
         }
 
         public async Task<ConfigurationModel> GetConfiguration()
@@ -29,8 +29,10 @@ namespace Stressless_Service.Database
 
             try
             {
-                TR_Config = await _context.Configuration.
-                    FirstOrDefaultAsync();
+                TR_Config = await _context.Configuration
+                    .FirstOrDefaultAsync();
+
+                _context.SaveChanges();
             }
 
             catch (Exception ex)
@@ -47,9 +49,8 @@ namespace Stressless_Service.Database
 
             try
             {
-                result = _context.Configuration
-                    .Where(e => e.ConfigurationID == 1)
-                    .Count();
+                result = _context.Configuration.Count();
+                    _context.SaveChanges();
             }
 
             catch (Exception ex)
@@ -66,7 +67,10 @@ namespace Stressless_Service.Database
             {
                 _context.Configuration.Remove(
                     await _context.Configuration
-                        .Where(e => e.ConfigurationID == 1).SingleOrDefaultAsync());
+                        .Where(e => e.FirstName != null)
+                .FirstOrDefaultAsync());
+
+                _context.SaveChanges();
             }
 
             catch (Exception ex)
@@ -80,6 +84,7 @@ namespace Stressless_Service.Database
             try
             {
                 await _context.Configuration.AddAsync(Configuration);
+                    _context.SaveChanges();
             }
 
             catch (Exception ex)
@@ -99,6 +104,8 @@ namespace Stressless_Service.Database
                     .OrderBy(p => Guid.NewGuid())
                     .Take(1)
                     .FirstOrDefaultAsync();
+
+                _context.SaveChanges();
             }
 
             catch (Exception ex)
@@ -109,11 +116,12 @@ namespace Stressless_Service.Database
             return Response;
         }
 
-        public void InsertPrompt(PromptModel Prompt)
+        public async Task InsertPrompt(PromptModel Prompt)
         {
             try
             {
-                _context.Prompts.AddAsync(Prompt);
+                await _context.Prompts.AddAsync(Prompt);
+                    _context.SaveChanges();
             }
 
             catch (Exception ex)
@@ -122,17 +130,19 @@ namespace Stressless_Service.Database
             }
         }
 
-        public async Task<UsedPromptsModel> GetUsedPrompt(int PromptID)
+        public async Task<UsedPromptsModel> GetUsedPrompt(Guid PromptID)
         {
             UsedPromptsModel Response = new UsedPromptsModel();
 
             try
             {
                 Response = await _context.UsedPrompts
-                    .Where(p => p.PromptID == PromptID)
+                    .Where(p => p.ID == PromptID)
                     .OrderByDescending(p => p.LastUsed)
                     .Take(1)
                     .FirstOrDefaultAsync();
+
+                _context.SaveChanges();
             }
 
             catch (Exception ex)
@@ -148,6 +158,7 @@ namespace Stressless_Service.Database
             try
             {
                 _context.UsedPrompts.AddAsync(UsedPrompt);
+                    _context.SaveChanges();
             }
 
             catch (Exception ex)
@@ -156,17 +167,18 @@ namespace Stressless_Service.Database
             }
         }
 
-        public void InsertAuthentication(AuthorizeModel Authentication)
+        public async Task InsertAuthentication(AuthorizeModel Authentication)
         {
             try
             {
-                _context.Authorize.AddAsync(new AuthorizeModel
+                await _context.Authorize.AddAsync(new AuthorizeModel
                 {
-                    AuthorizeID = 0,
                     MACAddress = Authentication.MACAddress,
                     LatestLogin = DateTime.Now.ToString(),
                     ClientID = Authentication.ClientID
                 });
+
+                _context.SaveChanges();
             }
 
             catch (Exception ex)
@@ -185,6 +197,8 @@ namespace Stressless_Service.Database
                     .Where(e => e.MACAddress == MACAddress)
                     .SelectMany(e => e.MACAddress)
                     .Count();
+
+                _context.SaveChanges();
             }
 
             catch (Exception ex)
@@ -204,6 +218,8 @@ namespace Stressless_Service.Database
                 Authorization = await _context.Authorize
                     .Where(e => e.MACAddress == macAddress)
                         .FirstAsync();
+
+                _context.SaveChanges();
             }
 
             catch (Exception ex)
@@ -224,6 +240,8 @@ namespace Stressless_Service.Database
                     .Where(e => e.MACAddress == macAddress)
                     .SelectMany(e => e.MACAddress)
                     .Count();
+
+                _context.SaveChanges();
             }
 
             catch (Exception ex)
@@ -279,6 +297,8 @@ namespace Stressless_Service.Database
                         Convert.ToDateTime(configuration.DayEndTime)
                     };
                 }
+
+                _context.SaveChanges();
             }
 
             catch (Exception ex)
@@ -289,13 +309,15 @@ namespace Stressless_Service.Database
             return times;
         }
 
-        public void DeleteExpiredTokens()
+        public async Task DeleteExpiredTokens()
         {
             try
             {
                 _context.Authorize.RemoveRange(
                     _context.Authorize.
                         Where(a => a.Expires <= DateTime.Now.AddDays(-1)));
+
+                _context.SaveChanges();
             }
 
             catch (Exception ex)
@@ -304,13 +326,17 @@ namespace Stressless_Service.Database
             }
         }
 
-        public void InsertCalenderEvents(CalenderModel[] calendarEvents)
+        public async Task InsertCalenderEvents(ICollection<CalenderModel> calendarEvents)
         {
             List<CalenderModel> Events = new List<CalenderModel>();
 
             try
             {
-                _context.Calender.AddRangeAsync(calendarEvents);
+                await _context.Configuration.AddRangeAsync(new ConfigurationModel {
+                    Calender = calendarEvents
+                });
+
+                    _context.SaveChanges();
             }
 
             catch (Exception ex)
@@ -319,11 +345,12 @@ namespace Stressless_Service.Database
             }
         }
 
-        public void InsertDayEvents(List<CalenderEvents> Events)
+        public async Task InsertDayEvents(List<CalenderEvents> Events)
         {
             try
             {
-                _context.CalenderEvents.AddRangeAsync(Events);
+                await _context.CalenderEvents.AddRangeAsync(Events);
+                    _context.SaveChanges();
             }
 
             catch (Exception ex)
@@ -339,6 +366,7 @@ namespace Stressless_Service.Database
             try
             {
                 Events = await _context.CalenderEvents.ToListAsync();
+                    _context.SaveChanges();
             }
 
             catch (Exception ex)
@@ -356,6 +384,8 @@ namespace Stressless_Service.Database
                 _context.CalenderEvents.RemoveRange(_context.CalenderEvents
                     .OrderBy(e => e.Event)
                     .Take(amount));
+
+                _context.SaveChanges();
             }
 
             catch (Exception ex)
@@ -369,12 +399,14 @@ namespace Stressless_Service.Database
             try
             {
                 _context.Reminders.AddAsync(Reminder);
+                    _context.SaveChanges();
             }
 
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
             }
+
         }
 
         public async Task<ReminderModel> GetReminders()
@@ -386,6 +418,8 @@ namespace Stressless_Service.Database
                 reminder = await _context.Reminders
                     .OrderByDescending(e => e.Date)
                     .FirstAsync();
+
+                _context.SaveChanges();
             }
 
             catch (Exception ex)

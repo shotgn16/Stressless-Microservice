@@ -13,18 +13,19 @@ namespace Stressless_Service.Database
         Task<int> GetAuthentication(string macAddress);
         Task<int> UserPreviousAuthenticated(string macAddress);
         Task<int> UpdateAuthentication(string macAddress);
-        Task<UsedPromptsModel> GetUsedPrompt(int promptid);
+        Task<UsedPromptsModel> GetUsedPrompt(Guid promptid);
         Task<AuthorizeModel> GetLatestAuthorization(string macAddress);
 
-        void DeleteExpiredTokens();
+        Task DeleteExpiredTokens();
         Task DeleteConfiguration();
         void DeleteDayEvents(int amount);
-        void InsertPrompt(PromptModel prompt);
+        Task InsertPrompt(PromptModel prompt);
         void InsertReminders(ReminderModel reminder);
         void InsertUsedPrompt(UsedPromptsModel prompt);
-        void InsertCalenderEvents(CalenderModel[] events);
-        void InsertDayEvents(List<CalenderEvents> events);
-        void InsertAuthentication(AuthorizeModel authorize);
+        Task InsertCalenderEvents(ICollection<CalenderModel> events);
+        Task InsertDayEvents(List<CalenderEvents> events);
+        Task InsertAuthentication(AuthorizeModel authorize);
         Task InsertConfiguration(ConfigurationModel Configuration);
+        //Task InsertCalenderEvents(CalenderModel[] calender);
     }
 }

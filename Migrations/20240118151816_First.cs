@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Stressless_Service.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateSQLITE : Migration
+    public partial class First : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,8 +15,7 @@ namespace Stressless_Service.Migrations
                 name: "Authorize",
                 columns: table => new
                 {
-                    AuthorizeID = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    AuthorizeID = table.Column<Guid>(type: "TEXT", nullable: false),
                     MACAddress = table.Column<string>(type: "TEXT", nullable: false),
                     ClientID = table.Column<string>(type: "TEXT", nullable: false),
                     Token = table.Column<string>(type: "TEXT", nullable: false),
@@ -32,8 +31,7 @@ namespace Stressless_Service.Migrations
                 name: "CalenderEvents",
                 columns: table => new
                 {
-                    EventID = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    EventID = table.Column<Guid>(type: "TEXT", nullable: false),
                     Runtime = table.Column<TimeSpan>(type: "TEXT", nullable: false),
                     Event = table.Column<DateOnly>(type: "TEXT", nullable: false)
                 },
@@ -46,8 +44,7 @@ namespace Stressless_Service.Migrations
                 name: "Configuration",
                 columns: table => new
                 {
-                    ConfigurationID = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    ConfigurationID = table.Column<Guid>(type: "TEXT", nullable: false),
                     FirstName = table.Column<string>(type: "TEXT", nullable: false),
                     LastName = table.Column<string>(type: "TEXT", nullable: false),
                     WorkingDays = table.Column<string>(type: "TEXT", nullable: false),
@@ -65,8 +62,7 @@ namespace Stressless_Service.Migrations
                 name: "Prompts",
                 columns: table => new
                 {
-                    PromptID = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    PromptID = table.Column<Guid>(type: "TEXT", nullable: false),
                     Type = table.Column<string>(type: "TEXT", nullable: false),
                     Text = table.Column<string>(type: "TEXT", nullable: false)
                 },
@@ -79,8 +75,7 @@ namespace Stressless_Service.Migrations
                 name: "Reminders",
                 columns: table => new
                 {
-                    ReminderID = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    ReminderID = table.Column<Guid>(type: "TEXT", nullable: false),
                     Date = table.Column<DateOnly>(type: "TEXT", nullable: false),
                     Time = table.Column<TimeOnly>(type: "TEXT", nullable: false)
                 },
@@ -93,42 +88,13 @@ namespace Stressless_Service.Migrations
                 name: "UsedPrompts",
                 columns: table => new
                 {
-                    UsedPromptID = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    PromptID = table.Column<int>(type: "INTEGER", nullable: false),
+                    UsedPromptID = table.Column<Guid>(type: "TEXT", nullable: false),
+                    PromptIdentification = table.Column<Guid>(type: "TEXT", nullable: false),
                     LastUsed = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Prompts", x => x.PromptID);
-                    table.ForeignKey(
-                        name: "FK_UsedPromps",
-                        column: x => x.PromptID,
-                        principalTable: "UsedPrompts",
-                        principalColumn: "PromptID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Calender",
-                columns: table => new
-                {
-                    CalenderID = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    ConfigurationID = table.Column<int>(type: "INTEGER", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Location = table.Column<string>(type: "TEXT", nullable: false),
-                    StartTime = table.Column<TimeOnly>(type: "TEXT", nullable: false),
-                    EndTime = table.Column<TimeOnly>(type: "TEXT", nullable: false),
-                    EventDate = table.Column<DateOnly>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Configuration", x => x.ConfigurationID);
-                    table.ForeignKey(
-                        name: "FK_Calender",
-                        column: x => x.ConfigurationID,
-                        principalTable: "Calender",
-                        principalColumn: "ConfigurationID");
+                    table.PrimaryKey("PK_UsedPrompts", x => x.UsedPromptID);
                 });
         }
 
@@ -139,10 +105,10 @@ namespace Stressless_Service.Migrations
                 name: "Authorize");
 
             migrationBuilder.DropTable(
-                name: "Calender");
+                name: "CalenderEvents");
 
             migrationBuilder.DropTable(
-                name: "CalenderEvents");
+                name: "CalenderModel");
 
             migrationBuilder.DropTable(
                 name: "Prompts");

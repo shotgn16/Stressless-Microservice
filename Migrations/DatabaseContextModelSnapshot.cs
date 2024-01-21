@@ -3,7 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Stressless_Service.Database_EFCore;
+using Stressless_Service.Database;
 
 #nullable disable
 
@@ -19,9 +19,10 @@ namespace Stressless_Service.Migrations
 
             modelBuilder.Entity("Stressless_Service.Models.AuthorizeModel", b =>
                 {
-                    b.Property<int>("AuthorizeID")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("AuthorizeID");
 
                     b.Property<string>("ClientID")
                         .IsRequired()
@@ -42,16 +43,17 @@ namespace Stressless_Service.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("AuthorizeID");
+                    b.HasKey("ID");
 
                     b.ToTable("Authorize");
                 });
 
             modelBuilder.Entity("Stressless_Service.Models.CalenderEvents", b =>
                 {
-                    b.Property<int>("EventID")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("EventID");
 
                     b.Property<DateOnly>("Event")
                         .HasColumnType("TEXT");
@@ -59,45 +61,17 @@ namespace Stressless_Service.Migrations
                     b.Property<TimeSpan>("Runtime")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("EventID");
+                    b.HasKey("ID");
+
                     b.ToTable("CalenderEvents");
-                });
-
-            modelBuilder.Entity("Stressless_Service.Models.CalenderModel", b =>
-                {
-                    b.Property<int>("CalenderID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ConfigurationID")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<TimeOnly>("EndTime")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateOnly>("EventDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<TimeOnly>("StartTime")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("CalenderID");
-                    b.ToTable("Calender");
                 });
 
             modelBuilder.Entity("Stressless_Service.Models.ConfigurationModel", b =>
                 {
-                    b.Property<int>("ConfigurationID")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("ConfigurationID");
 
                     b.Property<string>("CalenderImport")
                         .IsRequired()
@@ -121,15 +95,21 @@ namespace Stressless_Service.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("ConfigurationID");
+                    b.Property<string>("Calender")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ID");
+
                     b.ToTable("Configuration");
                 });
 
             modelBuilder.Entity("Stressless_Service.Models.PromptModel", b =>
                 {
-                    b.Property<int>("PromptID")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("PromptID");
 
                     b.Property<string>("Text")
                         .IsRequired()
@@ -139,15 +119,17 @@ namespace Stressless_Service.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("PromptID");
+                    b.HasKey("ID");
+
                     b.ToTable("Prompts");
                 });
 
             modelBuilder.Entity("Stressless_Service.Models.ReminderModel", b =>
                 {
-                    b.Property<int>("ReminderID")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("ReminderID");
 
                     b.Property<DateOnly>("Date")
                         .HasColumnType("TEXT");
@@ -155,38 +137,30 @@ namespace Stressless_Service.Migrations
                     b.Property<TimeOnly>("Time")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("ReminderID");
+                    b.HasKey("ID");
+
                     b.ToTable("Reminders");
                 });
 
             modelBuilder.Entity("Stressless_Service.Models.UsedPromptsModel", b =>
                 {
-                    b.Property<int>("UsedPromptID")
+                    b.Property<Guid>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("UsedPromptID");
 
                     b.Property<string>("LastUsed")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("PromptID")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("PromptIdentification")
+                        .HasColumnType("TEXT");
 
-                    b.HasKey("UsedPromptID");
+                    b.HasKey("ID");
+
                     b.ToTable("UsedPrompts");
                 });
 
-            modelBuilder.Entity("Stressless_Service.Models.ConfigurationModel", b =>
-                {
-                    b.HasOne("Stressless_Service.Models.CalenderModel", null)
-                        .WithOne("Configuration")
-                        .HasForeignKey("ConfigurationID");
-                });
-
-            modelBuilder.Entity("Stressless_Service.Models.CalenderModel", b =>
-                {
-                    b.Navigation("Configuration");
-                });
 #pragma warning restore 612, 618
         }
     }
