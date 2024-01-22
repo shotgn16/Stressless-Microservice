@@ -18,7 +18,7 @@ namespace Stressless_Service.Forecaster
         }
 
         // Callable method for running the controller in its intended order
-        public async Task EventHandler(CalenderModel[] calenderEvents, ConfigurationModel configuration)
+        public async Task EventHandler(CalenderModel[] calenderEvents, ConfigurationClass configuration)
         {
             List<CalenderEvents> events = await FormatEventData(calenderEvents);
 
@@ -106,7 +106,7 @@ namespace Stressless_Service.Forecaster
         }
 
         // True: Generate Notification | False: Don't do anything...
-        public async Task<bool> PromptBreak(ConfigurationModel config = null)
+        public async Task<bool> PromptBreak(ConfigurationClass config = null)
         {
             ReminderModel LatestReminders = new();
             bool remindUser = false;

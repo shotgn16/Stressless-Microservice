@@ -24,7 +24,7 @@ namespace Stressless_Service.Autorun
         public async Task<bool> GetSystemTime(bool isWorkingTime = false) // OLD NAME: CheckTime
         {
             if (await _productRepository.CheckConfigurationExists() == 1) {
-                ConfigurationModel configuration = await _productRepository.GetConfiguration();
+                ConfigurationClass configuration = await _productRepository.GetConfiguration();
 
                 if (configuration.DayStartTime != TimeOnly.MinValue && configuration.DayEndTime != TimeOnly.MinValue) {
                     DateTime[] Times = await _productRepository.GetShift();

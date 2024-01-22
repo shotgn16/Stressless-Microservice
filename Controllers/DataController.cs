@@ -96,9 +96,9 @@ namespace Stressless_Service.Controllers
 
         [Authorize]
         [HttpGet("GetConfiguration")]
-        public async Task<ConfigurationModel> GetConfiguration()
+        public async Task<ConfigurationClass> GetConfiguration()
         {
-            ConfigurationModel Configuration = new ConfigurationModel();
+            ConfigurationClass Configuration = new ConfigurationClass();
             var BearerToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
 
             if (!string.IsNullOrEmpty(BearerToken))
@@ -117,7 +117,7 @@ namespace Stressless_Service.Controllers
 
         [Authorize]
         [HttpPost("InsertConfiguration")]
-        public async Task<IActionResult> InsertConfiguration([FromBody] ConfigurationModel Configuration)
+        public async Task<IActionResult> InsertConfiguration([FromBody] ConfigurationClass Configuration)
         {
             if (Configuration == null) {
                 return BadRequest("Invalid configuration!");
@@ -136,8 +136,8 @@ namespace Stressless_Service.Controllers
                         if (OriginalConfiguration == null || OriginalConfiguration != Configuration)
                         {
                             await _productRepository.DeleteConfiguration();
-                            await _productRepository.InsertConfiguration(Configuration);
-                            await _productRepository.InsertCalenderEvents(Configuration.Calender);
+                                await _productRepository.InsertConfiguration(Configuration);
+                            //await _productRepository.InsertCalenderEvents(Configuration.Calender);
                         }
                     }
                 }
@@ -213,11 +213,11 @@ namespace Stressless_Service.Controllers
                         {
                             // If the token is VALID, it will continue into this code...
 
-                            ConfigurationModel Configuration = await _productRepository.GetConfiguration();
+                            ConfigurationClass Configuration = await _productRepository.GetConfiguration();
 
                             if (Configuration != null && !string.IsNullOrEmpty(Configuration.CalenderImport))
                             {
-                                await _eventController.EventHandler((CalenderModel[])Configuration.Calender, Configuration);
+                                await _eventController.EventHandler(Configuration.Calender, Configuration);
                                 reminderUser = await _eventController.PromptBreak(Configuration);
                             }
                         }

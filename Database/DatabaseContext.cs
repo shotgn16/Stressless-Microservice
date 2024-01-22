@@ -17,7 +17,7 @@ namespace Stressless_Service.Database
         public DbSet<UsedPromptsModel> UsedPrompts { get; set; }
         public DbSet<ReminderModel> Reminders { get; set; }
         public DbSet<PromptModel> Prompts { get; set; }
-        public DbSet<ConfigurationModel> Configuration { get; set; }
+        public DbSet<Configuration_Model> Configuration { get; set; }
         public DbSet<CalenderEvents> CalenderEvents { get; set; }
         public DbSet<AuthorizeModel> Authorize { get; set; }
         public DbSet<CalenderModel> Calender { get; set; }
@@ -25,7 +25,7 @@ namespace Stressless_Service.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ConfigurationModel>().HasKey(pk => pk.ID);
+            modelBuilder.Entity<Configuration_Model>().HasKey(pk => pk.ID);
                 modelBuilder.Entity<AuthorizeModel>().HasKey(pk => pk.ID);
 
             modelBuilder.Entity<CalenderEvents>().HasKey(pk => pk.ID);

@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ServiceStack.Auth;
+using ServiceStack.Script;
 using Stressless_Service.Configuration;
 using Stressless_Service.Database;
 using Stressless_Service.Models;
@@ -27,17 +29,20 @@ namespace Stressless_Service.JwtSecurityTokens
             if (auth == 1) { // NEW USER [REGISTER] GENERATE TOKEN & INSERT AUTH
 
                 var token = _tokenGeneratorService.GenerateToken(clientID);
+                Guid AuthID = new();
 
                 // DATABASE
-                _productRepository.InsertAuthentication(new AuthorizeModel {
+                AuthID = _productRepository.InsertAuthentication(new AuthorizeModel {
                     ClientID = clientID,
                     MACAddress = macAddres,
                     Token = token,
-                    LatestLogin = DateTime.Now.ToString()
-                });
+                    Expires = DateTime.Now.AddDays(1),
+                    LatestLogin = DateTime.Now.AsString()
+                }).Result;
 
                 // USER VIEW MODEL
                 returnmodel = new AuthenticationTokenModel {
+                    ID = AuthID,
                     Token = token,
                     Expires = DateTime.Now.AddDays(1).ToString(),
                     TokenType = "Bearer"
@@ -54,28 +59,30 @@ namespace Stressless_Service.JwtSecurityTokens
                 { // LESS THAN 1 HOUR LEFT - EXPIRED
 
                     var token = _tokenGeneratorService.GenerateToken(latestModel.ClientID);
+                    Guid AuthGuild = new();
 
-                    _productRepository.InsertAuthentication(new AuthorizeModel
-                    {
+                    AuthGuild = _productRepository.InsertAuthentication(new AuthorizeModel {
                         ClientID = clientID,
                         MACAddress = macAddres,
                         Token = token,
-                        LatestLogin = DateTime.Now.ToString()
-                    });
+                        Expires = DateTime.Now.AddDays(1),
+                        LatestLogin = DateTime.Now.AsString()
+                    }).Result;
 
                     _logger.LogInformation($"Bearer Token Generated...\nID: {macAddres}");
                 }
 
-                else if (latestModel.Expires > DateTime.Now.AddHours(1))
-
-                    // Returns the latest model from the database - NOT GENERATE
-                    returnmodel = new AuthenticationTokenModel {
+                else if (latestModel.Expires > DateTime.Now.AddHours(1)) { // Returns the latest model from the database - NOT GENERATE
+                    
+                    returnmodel = new AuthenticationTokenModel
+                    {
                         Token = latestModel.Token,
                         Expires = latestModel.Expires.ToString(),
                         TokenType = "Bearer"
                     };
 
-                _logger.LogInformation($"Bearer Token Retrieved...\nID: {macAddres}");
+                    _logger.LogInformation($"Bearer Token Retrieved...\nID: {macAddres}");
+                }
             }
 
             else if (auth == 0)

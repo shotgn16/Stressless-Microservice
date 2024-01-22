@@ -9,7 +9,7 @@ namespace Stressless_Service.Database
         Task<int> CheckConfigurationExists();
         Task<PromptModel> GetPrompt(string type);
         Task<List<CalenderEvents>> GetDayEvents();
-        Task<ConfigurationModel> GetConfiguration();
+        Task<ConfigurationClass> GetConfiguration();
         Task<int> GetAuthentication(string macAddress);
         Task<int> UserPreviousAuthenticated(string macAddress);
         Task<int> UpdateAuthentication(string macAddress);
@@ -22,10 +22,9 @@ namespace Stressless_Service.Database
         Task InsertPrompt(PromptModel prompt);
         void InsertReminders(ReminderModel reminder);
         void InsertUsedPrompt(UsedPromptsModel prompt);
-        Task InsertCalenderEvents(ICollection<CalenderModel> events);
+        //Task InsertCalenderEvents(ICollection<CalenderModel> events, Guid ConfigID);
         Task InsertDayEvents(List<CalenderEvents> events);
-        Task InsertAuthentication(AuthorizeModel authorize);
-        Task InsertConfiguration(ConfigurationModel Configuration);
-        //Task InsertCalenderEvents(CalenderModel[] calender);
+        Task<Guid> InsertAuthentication(AuthorizeModel authorize);
+        Task<Guid> InsertConfiguration(ConfigurationClass Configuration);
     }
 }
