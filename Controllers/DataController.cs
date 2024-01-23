@@ -13,6 +13,11 @@ namespace Stressless_Service.Controllers
     [System.Web.Http.Route("[controller]")]
     public class DataController : ControllerBase
     {
+        /// <summary>
+        /// * ILogger: Is used to capture messages and errors that occur within this constructor and write them to a designated location. The ILogger implementation feeds directly to the NLog configuration
+        /// * ITokenGeneratorService: Used to create a constructor-wide instance of the service used to generate OAuth Tokens. When used, this service can take in a ClientID and MacAddress(UUID) and return a fully generated Base64 OAuth Token used for authentcation between and client and server
+        /// * IProductRepository: Used to create a constructor-wide instance of the service that provdes access to 
+        /// </summary>
         private readonly Microsoft.Extensions.Logging.ILogger _logger;
         private readonly ITokenGeneratorService _tokenGeneratorService;
         private readonly IProductRepository _productRepository;
@@ -137,7 +142,6 @@ namespace Stressless_Service.Controllers
                         {
                             await _productRepository.DeleteConfiguration();
                                 await _productRepository.InsertConfiguration(Configuration);
-                            //await _productRepository.InsertCalenderEvents(Configuration.Calender);
                         }
                     }
                 }

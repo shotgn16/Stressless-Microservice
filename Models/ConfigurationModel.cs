@@ -23,7 +23,12 @@ namespace Stressless_Service.Models
         [Column(TypeName = "TEXT")]
         public string Calender { get; set; }
 
+        // Static constructor to initilize '_Model'
         public static Configuration_Model _Model;
+        static Configuration_Model() 
+        {
+            _Model = new Configuration_Model();
+        }
     }
 
     public class ConfigurationClass
