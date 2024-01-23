@@ -27,9 +27,10 @@ namespace Stressless_Service.Database
             try
             {
                 storedConfig = await _context.Configuration.FirstOrDefaultAsync();
-                    _context.SaveChanges();
+                _context.SaveChanges();
 
-                returnedConfig = new ConfigurationClass {
+                returnedConfig = new ConfigurationClass
+                {
                     FirstName = storedConfig.FirstName,
                     LastName = storedConfig.LastName,
                     DayStartTime = storedConfig.DayStartTime,
@@ -55,7 +56,7 @@ namespace Stressless_Service.Database
             try
             {
                 result = _context.Configuration.Count();
-                    _context.SaveChanges();
+                _context.SaveChanges();
             }
 
             catch (Exception ex)
@@ -91,7 +92,8 @@ namespace Stressless_Service.Database
 
             try
             {
-                await _context.Configuration.AddAsync(new Configuration_Model {
+                await _context.Configuration.AddAsync(new Configuration_Model
+                {
                     FirstName = Configuration.FirstName,
                     LastName = Configuration.LastName,
                     WorkingDays = Configuration.WorkingDays,
@@ -99,8 +101,8 @@ namespace Stressless_Service.Database
                     DayEndTime = Configuration.DayEndTime,
                     CalenderImport = Configuration.CalenderImport,
                     Calender = JsonConvert.SerializeObject(Configuration.Calender)
-                }); 
-                
+                });
+
                 _context.SaveChanges();
 
                 ConfigurationID = _context.Configuration
@@ -146,7 +148,7 @@ namespace Stressless_Service.Database
             try
             {
                 await _context.Prompts.AddAsync(Prompt);
-                    _context.SaveChanges();
+                _context.SaveChanges();
             }
 
             catch (Exception ex)
@@ -183,7 +185,7 @@ namespace Stressless_Service.Database
             try
             {
                 _context.UsedPrompts.AddAsync(UsedPrompt);
-                    _context.SaveChanges();
+                _context.SaveChanges();
             }
 
             catch (Exception ex)
@@ -288,7 +290,8 @@ namespace Stressless_Service.Database
 
             try
             {
-                if (MACAddress != null) {
+                if (MACAddress != null)
+                {
                     var updateAuth = _context.Authorize
                         .Where(e => e.MACAddress == MACAddress)
                             .FirstOrDefault();
@@ -316,11 +319,13 @@ namespace Stressless_Service.Database
             {
                 var configuration = _context.Configuration.Single();
 
-                if (string.IsNullOrEmpty(configuration.DayStartTime.ToString()) || string.IsNullOrEmpty(configuration.DayEndTime.ToString())) {
+                if (string.IsNullOrEmpty(configuration.DayStartTime.ToString()) || string.IsNullOrEmpty(configuration.DayEndTime.ToString()))
+                {
                     throw new ArgumentNullException("Invalid value detected!");
                 }
 
-                else {
+                else
+                {
                     times = new DateTime[]
                     {
                         Convert.ToDateTime(configuration.DayStartTime),
@@ -361,7 +366,7 @@ namespace Stressless_Service.Database
             try
             {
                 await _context.CalenderEvents.AddRangeAsync(Events);
-                    _context.SaveChanges();
+                _context.SaveChanges();
             }
 
             catch (Exception ex)
@@ -377,7 +382,7 @@ namespace Stressless_Service.Database
             try
             {
                 Events = await _context.CalenderEvents.ToListAsync();
-                    _context.SaveChanges();
+                _context.SaveChanges();
             }
 
             catch (Exception ex)
@@ -410,7 +415,7 @@ namespace Stressless_Service.Database
             try
             {
                 _context.Reminders.AddAsync(Reminder);
-                    _context.SaveChanges();
+                _context.SaveChanges();
             }
 
             catch (Exception ex)

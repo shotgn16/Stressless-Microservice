@@ -39,12 +39,14 @@ namespace Stressless_Service.Controllers
         {
             var response = _authenticationController.Authenticate(macAddress, clientID);
 
-            if (response == null) {
+            if (response == null)
+            {
                 _logger.LogInformation($"Authentication Failed for User: {macAddress}\nPlease ensure you have a valid MAC Address and ClientID.");
                 return BadRequest(new { message = "MAC Address or ClientID incorrect!" });
             }
 
-            else {
+            else
+            {
                 _logger.LogInformation($"User: {macAddress} Authenticated Successfully!");
                 return Ok(response);
             }
@@ -76,7 +78,8 @@ namespace Stressless_Service.Controllers
         [HttpPost("InsertPrompt")]
         public async Task<IActionResult> InsertPrompt([FromBody] PromptRequestModel PromptRequest)
         {
-            if (PromptRequest == null) {
+            if (PromptRequest == null)
+            {
                 return BadRequest("Invalid configuration!");
             }
 
@@ -124,7 +127,8 @@ namespace Stressless_Service.Controllers
         [HttpPost("InsertConfiguration")]
         public async Task<IActionResult> InsertConfiguration([FromBody] ConfigurationClass Configuration)
         {
-            if (Configuration == null) {
+            if (Configuration == null)
+            {
                 return BadRequest("Invalid configuration!");
             }
 
@@ -141,11 +145,11 @@ namespace Stressless_Service.Controllers
                         if (OriginalConfiguration == null || OriginalConfiguration != Configuration)
                         {
                             await _productRepository.DeleteConfiguration();
-                                await _productRepository.InsertConfiguration(Configuration);
+                            await _productRepository.InsertConfiguration(Configuration);
                         }
                     }
                 }
-            } 
+            }
             return Ok("Success!");
         }
 
@@ -175,7 +179,8 @@ namespace Stressless_Service.Controllers
         [HttpPost("InsertUsedPrompt")]
         public async Task<IActionResult> InsertUsedPrompt([FromBody] UsedPromptsModel UsedPrompt)
         {
-            if (UsedPrompt == null) {
+            if (UsedPrompt == null)
+            {
                 return BadRequest("Invalid configuration!");
             }
 
@@ -237,5 +242,5 @@ namespace Stressless_Service.Controllers
             // IF:True, Remind User... | IF:False, Do Nothing...
             return reminderUser;
         }
-    } 
+    }
 }

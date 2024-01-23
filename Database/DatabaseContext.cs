@@ -26,13 +26,13 @@ namespace Stressless_Service.Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Configuration_Model>().HasKey(pk => pk.ID);
-                modelBuilder.Entity<AuthorizeModel>().HasKey(pk => pk.ID);
+            modelBuilder.Entity<AuthorizeModel>().HasKey(pk => pk.ID);
 
             modelBuilder.Entity<CalenderEvents>().HasKey(pk => pk.ID);
-                modelBuilder.Entity<PromptModel>().HasKey(pk => pk.ID);
+            modelBuilder.Entity<PromptModel>().HasKey(pk => pk.ID);
 
             modelBuilder.Entity<UsedPromptsModel>().HasKey(pk => pk.ID);
-                modelBuilder.Entity<ReminderModel>().HasKey(pk => pk.ID);
+            modelBuilder.Entity<ReminderModel>().HasKey(pk => pk.ID);
         }
     }
 }

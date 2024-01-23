@@ -17,15 +17,18 @@ public class JWTokenValidation : Controller, IDisposable
 
     public async Task<bool> Handler(string token, string ClientID = "", bool returnValue = false)
     {
-        if (!string.IsNullOrEmpty(token)) {
+        if (!string.IsNullOrEmpty(token))
+        {
             (bool, SecurityToken) isValid = await ValidateToken(token);
 
-            if (isValid.Item1) {
+            if (isValid.Item1)
+            {
                 ClientID = GetClaim(token, "ClientID");
             }
         }
 
-        if (ClientID == GlobalConfiguration._configuration["AppSettings:ID"]) {
+        if (ClientID == GlobalConfiguration._configuration["AppSettings:ID"])
+        {
             returnValue = true;
         }
 
@@ -38,14 +41,16 @@ public class JWTokenValidation : Controller, IDisposable
         var tokenHandler = new JwtSecurityTokenHandler();
         SecurityToken vToken;
 
-        try {
-            tokenHandler.ValidateToken(token, 
-                GlobalTokenValidationParameters.ValidationParameters, 
+        try
+        {
+            tokenHandler.ValidateToken(token,
+                GlobalTokenValidationParameters.ValidationParameters,
                 out SecurityToken validatedToken);
 
             vToken = validatedToken;
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             _logger.LogError(ex.Message + ex);
             return (false, null);
         }
@@ -54,8 +59,10 @@ public class JWTokenValidation : Controller, IDisposable
 
     public string GetClaim(string token, string claimType, string returnValue = null)
     {
-        foreach (var claim in ClaimsToList(token)) {
-            if (claim.Type.Equals(claimType)) {
+        foreach (var claim in ClaimsToList(token))
+        {
+            if (claim.Type.Equals(claimType))
+            {
                 returnValue = claim.Value;
             }
         }
@@ -68,7 +75,8 @@ public class JWTokenValidation : Controller, IDisposable
         var handler = new JwtSecurityTokenHandler();
         var jsonToken = handler.ReadToken(token) as JwtSecurityToken;
 
-        if (jsonToken == null) {
+        if (jsonToken == null)
+        {
             throw new InvalidOperationException("Invalid JWT Token");
         }
 

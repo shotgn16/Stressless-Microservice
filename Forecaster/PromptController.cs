@@ -19,7 +19,8 @@ namespace Stressless_Service.Forecaster
 
         public async Task StartTimer()
         {
-            if (!isActive) {
+            if (!isActive)
+            {
                 _timer = new System.Timers.Timer(300000);
                 _timer.Elapsed += new System.Timers.ElapsedEventHandler(OnTimerFinishEvent);
                 _timer.Start();

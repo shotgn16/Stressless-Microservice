@@ -32,10 +32,12 @@ namespace Stressless_Service.Forecaster
         private async Task<List<CalenderEvents>> FormatEventData(CalenderModel[] calenderEvents)
         {
             List<CalenderModel> events = calenderEvents.ToList();
-            List<CalenderEvents> eventRuntime = new List<CalenderEvents>(); 
+            List<CalenderEvents> eventRuntime = new List<CalenderEvents>();
 
-            if (events.Count > 0) {
-                foreach (var item in events) {
+            if (events.Count > 0)
+            {
+                foreach (var item in events)
+                {
                     eventRuntime.Add(new CalenderEvents
                     {
                         Runtime = item.StartTime - item.EndTime,
@@ -60,11 +62,13 @@ namespace Stressless_Service.Forecaster
             List<CalenderEvents> storedDays = await _productRepository.GetDayEvents();
             AlreadyStored = storedDays.Count;
 
-            if (AlreadyStored + eventRuntimes.Count >= 21 || AlreadyStored >= 21) {
+            if (AlreadyStored + eventRuntimes.Count >= 21 || AlreadyStored >= 21)
+            {
                 _productRepository.DeleteDayEvents(1);
             }
 
-            else if (AlreadyStored + eventRuntimes.Count != 21 && AlreadyStored < 21) {
+            else if (AlreadyStored + eventRuntimes.Count != 21 && AlreadyStored < 21)
+            {
                 eventRuntimes = eventRuntimes.OrderBy(e => e.Event.DayOfWeek).ToList();
 
                 _productRepository.InsertDayEvents(eventRuntimes);
@@ -134,7 +138,7 @@ namespace Stressless_Service.Forecaster
             }
 
             return remindUser;
-        } 
+        }
 
         public void Dispose() => GC.Collect();
     }

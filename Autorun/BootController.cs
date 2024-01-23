@@ -23,13 +23,16 @@ namespace Stressless_Service.Autorun
 
         public async Task<bool> GetSystemTime(bool isWorkingTime = false) // OLD NAME: CheckTime
         {
-            if (await _productRepository.CheckConfigurationExists() == 1) {
+            if (await _productRepository.CheckConfigurationExists() == 1)
+            {
                 ConfigurationClass configuration = await _productRepository.GetConfiguration();
 
-                if (configuration.DayStartTime != TimeOnly.MinValue && configuration.DayEndTime != TimeOnly.MinValue) {
+                if (configuration.DayStartTime != TimeOnly.MinValue && configuration.DayEndTime != TimeOnly.MinValue)
+                {
                     DateTime[] Times = await _productRepository.GetShift();
 
-                    if (System.DateTime.Now >= Times[0] && System.DateTime.Now <= Times[1]) {
+                    if (System.DateTime.Now >= Times[0] && System.DateTime.Now <= Times[1])
+                    {
                         isWorkingTime = true;
                     }
                 }
@@ -40,12 +43,15 @@ namespace Stressless_Service.Autorun
 
         public async Task BootUI() // OLD NAME: initializeFront
         {
-            if (await GetSystemTime() && Process.GetProcessesByName("notepad.exe").Length > 0) {
+            if (await GetSystemTime() && Process.GetProcessesByName("notepad.exe").Length > 0)
+            {
                 await StartTimer();
             }
 
-            else {
-                if (await LastBooted()) {
+            else
+            {
+                if (await LastBooted())
+                {
                     LastSynced = DateTime.Now;
                     await StartTimer();
                 }
@@ -56,7 +62,8 @@ namespace Stressless_Service.Autorun
         {
             TimeSpan difference = System.DateTime.Now - LastSynced;
 
-            if (difference.TotalHours >= 2) {
+            if (difference.TotalHours >= 2)
+            {
                 isLater = true;
             }
 
@@ -65,7 +72,8 @@ namespace Stressless_Service.Autorun
 
         public async Task StartTimer()
         {
-            if (!isActive) {
+            if (!isActive)
+            {
                 _timer = new System.Timers.Timer(60000);
                 _timer.Elapsed += new System.Timers.ElapsedEventHandler(OnTimerFinishEvent);
                 _timer.Start();

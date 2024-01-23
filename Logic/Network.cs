@@ -8,8 +8,9 @@ public class Network
     public static async Task<string> GetMac()
     {
         return (from nic in NetworkInterface.GetAllNetworkInterfaces()
-        where nic.OperationalStatus == OperationalStatus.Up select 
-        nic.GetPhysicalAddress().ToString()).FirstOrDefault();
+                where nic.OperationalStatus == OperationalStatus.Up
+                select
+                nic.GetPhysicalAddress().ToString()).FirstOrDefault();
     }
 
     public static async Task<string> GetIPv4()

@@ -21,12 +21,14 @@ NLog.LogManager.GetCurrentClassLogger().Info("Stressless Service Starting...");
 System.Diagnostics.Trace.Listeners.Add(new NLog.NLogTraceListener { Name = "NLog" });
 Trace.Listeners.Add(new NLogTraceListener());
 
-try {
+try
+{
 
     builder.Host.UseNLog();
     LoggerFactory.Create(builder => builder.AddNLog());
 
-    builder.Services.AddHttpLogging(logging => {
+    builder.Services.AddHttpLogging(logging =>
+    {
         logging.LoggingFields = HttpLoggingFields.All;
     });
 
@@ -37,14 +39,17 @@ try {
         builder.AddDebug();
     });
 
-    builder.Services.AddDbContext<DatabaseContext>(o => {
+    builder.Services.AddDbContext<DatabaseContext>(o =>
+    {
         o.UseSqlite(GlobalConfiguration._configuration["Database:SqLite"]);
     });
 
     // Configuring Kestrel to enable HTTPS via certificate
     // [dotnet dev-certs https -ep <path_to_pfx_file> -p <password>]
-    builder.WebHost.ConfigureKestrel((context, options) => {
-        options.ListenAnyIP(7257, listenOptions => {
+    builder.WebHost.ConfigureKestrel((context, options) =>
+    {
+        options.ListenAnyIP(7257, listenOptions =>
+        {
             listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1AndHttp2AndHttp3;
             listenOptions.UseConnectionLogging();
             listenOptions.UseHttps(GlobalConfiguration._configuration["Certificate:File"], GlobalConfiguration._configuration["Certificate:Password"]);
@@ -52,18 +57,22 @@ try {
     });
 
     // Configuring JwtBearer Authentication to enable Bearer token authentication
-    builder.Services.AddAuthentication(config => {
+    builder.Services.AddAuthentication(config =>
+    {
         config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
         config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 
-    }).AddJwtBearer(options => {
+    }).AddJwtBearer(options =>
+    {
         options.RequireHttpsMetadata = false;
         options.SaveToken = true;
         options.TokenValidationParameters = GlobalTokenValidationParameters.ValidationParameters;
     });
 
-    builder.Services.AddAuthorization(options => {
-        options.AddPolicy("isAuthenticated", AuthPolicy => {
+    builder.Services.AddAuthorization(options =>
+    {
+        options.AddPolicy("isAuthenticated", AuthPolicy =>
+        {
             AuthPolicy.RequireAuthenticatedUser();
             AuthPolicy.RequireClaim("ID", GlobalConfiguration._configuration["AppSettings:ID"]);
         });
@@ -74,7 +83,7 @@ try {
     // Adding database & TokenGeneratorService to services
     builder.Services.AddLogging();
 
-    builder.Services.AddTransient<IProductRepository, ProductRepository>();;
+    builder.Services.AddTransient<IProductRepository, ProductRepository>(); ;
     builder.Services.AddTransient<DatabaseContext, DatabaseContext>();
     builder.Services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
 
@@ -123,22 +132,22 @@ try {
                 new List<string>()
             }
         });
-    }); 
+    });
 
     var app = builder.Build();
 
     app.UseHttpLogging();
-        app.UseSwaggerUI(options =>
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        });
+    app.UseSwaggerUI(options =>
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    });
 
     app.UseAuthentication();
     app.UseAuthorization();
-    
+
     app.UseHttpsRedirection();
-    app.MapControllers();  
+    app.MapControllers();
     app.UseHsts();
 
     using (var serviceScope = app.Services.CreateScope())

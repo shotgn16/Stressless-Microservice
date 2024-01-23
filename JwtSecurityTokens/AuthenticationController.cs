@@ -26,13 +26,15 @@ namespace Stressless_Service.JwtSecurityTokens
 
             int auth = CheckPreviousAuth(macAddres, clientID).Result;
 
-            if (auth == 1) { // NEW USER [REGISTER] GENERATE TOKEN & INSERT AUTH
+            if (auth == 1)
+            { // NEW USER [REGISTER] GENERATE TOKEN & INSERT AUTH
 
                 var token = _tokenGeneratorService.GenerateToken(clientID);
                 Guid AuthID = new();
 
                 // DATABASE
-                AuthID = _productRepository.InsertAuthentication(new AuthorizeModel {
+                AuthID = _productRepository.InsertAuthentication(new AuthorizeModel
+                {
                     ClientID = clientID,
                     MACAddress = macAddres,
                     Token = token,
@@ -41,7 +43,8 @@ namespace Stressless_Service.JwtSecurityTokens
                 }).Result;
 
                 // USER VIEW MODEL
-                returnmodel = new AuthenticationTokenModel {
+                returnmodel = new AuthenticationTokenModel
+                {
                     ID = AuthID,
                     Token = token,
                     Expires = DateTime.Now.AddDays(1).ToString(),
@@ -51,8 +54,9 @@ namespace Stressless_Service.JwtSecurityTokens
                 _logger.LogInformation($"Bearer Token Created!\nID: {macAddres}");
             }
 
-            else if (auth == 2) { // PREVIOUS USER - [AUTHENTICATE] RETRIEVE TOKEN (IF LESS THAN EXPIRY) & PUSH TO USER
-                
+            else if (auth == 2)
+            { // PREVIOUS USER - [AUTHENTICATE] RETRIEVE TOKEN (IF LESS THAN EXPIRY) & PUSH TO USER
+
                 AuthorizeModel latestModel = _productRepository.GetLatestAuthorization(macAddres).Result;
 
                 if (latestModel.Expires <= DateTime.Now.AddHours(1))
@@ -61,7 +65,8 @@ namespace Stressless_Service.JwtSecurityTokens
                     var token = _tokenGeneratorService.GenerateToken(latestModel.ClientID);
                     Guid AuthGuild = new();
 
-                    AuthGuild = _productRepository.InsertAuthentication(new AuthorizeModel {
+                    AuthGuild = _productRepository.InsertAuthentication(new AuthorizeModel
+                    {
                         ClientID = clientID,
                         MACAddress = macAddres,
                         Token = token,
@@ -72,8 +77,9 @@ namespace Stressless_Service.JwtSecurityTokens
                     _logger.LogInformation($"Bearer Token Generated...\nID: {macAddres}");
                 }
 
-                else if (latestModel.Expires > DateTime.Now.AddHours(1)) { // Returns the latest model from the database - NOT GENERATE
-                    
+                else if (latestModel.Expires > DateTime.Now.AddHours(1))
+                { // Returns the latest model from the database - NOT GENERATE
+
                     returnmodel = new AuthenticationTokenModel
                     {
                         Token = latestModel.Token,
@@ -97,16 +103,19 @@ namespace Stressless_Service.JwtSecurityTokens
 
             string configurationID = GlobalConfiguration._configuration.GetSection("AppSettings")["ID"];
 
-            if (CountOfUserAuth == 0 && id == configurationID) { // NEW USER - [REGISTER] GENERATE TOKEN & INSERT AUTH
-                returnValue = 1; 
+            if (CountOfUserAuth == 0 && id == configurationID)
+            { // NEW USER - [REGISTER] GENERATE TOKEN & INSERT AUTH
+                returnValue = 1;
             }
 
-            else if (CountOfUserAuth >= 1 && id == configurationID) { // PREVIOUS USER - [AUTHENTICATE] RETRIEVE TOKEN (IF LESS THAN EXPIRY) & PUSH TO USER
-                returnValue = 2; 
+            else if (CountOfUserAuth >= 1 && id == configurationID)
+            { // PREVIOUS USER - [AUTHENTICATE] RETRIEVE TOKEN (IF LESS THAN EXPIRY) & PUSH TO USER
+                returnValue = 2;
             }
 
-            else if (id != configurationID) { // INVALID - [ERROR] CLIENTID INCORRECT
-                returnValue = -1; 
+            else if (id != configurationID)
+            { // INVALID - [ERROR] CLIENTID INCORRECT
+                returnValue = -1;
             }
 
             return returnValue;

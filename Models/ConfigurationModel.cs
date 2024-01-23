@@ -19,13 +19,13 @@ namespace Stressless_Service.Models
         public TimeOnly DayStartTime { get; set; }
         public TimeOnly DayEndTime { get; set; }
         public string CalenderImport { get; set; }
-        
+
         [Column(TypeName = "TEXT")]
         public string Calender { get; set; }
 
         // Static constructor to initilize '_Model'
         public static Configuration_Model _Model;
-        static Configuration_Model() 
+        static Configuration_Model()
         {
             _Model = new Configuration_Model();
         }
@@ -40,7 +40,7 @@ namespace Stressless_Service.Models
 
         public string FirstName
         {
-            get => Configuration_Model._Model.FirstName; 
+            get => Configuration_Model._Model.FirstName;
             set => Configuration_Model._Model.FirstName = value;
         }
         public string LastName

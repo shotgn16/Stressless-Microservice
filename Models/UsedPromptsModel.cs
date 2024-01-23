@@ -12,5 +12,5 @@ namespace Stressless_Service.Models
 
         public Guid PromptIdentification { get; set; } // Foreign Key
         public string LastUsed { get; set; }
-    } 
+    }
 }
