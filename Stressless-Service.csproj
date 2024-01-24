@@ -71,7 +71,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Database-EFCore\" />
     <Folder Include="Migrations\" />
     <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>

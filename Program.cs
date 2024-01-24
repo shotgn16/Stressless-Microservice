@@ -6,7 +6,6 @@ using Stressless_Service.JwtSecurityTokens;
 using Stressless_Service.Configuration;
 using NLog.Web;
 using NLog.Extensions.Logging;
-using Microsoft.EntityFrameworkCore.Sqlite;
 using Stressless_Service;
 using System.Diagnostics;
 using Stressless_Service.logging;

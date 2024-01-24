@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Stressless_Service.Configuration;
 using Stressless_Service.Models;
-using System.Configuration;
-using System.Reflection;
 
 namespace Stressless_Service.Database
 {

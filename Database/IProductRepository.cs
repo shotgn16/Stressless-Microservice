@@ -4,7 +4,6 @@ namespace Stressless_Service.Database
 {
     public interface IProductRepository
     {
-        Task<DateTime[]> GetShift();
         Task<ReminderModel> GetReminders();
         Task<int> CheckConfigurationExists();
         Task<PromptModel> GetPrompt(string type);

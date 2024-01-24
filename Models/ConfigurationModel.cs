@@ -23,6 +23,8 @@ namespace Stressless_Service.Models
         [Column(TypeName = "TEXT")]
         public string Calender { get; set; }
 
+        public string UiLoc { get; set; }
+
         // Static constructor to initilize '_Model'
         public static Configuration_Model _Model;
         static Configuration_Model()
@@ -78,6 +80,12 @@ namespace Stressless_Service.Models
                 return list.ToArray();
             }
             set => Configuration_Model._Model.Calender = JsonConvert.SerializeObject(value);
+        }
+
+        public string UiLoc
+        {
+            get => Configuration_Model._Model.UiLoc;
+            set => Configuration_Model._Model.UiLoc = value;
         }
     }
 }

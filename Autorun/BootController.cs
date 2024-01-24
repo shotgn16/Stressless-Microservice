@@ -21,7 +21,12 @@ namespace Stressless_Service.Autorun
             _productRepository = productRepository;
         }
 
-        public async Task<bool> GetSystemTime(bool isWorkingTime = false) // OLD NAME: CheckTime
+        /// <summary>
+        /// Will return 'true' if the current System Time is within the users specified working hours (Per their configuration)
+        /// </summary>
+        /// <param name="isWorkingTime"></param>
+        /// <returns> True/False - Depending... </returns>
+        public async Task<bool> GetSystemTime(bool isWorkingTime = false)
         {
             if (await _productRepository.CheckConfigurationExists() == 1)
             {
@@ -29,7 +34,11 @@ namespace Stressless_Service.Autorun
 
                 if (configuration.DayStartTime != TimeOnly.MinValue && configuration.DayEndTime != TimeOnly.MinValue)
                 {
-                    DateTime[] Times = await _productRepository.GetShift();
+                    DateTime[] Times = new DateTime[]
+                    {
+                        Convert.ToDateTime(configuration.DayStartTime),
+                        Convert.ToDateTime(configuration.DayEndTime)
+                    };
 
                     if (System.DateTime.Now >= Times[0] && System.DateTime.Now <= Times[1])
                     {
@@ -41,23 +50,44 @@ namespace Stressless_Service.Autorun
             return isWorkingTime;
         }
 
-        public async Task BootUI() // OLD NAME: initializeFront
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task BootUI()
         {
-            if (await GetSystemTime() && Process.GetProcessesByName("notepad.exe").Length > 0)
+            bool isWorkingHours = await GetSystemTime();
+            bool isRecentlyBooted = await LastBooted();
+
+            // If the current system time is within the working hours & the 'StresslessUI' is found in the Task-Manager
+            if (isWorkingHours == true && Process.GetProcessesByName("StresslessUI.exe").Length > 0)
             {
+                // Start timer regardless of whether it boots or not
                 await StartTimer();
             }
 
-            else
+            else if (isWorkingHours == true)
             {
-                if (await LastBooted())
+                if (isRecentlyBooted == false)
                 {
+                    ConfigurationClass Configuration = await _productRepository.GetConfiguration();
+
+                    if (Directory.Exists(Configuration.UiLoc))
+                    {
+                        Process.Start(Configuration.UiLoc + "\\StressLess-Frontend.exe");
+                    }
+
                     LastSynced = DateTime.Now;
                     await StartTimer();
                 }
             }
         }
 
+        /// <summary>
+        /// * Checks to see if the last time the UI was booted was more than 2 hours ago. If so...
+        /// </summary>
+        /// <param name="isLater"></param>
+        /// <returns></returns>
         private async Task<bool> LastBooted(bool isLater = false)
         {
             TimeSpan difference = System.DateTime.Now - LastSynced;

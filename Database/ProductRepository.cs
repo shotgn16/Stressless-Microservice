@@ -126,11 +126,13 @@ namespace Stressless_Service.Database
 
             try
             {
-                var prompt = _context.Prompts
+                var random = new Random();
+                var rndIndex = random.Next();
+
+                Response = _context.Prompts
                     .Where(p => p.Type == type)
-                    .OrderBy(p => Guid.NewGuid())
-                    .Take(1)
-                    .FirstOrDefaultAsync();
+                    .OrderBy(x => rndIndex)
+                    .FirstOrDefault();
 
                 _context.SaveChanges();
             }
@@ -163,11 +165,10 @@ namespace Stressless_Service.Database
 
             try
             {
-                Response = await _context.UsedPrompts
-                    .Where(p => p.ID == PromptID)
-                    .OrderByDescending(p => p.LastUsed)
-                    .Take(1)
-                    .FirstOrDefaultAsync();
+                Response = _context.UsedPrompts
+                    .Where(p => p.PromptIdentification == PromptID)
+                        .OrderByDescending(p => p.LastUsed)
+                    .FirstOrDefault();
 
                 _context.SaveChanges();
             }
@@ -309,39 +310,6 @@ namespace Stressless_Service.Database
             }
 
             return RowsAffected;
-        }
-
-        public async Task<DateTime[]> GetShift()
-        {
-            DateTime[] times = new DateTime[] { DateTime.Now };
-
-            try
-            {
-                var configuration = _context.Configuration.Single();
-
-                if (string.IsNullOrEmpty(configuration.DayStartTime.ToString()) || string.IsNullOrEmpty(configuration.DayEndTime.ToString()))
-                {
-                    throw new ArgumentNullException("Invalid value detected!");
-                }
-
-                else
-                {
-                    times = new DateTime[]
-                    {
-                        Convert.ToDateTime(configuration.DayStartTime),
-                        Convert.ToDateTime(configuration.DayEndTime)
-                    };
-                }
-
-                _context.SaveChanges();
-            }
-
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message, ex);
-            }
-
-            return times;
         }
 
         public async Task DeleteExpiredTokens()
