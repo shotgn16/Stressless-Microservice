@@ -9,7 +9,9 @@ namespace Stressless_Service.Forecaster
     {
         private readonly IProductRepository _productRepository;
         private ILogger<EventController> _logger;
-        private static TimeSpan FreeTime;
+
+        private static TimeSpan GBL_FreeTime;
+        private static List<CalenderEvents> GBL_Events;
 
         public EventController(ILogger<EventController> logger, IProductRepository productRepository)
         {
@@ -20,12 +22,17 @@ namespace Stressless_Service.Forecaster
         // Callable method for running the controller in its intended order
         public async Task EventHandler(CalenderModel[] calenderEvents, ConfigurationClass configuration)
         {
-            List<CalenderEvents> events = await FormatEventData(calenderEvents);
+            GBL_Events = new List<CalenderEvents>();
 
-            await StoreDays(events);
+            // Formats the calender events into a different Model (CalenderModel => CalenderEvents)
+            List<CalenderEvents> FormattedEvents = await FormatEventData(calenderEvents);
+
+            // Stores the 'FormattedEvents [CalenderEvents]' in the database under a 'CalenderEvents' table
+            await StoreDays(FormattedEvents);
+
             (TimeSpan, List<CalenderEvents>) Comparison = await CompareDays(configuration.DayStartTime, configuration.DayEndTime);
-
-            FreeTime = Comparison.Item1;
+                GBL_FreeTime = Comparison.Item1;
+                GBL_Events = Comparison.Item2;
         }
 
         // Run Order : 1
@@ -40,13 +47,15 @@ namespace Stressless_Service.Forecaster
                 {
                     eventRuntime.Add(new CalenderEvents
                     {
-                        Runtime = item.StartTime - item.EndTime,
-                        Event = item.EventDate
+                        Start = item.StartTime,
+                        Finish = item.EndTime,
+                        Date = item.EventDate
                     });
 
                     // EXAMPLE
                     // =======  
-                    // Runtime = 00:05:37
+                    // Start = 09:00:00
+                    // Finish = 09:30:00
                     // Event: 06/12/2023
                 }
             }
@@ -55,89 +64,85 @@ namespace Stressless_Service.Forecaster
         }
 
         // Run Order : 2
-        public async Task StoreDays(List<CalenderEvents> eventRuntimes)
+        public async Task StoreDays(List<CalenderEvents> FormattedEvents)
         {
-            int AlreadyStored = 0;
-
             List<CalenderEvents> storedDays = await _productRepository.GetDayEvents();
-            AlreadyStored = storedDays.Count;
+            int CountOfDaysAlreadyStored = storedDays.Count;
 
-            if (AlreadyStored + eventRuntimes.Count >= 21 || AlreadyStored >= 21)
+            CheckNumberOfDaysInDatabase: // Label
+            if (CountOfDaysAlreadyStored + FormattedEvents.Count >= 21)
             {
                 _productRepository.DeleteDayEvents(1);
+                    goto CheckNumberOfDaysInDatabase; // Goto 'Label'
             }
 
-            else if (AlreadyStored + eventRuntimes.Count != 21 && AlreadyStored < 21)
+            else if (CountOfDaysAlreadyStored + FormattedEvents.Count < 21)
             {
-                eventRuntimes = eventRuntimes.OrderBy(e => e.Event.DayOfWeek).ToList();
-
-                _productRepository.InsertDayEvents(eventRuntimes);
+                FormattedEvents = FormattedEvents.OrderBy(e => e.Date.DayOfWeek).ToList();
+                    await _productRepository.InsertDayEvents(FormattedEvents);
             }
         }
 
         // Run Order : 3
         public async Task<(TimeSpan, List<CalenderEvents>)> CompareDays(TimeOnly StartTime, TimeOnly FinishTime)
         {
-            // Defines instances of the classes and variables needed for this method
+            TimeSpan timeInMeetings = new();
             List<CalenderEvents> storedDays = new();
-            TimeSpan OccupiedTime = new();
-            TimeSpan FreeTime = new();
+            TimeSpan workingHours = StartTime - FinishTime;
+            List<CalenderEvents> daysStoredInDatabase = await _productRepository.GetDayEvents();
 
-            // Works out the total time spend in meetings and events by working out the difference between the start and finish times in a specified working day.
-            TimeSpan WorkTime = StartTime - FinishTime;
-
-            var days = await _productRepository.GetDayEvents();
-
-            // Foreach event in the list of days returned from the database...
-            foreach (var item in days)
+            foreach (var item in daysStoredInDatabase)
             {
-
-                // If the event ooccurs today
-                if (item.Event == DateOnly.FromDateTime(DateTime.Now))
+                if (item.Date == DateOnly.FromDateTime(DateTime.Today))
                 {
-
-                    // Add the runtime of that event to an array
-                    OccupiedTime.Add(item.Runtime);
-
-                    // Add the event to the List Events for later use.
-                    storedDays.Add(item);
+                    timeInMeetings.Add(item.Start - item.Finish);
+                        storedDays.Add(item);
                 }
             }
 
-            FreeTime = WorkTime - OccupiedTime;
-
-            return (FreeTime, storedDays);
+            // Returns
+            //  * Freetime - Total free time left within the day represented by an int value
+            //  * storedDays - a List, in the format of the (CalenderEvents) model, of all events from the Configuration that are dated the current date!
+            return (workingHours - timeInMeetings, storedDays);
         }
 
-        // True: Generate Notification | False: Don't do anything...
-        public async Task<bool> PromptBreak(ConfigurationClass config = null)
+        public async Task<bool> PromptBreak()
         {
-            ReminderModel LatestReminders = new();
-            bool remindUser = false;
+            int busyTimeIndicator = 0;
+            bool promptUserForABreak = false;
+            ReminderModel latestReminders = await _productRepository.GetReminders();
+            ConfigurationClass configuration = await _productRepository.GetConfiguration();
 
-            LatestReminders = await _productRepository.GetReminders();
-
-            // Check if...
-            // * Date of the event occurred Today [DateTime.Now.Date]
-            // * Time of the event was at least 2 hours ago [DateTime.Now.Subtrace(TimeSpan.FromHours(2))]
-            if (LatestReminders.Date == DateOnly.FromDateTime(DateTime.Now) && LatestReminders.Time >= TimeOnly.FromDateTime(DateTime.Now - TimeSpan.FromHours(2)))
+            if (latestReminders.Time >= TimeOnly.FromDateTime(DateTime.Now + TimeSpan.FromHours(2)) &&
+                latestReminders.Time >= configuration.DayStartTime &&
+                latestReminders.Time < configuration.DayEndTime)
             {
-                // Checks if the 'time of the event' : 'LatestReminder.Time' is within the specific working hours the user specified.  
-                if (LatestReminders.Time >= config.DayStartTime && LatestReminders.Time <= config.DayEndTime)
+                if (GBL_FreeTime.Minutes >= 20) // MUST HAVE AT LEAST 20 MINUTES OF FREE TIME PER DAY FOR THIS TO WORK!
                 {
-                    // Must have at least 30 minutes spare minutes to allow a 15 minuit break...
-                    if (FreeTime.Minutes >= 30)
+                    TimeOnly currentTime = TimeOnly.FromDateTime(DateTime.Now);
+                    foreach (var item in GBL_Events)
                     {
-                        // If all the criteria is met - Will insert the reminder into the database and return 'True'
-                        _productRepository.InsertReminders(new ReminderModel { Date = DateOnly.FromDateTime(DateTime.Now), Time = TimeOnly.FromDateTime(DateTime.Now) });
+                        if (currentTime >= item.Start && currentTime <= item.Finish)
+                        {
+                            busyTimeIndicator++;
+                        }
+                    }
 
-                        // [remindUser = True] will trigger a response to the client that will cause a user prompt to take a break
-                        remindUser = true;
+                    if (busyTimeIndicator == 0)
+                    {
+                        _productRepository.InsertReminders(
+                            new ReminderModel
+                            {
+                                Date = DateOnly.FromDateTime(DateTime.Now),
+                                Time = TimeOnly.FromDateTime(DateTime.Now)
+                            });
+
+                        promptUserForABreak = true;
                     }
                 }
             }
 
-            return remindUser;
+            return promptUserForABreak;
         }
 
         public void Dispose() => GC.Collect();

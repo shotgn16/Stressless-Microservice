@@ -9,7 +9,8 @@ namespace Stressless_Service.Models
         [Column("EventID")]
         public Guid ID { get; set; }
 
-        public TimeSpan Runtime { get; set; }
-        public DateOnly Event { get; set; }
+        public TimeOnly Start { get; set; }
+        public TimeOnly Finish {  get; set; }
+        public DateOnly Date { get; set; }
     }
 }

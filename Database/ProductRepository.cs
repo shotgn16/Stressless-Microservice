@@ -100,6 +100,7 @@ namespace Stressless_Service.Database
                     DayStartTime = Configuration.DayStartTime,
                     DayEndTime = Configuration.DayEndTime,
                     CalenderImport = Configuration.CalenderImport,
+                    UiLoc = Configuration.UiLoc,
                     Calender = JsonConvert.SerializeObject(Configuration.Calender)
                 });
 
@@ -145,11 +146,20 @@ namespace Stressless_Service.Database
             return Response;
         }
 
-        public async Task InsertPrompt(PromptModel Prompt)
+        public async Task<List<string>> InsertPrompt(PromptModel Prompt)
         {
+            List<string> types = new();
+
             try
             {
                 await _context.Prompts.AddAsync(Prompt);
+                    _context.SaveChanges();
+
+                types = _context.Prompts
+                    .Select(e => e.Type)
+                        .Distinct()
+                    .ToList();
+                
                 _context.SaveChanges();
             }
 
@@ -157,6 +167,8 @@ namespace Stressless_Service.Database
             {
                 _logger.LogError(ex.Message, ex);
             }
+
+            return types;
         }
 
         public async Task<UsedPromptsModel> GetUsedPrompt(Guid PromptID)
@@ -366,7 +378,7 @@ namespace Stressless_Service.Database
             try
             {
                 _context.CalenderEvents.RemoveRange(_context.CalenderEvents
-                    .OrderBy(e => e.Event)
+                    .OrderBy(e => e.Date)
                     .Take(amount));
 
                 _context.SaveChanges();

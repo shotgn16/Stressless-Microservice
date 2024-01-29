@@ -78,6 +78,8 @@ namespace Stressless_Service.Controllers
         [HttpPost("InsertPrompt")]
         public async Task<IActionResult> InsertPrompt([FromBody] PromptRequestModel PromptRequest)
         {
+            List<string> types = new();
+
             if (PromptRequest == null)
             {
                 return BadRequest("Invalid configuration!");
@@ -93,13 +95,13 @@ namespace Stressless_Service.Controllers
                     {
                         foreach (var Item in PromptRequest.Prompt)
                         {
-                            _productRepository.InsertPrompt(Item);
+                             types = await _productRepository.InsertPrompt(Item);
                         }
                     }
                 }
             }
 
-            return Ok("Success!");
+            return Ok(types.ToList());
         }
 
         [Authorize]
@@ -154,7 +156,7 @@ namespace Stressless_Service.Controllers
         }
 
         [Authorize]
-        [HttpGet("GetUsedPrompt")]
+        [HttpGet("GetUsedPrompt/{promptID}")]
         public async Task<UsedPromptsModel> GetUsedPrompt(Guid promptID)
         {
             UsedPromptsModel UsedPrompt = new UsedPromptsModel();
@@ -202,32 +204,24 @@ namespace Stressless_Service.Controllers
 
         [Authorize]
         [HttpPost("PromptReminder")]
-        public async Task<bool> PromptReminder()
+        public async Task<bool> PromptReminder(bool reminderUser = false)
         {
-            bool reminderUser = false;
-
             try
             {
-                // Define a varaible and fill it with the Bearer token value that the client should have sent. 
-                // This value will have been generated from the 'Authorize' endpoint on this app but is used to authenticate the application
                 var BearerToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
 
-                // Checking that the token value isn't empty 
                 if (!string.IsNullOrEmpty(BearerToken))
                 {
                     using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
                     {
-                        // Validating the BearerToken...
                         if (await tokenValidation.Handler(BearerToken))
                         {
-                            // If the token is VALID, it will continue into this code...
-
                             ConfigurationClass Configuration = await _productRepository.GetConfiguration();
 
                             if (Configuration != null && !string.IsNullOrEmpty(Configuration.CalenderImport))
                             {
                                 await _eventController.EventHandler(Configuration.Calender, Configuration);
-                                reminderUser = await _eventController.PromptBreak(Configuration);
+                                reminderUser = await _eventController.PromptBreak();
                             }
                         }
                     }

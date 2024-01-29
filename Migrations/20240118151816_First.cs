@@ -32,8 +32,9 @@ namespace Stressless_Service.Migrations
                 columns: table => new
                 {
                     EventID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Runtime = table.Column<TimeSpan>(type: "TEXT", nullable: false),
-                    Event = table.Column<DateOnly>(type: "TEXT", nullable: false)
+                    Start = table.Column<TimeOnly>(type: "TEXT", nullable: false),
+                    Finish = table.Column<TimeOnly>(type: "TEXT", nullable: false),
+                    Date = table.Column<DateOnly>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -51,7 +52,8 @@ namespace Stressless_Service.Migrations
                     DayStartTime = table.Column<TimeOnly>(type: "TEXT", nullable: false),
                     DayEndTime = table.Column<TimeOnly>(type: "TEXT", nullable: false),
                     CalenderImport = table.Column<string>(type: "TEXT", nullable: false),
-                    Calender = table.Column<string>(type: "TEXT", nullable: false)
+                    Calender = table.Column<string>(type: "TEXT", nullable: false),
+                    UiLoc = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -18,7 +18,7 @@ namespace Stressless_Service.Database
         Task DeleteExpiredTokens();
         Task DeleteConfiguration();
         void DeleteDayEvents(int amount);
-        Task InsertPrompt(PromptModel prompt);
+        Task<List<string>> InsertPrompt(PromptModel prompt);
         void InsertReminders(ReminderModel reminder);
         void InsertUsedPrompt(UsedPromptsModel prompt);
         //Task InsertCalenderEvents(ICollection<CalenderModel> events, Guid ConfigID);

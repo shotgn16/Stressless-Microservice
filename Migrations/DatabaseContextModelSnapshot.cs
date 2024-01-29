@@ -55,10 +55,13 @@ namespace Stressless_Service.Migrations
                         .HasColumnType("TEXT")
                         .HasColumnName("EventID");
 
-                    b.Property<DateOnly>("Event")
+                    b.Property<DateOnly>("Date")
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeSpan>("Runtime")
+                    b.Property<TimeOnly>("Start")
+                        .HasColumnType("TEXT");
+
+                    b.Property<TimeOnly>("Finish")
                         .HasColumnType("TEXT");
 
                     b.HasKey("ID");
@@ -96,6 +99,10 @@ namespace Stressless_Service.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Calender")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UiLoc")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
