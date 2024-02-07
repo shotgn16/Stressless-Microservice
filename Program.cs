@@ -91,8 +91,8 @@ try
     builder.Services.AddScoped<BootController>();
     builder.Services.AddScoped<PromptController>();
 
-    builder.Services.AddScoped<EventController>();
-    builder.Services.AddScoped<AuthenticationController>();
+    builder.Services.AddScoped<IEventController, EventController>();
+    builder.Services.AddScoped<IAuthenticationController, AuthenticationController>();
 
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle 
     builder.Services.AddEndpointsApiExplorer();

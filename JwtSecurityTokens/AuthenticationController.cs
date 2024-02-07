@@ -7,7 +7,7 @@ using Stressless_Service.Models;
 
 namespace Stressless_Service.JwtSecurityTokens
 {
-    public class AuthenticationController : Controller
+    public class AuthenticationController : Controller, IAuthenticationController
     {
         private IProductRepository _productRepository;
         private ILogger<AuthenticationController> _logger;

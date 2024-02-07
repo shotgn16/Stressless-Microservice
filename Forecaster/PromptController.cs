@@ -6,12 +6,12 @@ namespace Stressless_Service.Forecaster
     public class PromptController : Controller
     {
         private ILogger<PromptController> _logger;
-        private EventController _eventController;
+        private IEventController _eventController;
 
         private static System.Timers.Timer _timer;
         private static bool isActive;
 
-        public PromptController(ILogger<PromptController> logger, EventController eventController)
+        public PromptController(ILogger<PromptController> logger, IEventController eventController)
         {
             _logger = logger;
             _eventController = eventController;
@@ -39,7 +39,5 @@ namespace Stressless_Service.Forecaster
 
             _eventController.PromptBreak();
         }
-
-        public void Dispose() => GC.Collect();
     }
 }

@@ -3,7 +3,7 @@ using System.Net.NetworkInformation;
 
 namespace Stressless_Service.Logic;
 
-public class Network
+public class Network : IDisposable
 {
     public static async Task<string> GetMac()
     {
@@ -21,4 +21,6 @@ public class Network
 
         return ipAddress.Address.ToString();
     }
+
+    public void Dispose() => GC.Collect();
 }

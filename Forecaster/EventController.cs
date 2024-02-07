@@ -1,11 +1,12 @@
-﻿using ServiceStack;
+﻿using Microsoft.AspNetCore.Mvc;
+using ServiceStack;
 using Stressless_Service.Database;
 using Stressless_Service.Models;
 using System.Data.Entity;
 
 namespace Stressless_Service.Forecaster
 {
-    public class EventController : IDisposable
+    public class EventController : Controller, IEventController
     {
         private readonly IProductRepository _productRepository;
         private ILogger<EventController> _logger;
@@ -36,7 +37,7 @@ namespace Stressless_Service.Forecaster
         }
 
         // Run Order : 1
-        private async Task<List<CalenderEvents>> FormatEventData(CalenderModel[] calenderEvents)
+        public async Task<List<CalenderEvents>> FormatEventData(CalenderModel[] calenderEvents)
         {
             List<CalenderModel> events = calenderEvents.ToList();
             List<CalenderEvents> eventRuntime = new List<CalenderEvents>();
@@ -144,7 +145,5 @@ namespace Stressless_Service.Forecaster
 
             return promptUserForABreak;
         }
-
-        public void Dispose() => GC.Collect();
     }
 }

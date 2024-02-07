@@ -1,10 +1,10 @@
-﻿using Stressless_Service.Autorun;
+﻿using Microsoft.AspNetCore.Mvc;
+using Stressless_Service.Autorun;
 using Stressless_Service.Forecaster;
-using System.Web.Mvc;
 
 namespace Stressless_Service
 {
-    public class TimerInitiation : Controller, IDisposable
+    public class TimerInitiation : Controller
     {
         private PromptController _promptController;
         private readonly ILogger<TimerInitiation> _logger;
@@ -20,10 +20,7 @@ namespace Stressless_Service
         public async Task InitalizeSystem()
         {
             await _promptController.StartTimer();
-
             await _bootController.StartTimer();
         }
-
-        public void Dispose() => GC.Collect();
     }
 }

@@ -6,7 +6,7 @@ using System.Timers;
 
 namespace Stressless_Service.Autorun
 {
-    public class BootController : Controller
+    public class BootController
     {
         private readonly ILogger _logger;
         private readonly IProductRepository _productRepository;
@@ -21,11 +21,6 @@ namespace Stressless_Service.Autorun
             _productRepository = productRepository;
         }
 
-        /// <summary>
-        /// Will return 'true' if the current System Time is within the users specified working hours (Per their configuration)
-        /// </summary>
-        /// <param name="isWorkingTime"></param>
-        /// <returns> True/False - Depending... </returns>
         public async Task<bool> GetSystemTime(bool isWorkingTime = false)
         {
             if (await _productRepository.CheckConfigurationExists() == 1)
@@ -128,7 +123,5 @@ namespace Stressless_Service.Autorun
 
             BootUI();
         }
-
-        public void Dispose() => GC.Collect();
     }
 }

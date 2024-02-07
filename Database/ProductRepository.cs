@@ -43,7 +43,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex);
+                _logger.LogError(ex, ex.StackTrace);
             }
 
             return returnedConfig;
@@ -61,7 +61,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                _logger.LogError("");
+                _logger.LogError(ex, ex.StackTrace);
             }
 
             return result;
@@ -81,7 +81,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex);
+                _logger.LogError(ex, ex.StackTrace);
             }
         }
 
@@ -115,7 +115,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex);
+                _logger.LogError(ex, ex.StackTrace);
             }
 
             return ConfigurationID;
@@ -140,7 +140,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex);
+                _logger.LogError(ex, ex.StackTrace);
             }
 
             return Response;
@@ -165,7 +165,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex);
+                _logger.LogError(ex, ex.StackTrace);
             }
 
             return types;
@@ -187,7 +187,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex);
+                _logger.LogError(ex, ex.StackTrace);
             }
 
             return Response;
@@ -203,7 +203,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex);
+                _logger.LogError(ex, ex.StackTrace);
             }
         }
 
@@ -226,7 +226,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex);
+                _logger.LogError(ex, ex.StackTrace);
             }
 
             return AuthID;
@@ -248,7 +248,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex);
+                _logger.LogError(ex, ex.StackTrace);
             }
 
             return Exists;
@@ -269,7 +269,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex);
+                _logger.LogError(ex, ex.StackTrace);
             }
 
             return Authorization;
@@ -291,7 +291,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex);
+                _logger.LogError(ex, ex.StackTrace);
             }
 
             return exists;
@@ -318,7 +318,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex);
+                _logger.LogError(ex, ex.StackTrace);
             }
 
             return RowsAffected;
@@ -337,7 +337,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex);
+                _logger.LogError(ex, ex.StackTrace);
             }
         }
 
@@ -351,7 +351,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex);
+                _logger.LogError(ex, ex.StackTrace);
             }
         }
 
@@ -367,7 +367,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex);
+                _logger.LogError(ex, ex.StackTrace);
             }
 
             return Events;
@@ -386,7 +386,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex);
+                _logger.LogError(ex, ex.StackTrace);
             }
         }
 
@@ -400,7 +400,7 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex);
+                _logger.LogError(ex, ex.StackTrace);
             }
 
         }
@@ -420,12 +420,10 @@ namespace Stressless_Service.Database
 
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message, ex);
+                _logger.LogError(ex, ex.StackTrace);
             }
 
             return reminder;
         }
-
-        public void Dispose() => GC.Collect();
     }
 }

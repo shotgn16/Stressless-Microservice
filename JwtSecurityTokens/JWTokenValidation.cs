@@ -1,13 +1,13 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Stressless_Service.Configuration;
 
 namespace Stressless_Service.JwtSecurityTokens;
 
-public class JWTokenValidation : Controller, IDisposable
+public class JWTokenValidation : Controller
 {
     private readonly ILogger _logger;
     public JWTokenValidation(ILogger logger)
@@ -82,6 +82,4 @@ public class JWTokenValidation : Controller, IDisposable
 
         return jsonToken.Claims.ToList();
     }
-
-    public void Dispose() => GC.Collect();
 }

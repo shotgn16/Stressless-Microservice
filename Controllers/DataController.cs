@@ -3,14 +3,12 @@ using Stressless_Service.Database;
 using Stressless_Service.Models;
 using Microsoft.AspNetCore.Authorization;
 using Stressless_Service.JwtSecurityTokens;
-using NLog.Fluent;
 using Stressless_Service.Forecaster;
-using NLog;
 
 namespace Stressless_Service.Controllers
 {
     [ApiController]
-    [System.Web.Http.Route("[controller]")]
+    [Route("[controller]")]
     public class DataController : ControllerBase
     {
         /// <summary>
@@ -21,10 +19,10 @@ namespace Stressless_Service.Controllers
         private readonly Microsoft.Extensions.Logging.ILogger _logger;
         private readonly ITokenGeneratorService _tokenGeneratorService;
         private readonly IProductRepository _productRepository;
-        private readonly EventController _eventController;
-        private readonly AuthenticationController _authenticationController;
+        private readonly IEventController _eventController;
+        private readonly IAuthenticationController _authenticationController;
 
-        public DataController(ILogger<DataController> logger, ITokenGeneratorService tokenGeneratorService, IProductRepository productRepository, EventController eventController, AuthenticationController authenticationController)
+        public DataController(ILogger<DataController> logger, ITokenGeneratorService tokenGeneratorService, IProductRepository productRepository, IEventController eventController, IAuthenticationController authenticationController)
         {
             _logger = logger;
             _tokenGeneratorService = tokenGeneratorService;
@@ -35,19 +33,19 @@ namespace Stressless_Service.Controllers
 
         // Authorization Request
         [HttpPost("Authorize")]
-        public async Task<ActionResult<AuthenticationTokenModel>> Authorize(string macAddress, string clientID)
+        public async Task<ActionResult<AuthenticationTokenModel>> Authorize([FromBody] RequestAuthorizationModel _model)
         {
-            var response = _authenticationController.Authenticate(macAddress, clientID);
+            var response = _authenticationController.Authenticate(_model.MACAddress, _model.ClientID);
 
             if (response == null)
             {
-                _logger.LogInformation($"Authentication Failed for User: {macAddress}\nPlease ensure you have a valid MAC Address and ClientID.");
+                _logger.LogInformation($"Authentication Failed for User: {_model.MACAddress}\nPlease ensure you have a valid MAC Address and ClientID.");
                 return BadRequest(new { message = "MAC Address or ClientID incorrect!" });
             }
 
             else
             {
-                _logger.LogInformation($"User: {macAddress} Authenticated Successfully!");
+                _logger.LogInformation($"User: {_model.MACAddress} Authenticated Successfully!");
                 return Ok(response);
             }
         }
@@ -235,6 +233,35 @@ namespace Stressless_Service.Controllers
 
             // IF:True, Remind User... | IF:False, Do Nothing...
             return reminderUser;
+        }
+
+        [Authorize]
+        [HttpDelete("DeleteConfiguration")]
+        public async Task<bool> DeleteConfiguration(bool Value = true)
+        {
+            try
+            {
+                var BearerToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+                
+                if (!string.IsNullOrEmpty(BearerToken))
+                {
+                    using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
+                    {
+                        if (await tokenValidation.Handler(BearerToken))
+                        {
+                            await _productRepository.DeleteConfiguration();
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Value = false;
+                    // LOG
+            }
+
+            return Value;
         }
     }
 }
