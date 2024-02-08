@@ -40,7 +40,7 @@ namespace Stressless_Service.JwtSecurityTokens
                     Token = token,
                     Expires = DateTime.Now.AddDays(1),
                     LatestLogin = DateTime.Now.AsString()
-                }).Result;
+                });
 
                 // USER VIEW MODEL
                 returnmodel = new AuthenticationTokenModel
@@ -57,7 +57,7 @@ namespace Stressless_Service.JwtSecurityTokens
             else if (auth == 2)
             { // PREVIOUS USER - [AUTHENTICATE] RETRIEVE TOKEN (IF LESS THAN EXPIRY) & PUSH TO USER
 
-                AuthorizeModel latestModel = _productRepository.GetLatestAuthorization(macAddres).Result;
+                AuthorizeModel latestModel = _productRepository.GetLatestAuthorization(macAddres);
 
                 if (latestModel.Expires <= DateTime.Now.AddHours(1))
                 { // LESS THAN 1 HOUR LEFT - EXPIRED
@@ -72,7 +72,7 @@ namespace Stressless_Service.JwtSecurityTokens
                         Token = token,
                         Expires = DateTime.Now.AddDays(1),
                         LatestLogin = DateTime.Now.AsString()
-                    }).Result;
+                    });
 
                     _logger.LogInformation($"Bearer Token Generated...\nID: {macAddres}");
                 }
@@ -99,7 +99,7 @@ namespace Stressless_Service.JwtSecurityTokens
 
         public async Task<int> CheckPreviousAuth(string macAddress, string id, int returnValue = -1)
         {
-            int CountOfUserAuth = await _productRepository.UserPreviousAuthenticated(macAddress);
+            int CountOfUserAuth = _productRepository.UserPreviousAuthenticated(macAddress);
 
             string configurationID = GlobalConfiguration._configuration.GetSection("AppSettings")["ID"];
 

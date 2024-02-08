@@ -20,14 +20,14 @@ namespace Stressless_Service.Database
             _context.Database.EnsureCreated();
         }
 
-        public async Task<ConfigurationClass> GetConfiguration()
+        public ConfigurationClass GetConfiguration()
         {
             Configuration_Model storedConfig = new();
             ConfigurationClass returnedConfig = new();
 
             try
             {
-                storedConfig = await _context.Configuration.FirstOrDefaultAsync();
+                storedConfig = _context.Configuration.FirstOrDefault();
                 _context.SaveChanges();
 
                 returnedConfig = new ConfigurationClass
@@ -71,14 +71,14 @@ namespace Stressless_Service.Database
             return result;
         }
 
-        public async Task DeleteConfiguration()
+        public void DeleteConfiguration()
         {
             try
             {
                 _context.Configuration.Remove(
-                    await _context.Configuration
+                    _context.Configuration
                         .Where(e => e.FirstName != null)
-                .FirstOrDefaultAsync());
+                .FirstOrDefault());
 
                 _context.SaveChanges();
             }
@@ -125,7 +125,7 @@ namespace Stressless_Service.Database
             return ConfigurationID;
         }
 
-        public async Task<PromptModel> GetPrompt(string type)
+        public PromptModel GetPrompt(string type)
         {
             PromptModel Response = new PromptModel();
 
@@ -150,13 +150,13 @@ namespace Stressless_Service.Database
             return Response;
         }
 
-        public async Task<List<string>> InsertPrompt(PromptModel Prompt)
+        public List<string> InsertPrompt(PromptModel Prompt)
         {
             List<string> types = new();
 
             try
             {
-                await _context.Prompts.AddAsync(Prompt);
+                _context.Prompts.Add(Prompt);
                     _context.SaveChanges();
 
                 types = _context.Prompts
@@ -175,7 +175,7 @@ namespace Stressless_Service.Database
             return types;
         }
 
-        public async Task<UsedPromptsModel> GetUsedPrompt(Guid PromptID)
+        public UsedPromptsModel GetUsedPrompt(Guid PromptID)
         {
             UsedPromptsModel Response = new UsedPromptsModel();
 
@@ -201,7 +201,7 @@ namespace Stressless_Service.Database
         {
             try
             {
-                _context.UsedPrompts.AddAsync(UsedPrompt);
+                _context.UsedPrompts.Add(UsedPrompt);
                 _context.SaveChanges();
             }
 
@@ -211,7 +211,7 @@ namespace Stressless_Service.Database
             }
         }
 
-        public async Task<Guid> InsertAuthentication(AuthorizeModel Authentication)
+        public Guid InsertAuthentication(AuthorizeModel Authentication)
         {
             Guid AuthID = new();
 
@@ -236,7 +236,7 @@ namespace Stressless_Service.Database
             return AuthID;
         }
 
-        public async Task<int> UserPreviousAuthenticated(string MACAddress)
+        public int UserPreviousAuthenticated(string MACAddress)
         {
             int Exists = 0;
 
@@ -258,15 +258,15 @@ namespace Stressless_Service.Database
             return Exists;
         }
 
-        public async Task<AuthorizeModel> GetLatestAuthorization(string macAddress)
+        public AuthorizeModel GetLatestAuthorization(string macAddress)
         {
             AuthorizeModel Authorization = new();
 
             try
             {
-                Authorization = await _context.Authorize
+                Authorization = _context.Authorize
                     .Where(e => e.MACAddress == macAddress)
-                        .FirstAsync();
+                        .First();
 
                 _context.SaveChanges();
             }
@@ -279,7 +279,7 @@ namespace Stressless_Service.Database
             return Authorization;
         }
 
-        public async Task<int> GetAuthentication(string macAddress)
+        public int GetAuthentication(string macAddress)
         {
             int exists = 0;
 
@@ -301,7 +301,7 @@ namespace Stressless_Service.Database
             return exists;
         }
 
-        public async Task<int> UpdateAuthentication(string MACAddress)
+        public int UpdateAuthentication(string MACAddress)
         {
             int RowsAffected = 0;
 
@@ -316,7 +316,7 @@ namespace Stressless_Service.Database
                     updateAuth.LatestLogin = DateTime.Now.ToString();
                     RowsAffected = 1;
 
-                    await _context.SaveChangesAsync();
+                    _context.SaveChanges();
                 }
             }
 
@@ -328,7 +328,7 @@ namespace Stressless_Service.Database
             return RowsAffected;
         }
 
-        public async Task DeleteExpiredTokens()
+        public void DeleteExpiredTokens()
         {
             try
             {
@@ -345,12 +345,12 @@ namespace Stressless_Service.Database
             }
         }
 
-        public async Task InsertDayEvents(List<CalenderEvents> Events)
+        public void InsertDayEvents(List<CalenderEvents> Events)
         {
             try
             {
-                await _context.CalenderEvents.AddRangeAsync(Events);
-                _context.SaveChanges();
+                _context.CalenderEvents.AddRange(Events);
+                    _context.SaveChanges();
             }
 
             catch (Exception ex)
@@ -359,14 +359,14 @@ namespace Stressless_Service.Database
             }
         }
 
-        public async Task<List<CalenderEvents>> GetDayEvents()
+        public List<CalenderEvents> GetDayEvents()
         {
             List<CalenderEvents> Events = new List<CalenderEvents>();
 
             try
             {
-                Events = await _context.CalenderEvents.ToListAsync();
-                _context.SaveChanges();
+                Events = _context.CalenderEvents.ToList();
+                    _context.SaveChanges();
             }
 
             catch (Exception ex)
@@ -383,7 +383,8 @@ namespace Stressless_Service.Database
             {
                 _context.CalenderEvents.RemoveRange(_context.CalenderEvents
                     .OrderBy(e => e.Date)
-                    .Take(amount));
+                    .Take(amount)
+                    );
 
                 _context.SaveChanges();
             }
@@ -409,15 +410,15 @@ namespace Stressless_Service.Database
 
         }
 
-        public async Task<ReminderModel> GetReminders()
+        public ReminderModel GetReminders()
         {
             ReminderModel reminder = new();
 
             try
             {
-                reminder = await _context.Reminders
+                reminder = _context.Reminders
                     .OrderByDescending(e => e.Date)
-                    .FirstAsync();
+                    .First();
 
                 _context.SaveChanges();
             }

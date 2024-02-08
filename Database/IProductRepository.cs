@@ -4,26 +4,26 @@ namespace Stressless_Service.Database
 {
     public interface IProductRepository
     {
-        Task<ReminderModel> GetReminders();
+        ReminderModel GetReminders();
         int CheckConfigurationExists();
-        Task<PromptModel> GetPrompt(string type);
-        Task<List<CalenderEvents>> GetDayEvents();
-        Task<ConfigurationClass> GetConfiguration();
-        Task<int> GetAuthentication(string macAddress);
-        Task<int> UserPreviousAuthenticated(string macAddress);
-        Task<int> UpdateAuthentication(string macAddress);
-        Task<UsedPromptsModel> GetUsedPrompt(Guid promptid);
-        Task<AuthorizeModel> GetLatestAuthorization(string macAddress);
+        PromptModel GetPrompt(string type);
+        List<CalenderEvents> GetDayEvents();
+        ConfigurationClass GetConfiguration();
+        int GetAuthentication(string macAddress);
+        int UserPreviousAuthenticated(string macAddress);
+        int UpdateAuthentication(string macAddress);
+        UsedPromptsModel GetUsedPrompt(Guid promptid);
+        AuthorizeModel GetLatestAuthorization(string macAddress);
 
-        Task DeleteExpiredTokens();
-        Task DeleteConfiguration();
+        void DeleteExpiredTokens();
+        void DeleteConfiguration();
         void DeleteDayEvents(int amount);
-        Task<List<string>> InsertPrompt(PromptModel prompt);
+        List<string> InsertPrompt(PromptModel prompt);
         void InsertReminders(ReminderModel reminder);
         void InsertUsedPrompt(UsedPromptsModel prompt);
         //Task InsertCalenderEvents(ICollection<CalenderModel> events, Guid ConfigID);
-        Task InsertDayEvents(List<CalenderEvents> events);
-        Task<Guid> InsertAuthentication(AuthorizeModel authorize);
+        void InsertDayEvents(List<CalenderEvents> events);
+        Guid InsertAuthentication(AuthorizeModel authorize);
         Task<Guid> InsertConfiguration(ConfigurationClass Configuration);
     }
 }

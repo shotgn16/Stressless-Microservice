@@ -2,7 +2,6 @@
 using ServiceStack;
 using Stressless_Service.Database;
 using Stressless_Service.Models;
-using System.Data.Entity;
 
 namespace Stressless_Service.Forecaster
 {
@@ -67,7 +66,7 @@ namespace Stressless_Service.Forecaster
         // Run Order : 2
         public async Task StoreDays(List<CalenderEvents> FormattedEvents)
         {
-            List<CalenderEvents> storedDays = await _productRepository.GetDayEvents();
+            List<CalenderEvents> storedDays = _productRepository.GetDayEvents();
             int CountOfDaysAlreadyStored = storedDays.Count;
 
             CheckNumberOfDaysInDatabase: // Label
@@ -80,7 +79,7 @@ namespace Stressless_Service.Forecaster
             else if (CountOfDaysAlreadyStored + FormattedEvents.Count < 21)
             {
                 FormattedEvents = FormattedEvents.OrderBy(e => e.Date.DayOfWeek).ToList();
-                    await _productRepository.InsertDayEvents(FormattedEvents);
+                    _productRepository.InsertDayEvents(FormattedEvents);
             }
         }
 
@@ -90,7 +89,7 @@ namespace Stressless_Service.Forecaster
             TimeSpan timeInMeetings = new();
             List<CalenderEvents> storedDays = new();
             TimeSpan workingHours = StartTime - FinishTime;
-            List<CalenderEvents> daysStoredInDatabase = await _productRepository.GetDayEvents();
+            List<CalenderEvents> daysStoredInDatabase = _productRepository.GetDayEvents();
 
             foreach (var item in daysStoredInDatabase)
             {
@@ -112,9 +111,9 @@ namespace Stressless_Service.Forecaster
             int busyTimeIndicator = 0;
             bool promptUserForABreak = false;
             bool isUserBusy = false;
-            ReminderModel latestReminders = await _productRepository.GetReminders();
-            ConfigurationClass configuration = await _productRepository.GetConfiguration();
-            List<CalenderEvents> todaysEvents = await _productRepository.GetDayEvents();
+            ReminderModel latestReminders = _productRepository.GetReminders();
+            ConfigurationClass configuration = _productRepository.GetConfiguration();
+            List<CalenderEvents> todaysEvents = _productRepository.GetDayEvents();
 
             if (latestReminders.Time >= TimeOnly.FromDateTime(DateTime.Now + TimeSpan.FromHours(2)) &&
                 latestReminders.Time >= configuration.DayStartTime &&

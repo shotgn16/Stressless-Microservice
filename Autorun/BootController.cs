@@ -27,7 +27,7 @@ namespace Stressless_Service.Autorun
 
             if (configurationCount == 1)
             {
-                ConfigurationClass configuration = await _productRepository.GetConfiguration();
+                ConfigurationClass configuration = _productRepository.GetConfiguration();
 
                 if (configuration.DayStartTime != TimeOnly.MinValue && configuration.DayEndTime != TimeOnly.MinValue)
                 {
@@ -67,7 +67,7 @@ namespace Stressless_Service.Autorun
             {
                 if (isRecentlyBooted == false)
                 {
-                    ConfigurationClass Configuration = await _productRepository.GetConfiguration();
+                    ConfigurationClass Configuration = _productRepository.GetConfiguration();
 
                     if (Directory.Exists(Configuration.UiLoc))
                     {

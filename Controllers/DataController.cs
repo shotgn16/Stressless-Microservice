@@ -64,7 +64,7 @@ namespace Stressless_Service.Controllers
                 {
                     if (await tokenValidation.Handler(BearerToken))
                     {
-                        Prompt = await _productRepository.GetPrompt(promptType);
+                        Prompt = _productRepository.GetPrompt(promptType);
                     }
                 }
             }
@@ -93,7 +93,7 @@ namespace Stressless_Service.Controllers
                     {
                         foreach (var Item in PromptRequest.Prompt)
                         {
-                             types = await _productRepository.InsertPrompt(Item);
+                             types = _productRepository.InsertPrompt(Item);
                         }
                     }
                 }
@@ -115,7 +115,7 @@ namespace Stressless_Service.Controllers
                 {
                     if (await tokenValidation.Handler(BearerToken))
                     {
-                        Configuration = await _productRepository.GetConfiguration();
+                        Configuration = _productRepository.GetConfiguration();
                     }
                 }
             }
@@ -140,12 +140,12 @@ namespace Stressless_Service.Controllers
                 {
                     if (await tokenValidation.Handler(BearerToken))
                     {
-                        var OriginalConfiguration = await _productRepository.GetConfiguration();
+                        var OriginalConfiguration = _productRepository.GetConfiguration();
 
                         if (OriginalConfiguration == null || OriginalConfiguration != Configuration)
                         {
-                            await _productRepository.DeleteConfiguration();
-                            await _productRepository.InsertConfiguration(Configuration);
+                            _productRepository.DeleteConfiguration();
+                            _productRepository.InsertConfiguration(Configuration);
                         }
                     }
                 }
@@ -167,7 +167,7 @@ namespace Stressless_Service.Controllers
                     if (await tokenValidation.Handler(BearerToken))
                     {
                         //Will get the last used prompt specified by ID (Ordered by the specified time in the database - DESC [Most recent at the top])
-                        UsedPrompt = await _productRepository.GetUsedPrompt(promptID);
+                        UsedPrompt = _productRepository.GetUsedPrompt(promptID);
                     }
                 }
             }
@@ -214,7 +214,7 @@ namespace Stressless_Service.Controllers
                     {
                         if (await tokenValidation.Handler(BearerToken))
                         {
-                            ConfigurationClass Configuration = await _productRepository.GetConfiguration();
+                            ConfigurationClass Configuration = _productRepository.GetConfiguration();
 
                             if (Configuration != null && !string.IsNullOrEmpty(Configuration.CalenderImport))
                             {
@@ -249,7 +249,7 @@ namespace Stressless_Service.Controllers
                     {
                         if (await tokenValidation.Handler(BearerToken))
                         {
-                            await _productRepository.DeleteConfiguration();
+                            _productRepository.DeleteConfiguration();
                         }
                     }
                 }

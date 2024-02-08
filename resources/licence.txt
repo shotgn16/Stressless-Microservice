@@ -1,0 +1,1 @@
+By installing this you hereby acknowledge that you are installing and utilizing software that has not been fully tested according to the appropriate guidelines, therefore may produce unexpected behavior and / or act in a way untended during design and development.

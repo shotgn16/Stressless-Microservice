@@ -62,6 +62,12 @@
     <None Update="https.pfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="resources\logo.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="resources\logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Stressless-Service.pfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
