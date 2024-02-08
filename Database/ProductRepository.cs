@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using ServiceStack;
 using Stressless_Service.Models;
 using System.Data.Entity;
+using System.Net.Mail;
 
 namespace Stressless_Service.Database
 {
@@ -49,13 +50,16 @@ namespace Stressless_Service.Database
             return returnedConfig;
         }
 
-        public async Task<int> CheckConfigurationExists()
+        public int CheckConfigurationExists()
         {
             int result = 0;
 
             try
             {
-                result = _context.Configuration.Count();
+                result = _context.Configuration
+                    .Where(x => x.FirstName != null)
+                    .Count();
+
                 _context.SaveChanges();
             }
 

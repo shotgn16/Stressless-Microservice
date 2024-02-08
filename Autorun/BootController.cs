@@ -6,7 +6,7 @@ using System.Timers;
 
 namespace Stressless_Service.Autorun
 {
-    public class BootController
+    public class BootController : Controller, IBootController
     {
         private readonly ILogger _logger;
         private readonly IProductRepository _productRepository;
@@ -23,7 +23,9 @@ namespace Stressless_Service.Autorun
 
         public async Task<bool> GetSystemTime(bool isWorkingTime = false)
         {
-            if (await _productRepository.CheckConfigurationExists() == 1)
+            int configurationCount = _productRepository.CheckConfigurationExists();
+
+            if (configurationCount == 1)
             {
                 ConfigurationClass configuration = await _productRepository.GetConfiguration();
 
@@ -83,7 +85,7 @@ namespace Stressless_Service.Autorun
         /// </summary>
         /// <param name="isLater"></param>
         /// <returns></returns>
-        private async Task<bool> LastBooted(bool isLater = false)
+        public async Task<bool> LastBooted(bool isLater = false)
         {
             TimeSpan difference = System.DateTime.Now - LastSynced;
 
@@ -116,7 +118,7 @@ namespace Stressless_Service.Autorun
             TimerRunner();
         }
 
-        private void TimerRunner()
+        public void TimerRunner()
         {
             _logger.LogInformation($"Stopping timer on thread: [{Thread.CurrentThread.ManagedThreadId}]");
             _logger.LogInformation("Starting Stressless Frontend...");

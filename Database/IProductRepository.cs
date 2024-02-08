@@ -5,7 +5,7 @@ namespace Stressless_Service.Database
     public interface IProductRepository
     {
         Task<ReminderModel> GetReminders();
-        Task<int> CheckConfigurationExists();
+        int CheckConfigurationExists();
         Task<PromptModel> GetPrompt(string type);
         Task<List<CalenderEvents>> GetDayEvents();
         Task<ConfigurationClass> GetConfiguration();

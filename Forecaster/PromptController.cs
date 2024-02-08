@@ -3,7 +3,7 @@ using System.Timers;
 
 namespace Stressless_Service.Forecaster
 {
-    public class PromptController : Controller
+    public class PromptController : Controller, IPromptController
     {
         private ILogger<PromptController> _logger;
         private IEventController _eventController;

@@ -3,7 +3,7 @@ using Stressless_Service.Models;
 
 namespace Stressless_Service.Database
 {
-    public class DatabaseContext : DbContext
+    public class DatabaseContext : DbContext, IDisposable
     {
         public DatabaseContext(DbContextOptions<DatabaseContext> contextOptions)
             : base(contextOptions)
@@ -31,5 +31,7 @@ namespace Stressless_Service.Database
             modelBuilder.Entity<UsedPromptsModel>().HasKey(pk => pk.ID);
             modelBuilder.Entity<ReminderModel>().HasKey(pk => pk.ID);
         }
+
+        public void Dispose() => GC.Collect();
     }
 }

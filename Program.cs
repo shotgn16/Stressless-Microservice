@@ -83,13 +83,14 @@ try
     builder.Services.AddLogging();
 
     builder.Services.AddTransient<IProductRepository, ProductRepository>(); ;
-    builder.Services.AddTransient<DatabaseContext, DatabaseContext>();
+    builder.Services.AddScoped<DatabaseContext>();
+
     builder.Services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
 
-    builder.Services.AddScoped<TimerInitiation>();
+    builder.Services.AddScoped<ITimeInitiation, TimerInitiation>();
 
-    builder.Services.AddScoped<BootController>();
-    builder.Services.AddScoped<PromptController>();
+    builder.Services.AddScoped<IBootController, BootController>();
+    builder.Services.AddScoped<IPromptController, PromptController>();
 
     builder.Services.AddScoped<IEventController, EventController>();
     builder.Services.AddScoped<IAuthenticationController, AuthenticationController>();
@@ -153,7 +154,7 @@ try
     {
         var services = serviceScope.ServiceProvider;
 
-        var myTimeService = services.GetRequiredService<TimerInitiation>();
+        var myTimeService = services.GetRequiredService<ITimeInitiation>();
         await myTimeService.InitalizeSystem();
     }
 

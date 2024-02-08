@@ -4,13 +4,13 @@ using Stressless_Service.Forecaster;
 
 namespace Stressless_Service
 {
-    public class TimerInitiation : Controller
+    public class TimerInitiation : Controller, ITimeInitiation
     {
-        private PromptController _promptController;
+        private IPromptController _promptController;
         private readonly ILogger<TimerInitiation> _logger;
-        private BootController _bootController;
+        private IBootController _bootController;
 
-        public TimerInitiation(PromptController promptController, ILogger<TimerInitiation> logger, BootController bootController)
+        public TimerInitiation(IPromptController promptController, ILogger<TimerInitiation> logger, IBootController bootController)
         {
             _promptController = promptController;
             _logger = logger;

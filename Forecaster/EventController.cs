@@ -111,14 +111,27 @@ namespace Stressless_Service.Forecaster
         {
             int busyTimeIndicator = 0;
             bool promptUserForABreak = false;
+            bool isUserBusy = false;
             ReminderModel latestReminders = await _productRepository.GetReminders();
             ConfigurationClass configuration = await _productRepository.GetConfiguration();
+            List<CalenderEvents> todaysEvents = await _productRepository.GetDayEvents();
 
             if (latestReminders.Time >= TimeOnly.FromDateTime(DateTime.Now + TimeSpan.FromHours(2)) &&
                 latestReminders.Time >= configuration.DayStartTime &&
                 latestReminders.Time < configuration.DayEndTime)
             {
-                if (GBL_FreeTime.Minutes >= 20) // MUST HAVE AT LEAST 20 MINUTES OF FREE TIME PER DAY FOR THIS TO WORK!
+                todaysEvents = (List<CalenderEvents>)todaysEvents.Where(x => x.Date == DateOnly.FromDateTime(DateTime.Now));
+                foreach (var e in todaysEvents)
+                {
+                    TimeSpan eventDuration = e.Start - e.Finish;
+
+                    if (TimeOnly.FromDateTime(DateTime.Now) == e.Start || TimeOnly.FromDateTime(DateTime.Now) == e.Start.AddMinutes(Convert.ToDouble(eventDuration)))
+                    {
+                        isUserBusy = true;
+                    }
+                }
+
+                if (GBL_FreeTime.Minutes >= 20 && isUserBusy == false) // MUST HAVE AT LEAST 20 MINUTES OF FREE TIME PER DAY FOR THIS TO WORK!
                 {
                     TimeOnly currentTime = TimeOnly.FromDateTime(DateTime.Now);
                     foreach (var item in GBL_Events)
@@ -145,5 +158,7 @@ namespace Stressless_Service.Forecaster
 
             return promptUserForABreak;
         }
+
+
     }
 }
