@@ -1,7 +1,4 @@
-﻿using ServiceStack.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity;
-using ForeignKeyAttribute = System.ComponentModel.DataAnnotations.Schema.ForeignKeyAttribute;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Stressless_Service.Models
 {

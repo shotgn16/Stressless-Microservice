@@ -4,6 +4,7 @@ using Stressless_Service.Models;
 using Microsoft.AspNetCore.Authorization;
 using Stressless_Service.JwtSecurityTokens;
 using Stressless_Service.Forecaster;
+using Newtonsoft.Json;
 
 namespace Stressless_Service.Controllers
 {
@@ -39,13 +40,13 @@ namespace Stressless_Service.Controllers
 
             if (response == null)
             {
-                _logger.LogInformation($"Authentication Failed for User: {_model.MACAddress}\nPlease ensure you have a valid MAC Address and ClientID.");
+                _logger.LogInformation($"Class: 'DataController' | Function: 'Authorize' | Status: 'Failed' | User: '{_model.MACAddress}' Message: 'Please ensure you have a valid MAC Address and ClientID.'");
                 return BadRequest(new { message = "MAC Address or ClientID incorrect!" });
             }
 
             else
             {
-                _logger.LogInformation($"User: {_model.MACAddress} Authenticated Successfully!");
+                _logger.LogInformation($"Class: 'DataController' | Function: 'Authorize' | Status: 'Success' | User: '{_model.MACAddress}'");
                 return Ok(response);
             }
         }
@@ -54,19 +55,28 @@ namespace Stressless_Service.Controllers
         [HttpGet("GetPrompt/{promptType}")]
         public async Task<PromptModel> GetPrompt(string promptType)
         {
-
             PromptModel Prompt = new PromptModel();
             var BearerToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
 
-            if (!string.IsNullOrEmpty(BearerToken))
+            try
             {
-                using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
+                if (!string.IsNullOrEmpty(BearerToken))
                 {
-                    if (await tokenValidation.Handler(BearerToken))
+                    using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
                     {
-                        Prompt = _productRepository.GetPrompt(promptType);
+                        if (await tokenValidation.Handler(BearerToken))
+                        {
+                            Prompt = _productRepository.GetPrompt(promptType);
+                        }
                     }
                 }
+
+                _logger.LogInformation("Class: 'DataController' | Function: 'GetPrompt' | Status - " + JsonConvert.SerializeObject(promptType, Formatting.Indented));
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
             }
 
             return Prompt;
@@ -77,26 +87,35 @@ namespace Stressless_Service.Controllers
         public async Task<IActionResult> InsertPrompt([FromBody] PromptRequestModel PromptRequest)
         {
             List<string> types = new();
-
-            if (PromptRequest == null)
-            {
-                return BadRequest("Invalid configuration!");
-            }
-
             var BearerToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
 
-            if (!string.IsNullOrEmpty(BearerToken))
+            try
             {
-                using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
+                if (PromptRequest == null)
                 {
-                    if (await tokenValidation.Handler(BearerToken))
+                    return BadRequest("Invalid configuration!");
+                }
+
+                if (!string.IsNullOrEmpty(BearerToken))
+                {
+                    using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
                     {
-                        foreach (var Item in PromptRequest.Prompt)
+                        if (await tokenValidation.Handler(BearerToken))
                         {
-                             types = _productRepository.InsertPrompt(Item);
+                            foreach (var Item in PromptRequest.Prompt)
+                            {
+                                types = _productRepository.InsertPrompt(Item);
+                            }
                         }
                     }
                 }
+
+                _logger.LogInformation("Class: 'DataController' | Function: 'InsertPrompt' | Status - " + JsonConvert.SerializeObject(PromptRequest, Formatting.Indented));
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
             }
 
             return Ok(types.ToList());
@@ -109,20 +128,32 @@ namespace Stressless_Service.Controllers
             ConfigurationClass Configuration = new ConfigurationClass();
             var BearerToken = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
 
-            if (!string.IsNullOrEmpty(BearerToken))
+            try
             {
-                using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
+                if (!string.IsNullOrEmpty(BearerToken))
                 {
-                    if (await tokenValidation.Handler(BearerToken))
+                    using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
                     {
-                        Configuration = _productRepository.GetConfiguration();
+                        if (await tokenValidation.Handler(BearerToken))
+                        {
+                            Configuration = _productRepository.GetConfiguration();
+                        }
                     }
                 }
+
+                _logger.LogInformation("Class: 'DataController' | Function: 'GetConfiguration' | Status - " + JsonConvert.SerializeObject(Configuration, Formatting.Indented));
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
             }
 
             return Configuration;
         }
 
+
+        // HERE NEXT TIME
         [Authorize]
         [HttpPost("InsertConfiguration")]
         public async Task<IActionResult> InsertConfiguration([FromBody] ConfigurationClass Configuration)
@@ -145,7 +176,7 @@ namespace Stressless_Service.Controllers
                         if (OriginalConfiguration == null || OriginalConfiguration != Configuration)
                         {
                             _productRepository.DeleteConfiguration();
-                            _productRepository.InsertConfiguration(Configuration);
+                            await _productRepository.InsertConfiguration(Configuration);
                         }
                     }
                 }
@@ -258,7 +289,7 @@ namespace Stressless_Service.Controllers
             catch (Exception ex)
             {
                 Value = false;
-                    // LOG
+                _logger.LogError(ex.Message, ex);
             }
 
             return Value;

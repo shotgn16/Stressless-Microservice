@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>Stressless_Service</RootNamespace>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <ApplicationIcon>resources\logo.ico</ApplicationIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -18,6 +19,10 @@
     <Content Remove="ccfzc\**" />
     <EmbeddedResource Remove="ccfzc\**" />
     <None Remove="ccfzc\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="resources\logo.ico" />
   </ItemGroup>
 
   <ItemGroup>

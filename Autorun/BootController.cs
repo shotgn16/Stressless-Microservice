@@ -2,6 +2,7 @@
 using Stressless_Service.Database;
 using Stressless_Service.Models;
 using System.Diagnostics;
+using System.Threading;
 using System.Timers;
 
 namespace Stressless_Service.Autorun
@@ -21,62 +22,80 @@ namespace Stressless_Service.Autorun
             _productRepository = productRepository;
         }
 
+        // IsUserShift
         public async Task<bool> GetSystemTime(bool isWorkingTime = false)
         {
             int configurationCount = _productRepository.CheckConfigurationExists();
 
-            if (configurationCount == 1)
+            try
             {
-                ConfigurationClass configuration = _productRepository.GetConfiguration();
-
-                if (configuration.DayStartTime != TimeOnly.MinValue && configuration.DayEndTime != TimeOnly.MinValue)
+                if (configurationCount == 1)
                 {
-                    DateTime[] Times = new DateTime[]
+                    ConfigurationClass configuration = _productRepository.GetConfiguration();
+
+                    if (configuration.DayStartTime != TimeOnly.MinValue && configuration.DayEndTime != TimeOnly.MinValue)
                     {
+                        DateTime[] Times = new DateTime[]
+                        {
                         Convert.ToDateTime(configuration.DayStartTime),
                         Convert.ToDateTime(configuration.DayEndTime)
-                    };
+                        };
 
-                    if (System.DateTime.Now >= Times[0] && System.DateTime.Now <= Times[1])
-                    {
-                        isWorkingTime = true;
+                        if (System.DateTime.Now >= Times[0] && System.DateTime.Now <= Times[1])
+                        {
+                            isWorkingTime = true;
+                        }
                     }
                 }
+
+                _logger.LogInformation("Class: 'BootController' | Function: 'IsUserShift' | Status: " + isWorkingTime);
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
             }
 
             return isWorkingTime;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
+
         public async Task BootUI()
         {
             bool isWorkingHours = await GetSystemTime();
             bool isRecentlyBooted = await LastBooted();
 
-            // If the current system time is within the working hours & the 'StresslessUI' is found in the Task-Manager
-            if (isWorkingHours == true && Process.GetProcessesByName("StresslessUI.exe").Length > 0)
+            try
             {
-                // Start timer regardless of whether it boots or not
-                await StartTimer();
-            }
-
-            else if (isWorkingHours == true)
-            {
-                if (isRecentlyBooted == false)
+                // If the current system time is within the working hours & the 'StresslessUI' is found in the Task-Manager
+                if (isWorkingHours == true && Process.GetProcessesByName("StresslessUI.exe").Length > 0)
                 {
-                    ConfigurationClass Configuration = _productRepository.GetConfiguration();
-
-                    if (Directory.Exists(Configuration.UiLoc))
-                    {
-                        Process.Start(Configuration.UiLoc + "\\StressLess-Frontend.exe");
-                    }
-
-                    LastSynced = DateTime.Now;
+                    // Start timer regardless of whether it boots or not
                     await StartTimer();
                 }
+
+                else if (isWorkingHours == true)
+                {
+                    if (isRecentlyBooted == false)
+                    {
+                        ConfigurationClass Configuration = _productRepository.GetConfiguration();
+
+                        if (Directory.Exists(Configuration.UiLoc))
+                        {
+                            Process.Start(Configuration.UiLoc + "\\StressLess-Frontend.exe");
+                        }
+
+                        LastSynced = DateTime.Now;
+                        await StartTimer();
+                    }
+                }
+
+                _logger.LogInformation("Class: 'BootController' | Function: 'BootUI' | WasRecentlyBooted: " + isRecentlyBooted);
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
             }
         }
 
@@ -99,14 +118,22 @@ namespace Stressless_Service.Autorun
 
         public async Task StartTimer()
         {
-            if (!isActive)
+            try
             {
-                _timer = new System.Timers.Timer(60000);
-                _timer.Elapsed += new System.Timers.ElapsedEventHandler(OnTimerFinishEvent);
-                _timer.Start();
+                if (!isActive)
+                {
+                    _timer = new System.Timers.Timer(60000);
+                    _timer.Elapsed += new System.Timers.ElapsedEventHandler(OnTimerFinishEvent);
+                    _timer.Start();
 
-                isActive = true;
-                _logger.LogInformation($"Starting timer on thread: [{Thread.CurrentThread.ManagedThreadId}]");
+                    isActive = true;
+                    _logger.LogInformation($"Class: 'BootController' | Function: 'StartTime' | ID: " + Thread.CurrentThread.ManagedThreadId);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
             }
         }
 

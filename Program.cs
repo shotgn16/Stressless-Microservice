@@ -38,10 +38,12 @@ try
         builder.AddDebug();
     });
 
+    // Adds the DBContext and registers it as a service
     builder.Services.AddDbContext<DatabaseContext>(o =>
     {
         o.UseSqlite(GlobalConfiguration._configuration["Database:SqLite"]);
-    });
+
+    }).AddScoped<DatabaseContext>();
 
     // Configuring Kestrel to enable HTTPS via certificate
     // [dotnet dev-certs https -ep <path_to_pfx_file> -p <password>]
@@ -82,17 +84,18 @@ try
     // Adding database & TokenGeneratorService to services
     builder.Services.AddLogging();
 
-    builder.Services.AddTransient<IProductRepository, ProductRepository>(); ;
-    builder.Services.AddScoped<DatabaseContext>();
+    builder.Services.AddTransient<IProductRepository, ProductRepository>();
 
     builder.Services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
 
-    builder.Services.AddScoped<ITimeInitiation, TimerInitiation>();
+    builder.Services.AddTransient<ITimeInitiation, TimerInitiation>();
 
-    builder.Services.AddScoped<IBootController, BootController>();
-    builder.Services.AddScoped<IPromptController, PromptController>();
+    builder.Services.AddTransient<IBootController, BootController>();
+
+    builder.Services.AddTransient<IPromptController, PromptController>();
 
     builder.Services.AddScoped<IEventController, EventController>();
+
     builder.Services.AddScoped<IAuthenticationController, AuthenticationController>();
 
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle 
