@@ -75,10 +75,15 @@ namespace Stressless_Service.Database
         {
             try
             {
+                //_context.Configuration.Remove(
+                //    _context.Configuration
+                //        .Where(e => e.FirstName != null)
+                //.First());
+
                 _context.Configuration.Remove(
-                    _context.Configuration
-                        .Where(e => e.FirstName != null)
-                .FirstOrDefault());
+                    _context.Configuration.
+                        FirstOrDefault()
+                        );
 
                 _context.SaveChanges();
             }
