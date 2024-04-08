@@ -4,10 +4,11 @@ using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Stressless_Service.Configuration;
+using Stressless_Service.Interfaces;
 
 namespace Stressless_Service.JwtSecurityTokens;
 
-public class JWTokenValidation : Controller
+public class JWTokenValidation : Controller, iJWTokenValidation
 {
     private readonly ILogger _logger;
     public JWTokenValidation(ILogger logger)
@@ -70,7 +71,7 @@ public class JWTokenValidation : Controller
         return returnValue;
     }
 
-    private static List<Claim> ClaimsToList(string token)
+    public List<Claim> ClaimsToList(string token)
     {
         var handler = new JwtSecurityTokenHandler();
         var jsonToken = handler.ReadToken(token) as JwtSecurityToken;

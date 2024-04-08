@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Stressless_Service.JwtSecurityTokens;
 using Stressless_Service.Forecaster;
 using Newtonsoft.Json;
+using Stressless_Service.Interfaces;
 
 namespace Stressless_Service.Controllers
 {
@@ -22,14 +23,16 @@ namespace Stressless_Service.Controllers
         private readonly IProductRepository _productRepository;
         private readonly IEventController _eventController;
         private readonly IAuthenticationController _authenticationController;
+        private readonly iJWTokenValidation _JWTokenValidation;
 
-        public DataController(ILogger<DataController> logger, ITokenGeneratorService tokenGeneratorService, IProductRepository productRepository, IEventController eventController, IAuthenticationController authenticationController)
+        public DataController(ILogger<DataController> logger, ITokenGeneratorService tokenGeneratorService, IProductRepository productRepository, IEventController eventController, IAuthenticationController authenticationController, iJWTokenValidation JWTokenValidation)
         {
             _logger = logger;
             _tokenGeneratorService = tokenGeneratorService;
             _productRepository = productRepository;
             _eventController = eventController;
             _authenticationController = authenticationController;
+            _JWTokenValidation = JWTokenValidation;
         }
 
         // Authorization Request
@@ -62,12 +65,9 @@ namespace Stressless_Service.Controllers
             {
                 if (!string.IsNullOrEmpty(BearerToken))
                 {
-                    using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
+                    if (await _JWTokenValidation.Handler(BearerToken))
                     {
-                        if (await tokenValidation.Handler(BearerToken))
-                        {
-                            Prompt = _productRepository.GetPrompt(promptType);
-                        }
+                        Prompt = _productRepository.GetPrompt(promptType);
                     }
                 }
 
@@ -98,14 +98,11 @@ namespace Stressless_Service.Controllers
 
                 if (!string.IsNullOrEmpty(BearerToken))
                 {
-                    using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
+                    if (await _JWTokenValidation.Handler(BearerToken))
                     {
-                        if (await tokenValidation.Handler(BearerToken))
+                        foreach (var Item in PromptRequest.Prompt)
                         {
-                            foreach (var Item in PromptRequest.Prompt)
-                            {
-                                types = _productRepository.InsertPrompt(Item);
-                            }
+                            types = _productRepository.InsertPrompt(Item);
                         }
                     }
                 }
@@ -132,12 +129,9 @@ namespace Stressless_Service.Controllers
             {
                 if (!string.IsNullOrEmpty(BearerToken))
                 {
-                    using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
+                    if (await _JWTokenValidation.Handler(BearerToken))
                     {
-                        if (await tokenValidation.Handler(BearerToken))
-                        {
-                            Configuration = _productRepository.GetConfiguration();
-                        }
+                        Configuration = _productRepository.GetConfiguration();
                     }
                 }
 
@@ -167,17 +161,14 @@ namespace Stressless_Service.Controllers
 
             if (!string.IsNullOrEmpty(BearerToken))
             {
-                using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
+                if (await _JWTokenValidation.Handler(BearerToken))
                 {
-                    if (await tokenValidation.Handler(BearerToken))
-                    {
-                        var OriginalConfiguration = _productRepository.GetConfiguration();
+                    var OriginalConfiguration = _productRepository.GetConfiguration();
 
-                        if (OriginalConfiguration == null || OriginalConfiguration != Configuration)
-                        {
-                            _productRepository.DeleteConfiguration();
-                            await _productRepository.InsertConfiguration(Configuration);
-                        }
+                    if (OriginalConfiguration == null || OriginalConfiguration != Configuration)
+                    {
+                        _productRepository.DeleteConfiguration();
+                        await _productRepository.InsertConfiguration(Configuration);
                     }
                 }
             }
@@ -193,13 +184,10 @@ namespace Stressless_Service.Controllers
 
             if (!string.IsNullOrEmpty(BearerToken))
             {
-                using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
+                if (await _JWTokenValidation.Handler(BearerToken))
                 {
-                    if (await tokenValidation.Handler(BearerToken))
-                    {
-                        //Will get the last used prompt specified by ID (Ordered by the specified time in the database - DESC [Most recent at the top])
-                        UsedPrompt = _productRepository.GetUsedPrompt(promptID);
-                    }
+                    //Will get the last used prompt specified by ID (Ordered by the specified time in the database - DESC [Most recent at the top])
+                    UsedPrompt = _productRepository.GetUsedPrompt(promptID);
                 }
             }
 
@@ -219,12 +207,9 @@ namespace Stressless_Service.Controllers
 
             if (!string.IsNullOrEmpty(BearerToken))
             {
-                using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
+                if (await _JWTokenValidation.Handler(BearerToken))
                 {
-                    if (await tokenValidation.Handler(BearerToken))
-                    {
-                        _productRepository.InsertUsedPrompt(UsedPrompt);
-                    }
+                    _productRepository.InsertUsedPrompt(UsedPrompt);
                 }
             }
 
@@ -241,17 +226,14 @@ namespace Stressless_Service.Controllers
 
                 if (!string.IsNullOrEmpty(BearerToken))
                 {
-                    using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
+                    if (await _JWTokenValidation.Handler(BearerToken))
                     {
-                        if (await tokenValidation.Handler(BearerToken))
-                        {
-                            ConfigurationClass Configuration = _productRepository.GetConfiguration();
+                        ConfigurationClass Configuration = _productRepository.GetConfiguration();
 
-                            if (Configuration != null && !string.IsNullOrEmpty(Configuration.CalenderImport))
-                            {
-                                await _eventController.EventHandler(Configuration.Calender, Configuration);
-                                reminderUser = await _eventController.PromptBreak();
-                            }
+                        if (Configuration != null && !string.IsNullOrEmpty(Configuration.CalenderImport))
+                        {
+                            await _eventController.EventHandler(Configuration.Calender, Configuration);
+                            reminderUser = await _eventController.PromptBreak();
                         }
                     }
                 }
@@ -276,12 +258,9 @@ namespace Stressless_Service.Controllers
                 
                 if (!string.IsNullOrEmpty(BearerToken))
                 {
-                    using (JWTokenValidation tokenValidation = new JWTokenValidation(_logger))
+                    if (await _JWTokenValidation.Handler(BearerToken))
                     {
-                        if (await tokenValidation.Handler(BearerToken))
-                        {
-                            _productRepository.DeleteConfiguration();
-                        }
+                        _productRepository.DeleteConfiguration();
                     }
                 }
             }

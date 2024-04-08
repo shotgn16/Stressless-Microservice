@@ -12,6 +12,7 @@ using Stressless_Service.logging;
 using Stressless_Service.Autorun;
 using Stressless_Service.Forecaster;
 using Microsoft.EntityFrameworkCore;
+using Stressless_Service.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -83,6 +84,8 @@ try
 
     // Adding database & TokenGeneratorService to services
     builder.Services.AddLogging();
+
+    builder.Services.AddTransient<iJWTokenValidation, JWTokenValidation>();
 
     builder.Services.AddTransient<IProductRepository, ProductRepository>();
 
